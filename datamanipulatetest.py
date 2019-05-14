@@ -1,6 +1,7 @@
 #import necessary
 import csv
 from itertools import islice
+from shutil import copyfile as cpfl
 
 #setting variables
 row_counter = 0
@@ -14,7 +15,7 @@ current_voltage = 0
 results = []
 
 #opening and printing data file
-while file_counter < 1000:
+while file_counter < 10829:
     with open('g:/data/watchman/20190514_watchman_spe/C2--waveforms--'+str(file_counter).zfill(5)+'.txt','r')as f:
         data = csv.reader(f)
         for row in islice(data, 5, None):
@@ -32,6 +33,7 @@ while file_counter < 1000:
         print(str(file_counter).zfill(5))
         print(max_match)
         print()
+        cpfl('g:/data/watchman/20190514_watchman_spe/C2--waveforms--'+str(file_counter).zfill(5)+'.txt','g:/data/watchman/20190514_watchman_spe/matching_files/C2--waveforms--'+str(file_counter).zfill(5)+'.txt')
     num_matches = 0
     row_counter = 0
     max_match = 0
