@@ -7,6 +7,8 @@ row_counter = 0
 num_rows = 0
 num_matches = 0
 file_counter = 0
+max_match = 0
+current_voltage = 0
 
 #setting arrays
 results = []
@@ -19,15 +21,20 @@ while file_counter < 1000:
             results.append(row)
     num_rows = len(results)
     while row_counter < num_rows:
-        if float(results[row_counter][1]) <= -0.005:
+        current_voltage = float(results[row_counter][1])
+        if current_voltage <= -0.005:
             num_matches += 1
+            if current_voltage < max_match:
+                max_match = current_voltage
         row_counter += 1
     if num_matches > 0:
         print(num_matches)
         print(str(file_counter).zfill(5))
+        print(max_match)
         print()
     num_matches = 0
     row_counter = 0
+    max_match = 0
     results = []
     file_counter += 1
 print("Done!")
