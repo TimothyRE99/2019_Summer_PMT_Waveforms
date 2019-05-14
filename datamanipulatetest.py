@@ -25,6 +25,7 @@ while file_counter < 1000:
     if num_matches > 0:
         print(num_matches)
         print(str(file_counter).zfill(5))
+        print()
     num_matches = 0
     row_counter = 0
     results = []
