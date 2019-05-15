@@ -56,7 +56,7 @@ def p1_sort(filenum):
                     plt.grid(True)
                     print('Displaying file #%05d' % filenum)
                     plt.show(block = False)
-                    plt.pause(1.5)
+                    plt.pause(5)
                     plt.close()
 
                     spe_check = 'pre-loop initialization'
