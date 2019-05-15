@@ -1,4 +1,4 @@
-#writing a waveform
+#writing a waveform to a CSV file
 
 #import necessary
 import sys
