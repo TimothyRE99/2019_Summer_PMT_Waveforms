@@ -27,7 +27,7 @@ if __name__ == '__main__':
     import argparse
     parser = argparse.ArgumentParser(prog="read waveform",description="read the waveform datafile.")
     parser.add_argument("--numhead",type=int,help='number of header lines to skip in the raw file',default=5)
-    parser.add_argument("--filename",type=str,help="filename",default='g:/data/watchman/20190514_watchman_spe/C2--waveforms--00030.txt')
+    parser.add_argument("--filename",type=str,help="filename",default='g:/data/watchman/20190514_watchman_spe/C2--waveforms--00000.txt')
     args = parser.parse_args()
 
     x,y,header = read_waveform(args.filename,args.numhead)
