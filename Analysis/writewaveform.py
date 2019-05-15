@@ -1,9 +1,6 @@
 #writing a waveform to a CSV file
 
 #import necessary
-import sys
-sys.path.append('../')
-sys.path.append('')
 import numpy as np
 import matplotlib.pyplot as plt
 import os

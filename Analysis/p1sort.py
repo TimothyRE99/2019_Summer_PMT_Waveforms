@@ -2,8 +2,6 @@
 #Requires import of readwaveform.py and writewaveform.py for proper functioning
 
 #import necessary
-import sys
-sys.path.append("C:/Users/Timothy/Desktop/Summer Work/2019_Summer_PMT_Waveforms/Analysis")
 import numpy as np
 import matplotlib.pyplot as plt
 from readwaveform import read_waveform as rw

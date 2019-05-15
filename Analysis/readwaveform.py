@@ -1,9 +1,6 @@
 #Read a waveform from a time, voltage CSV format
 
 #import necessary
-import sys
-sys.path.append('../')
-sys.path.append('')
 import numpy as np
 import matplotlib.pyplot as plt
 import os

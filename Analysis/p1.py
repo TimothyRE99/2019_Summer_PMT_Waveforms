@@ -1,9 +1,7 @@
 #import necessary
 import numpy as np
 import matplotlib.pyplot as plt
-import sys
 from scipy import signal
-sys.path.append("C:/Users/Timothy/Desktop/Summer Work/2019_Summer_PMT_Waveforms/Analysis")
 from readwaveform import read_waveform as rw
 from writewaveform import write_waveform
 import time
