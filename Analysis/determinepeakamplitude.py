@@ -7,7 +7,7 @@ from readwaveform import read_waveform as rw
 from writehistogram import write_histogram as wh
 
 #define constants
-Nloops = len(os.listdir('G:/data/watchman/20190514_watchman_spe/d1/d1_50centered'))
+Nloops = len(os.listdir('G:/data/watchman/20190514_watchman_spe/d1/d1_baseline_shifted'))
 numhead = 5
 writename = 'G:/data/watchman/20190514_watchman_spe/d1/d1_histograms/peak_amplitude.txt'
 
