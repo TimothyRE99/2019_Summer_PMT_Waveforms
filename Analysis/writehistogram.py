@@ -2,11 +2,15 @@
 
 #Import necessary
 import numpy as np
+import os
 
 #write the data
 def write_histogram(value,filename):
     histogram = open(filename,"a")
-    histogram.write(value+",")
+    if os.stat(filename).st_size == 0:
+        histogram.write(value)
+    else:
+        histogram.write(","+value)
     histogram.close
     return
 
