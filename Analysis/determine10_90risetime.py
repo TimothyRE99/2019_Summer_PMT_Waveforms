@@ -7,13 +7,13 @@ from writehistogram import write_histogram as wh
 import os
 
 #Setting variables
-Nloops = len(os.listdir('G:/data/watchman/20190514_watchman_spe/d1/d1_baseline_shifted'))
+Nloops = len(os.listdir('G:/data/watchman/20190516_watchman_spe/d1/d1_baseline_shifted'))
 numhead = 5
-writename = 'G:/data/watchman/20190514_watchman_spe/d1/d1_histograms/10_90_rise_time.txt'
+writename = 'G:/data/watchman/20190516_watchman_spe/d1/d1_histograms/10_90_rise_time.txt'
 
 #determine rise times
 for i in range(Nloops):
-    filename = 'G:/data/watchman/20190514_watchman_spe/d1/d1_baseline_shifted/D1--waveforms--%05d.txt' % i
+    filename = 'G:/data/watchman/20190516_watchman_spe/d1/d1_baseline_shifted/D1--waveforms--%05d.txt' % i
     (t,y,_) = rw(filename,numhead)
     y_norm = y/min(y[370:1370])
     check10 = y_norm >= .1                                      #determining where 10% and 90% are located

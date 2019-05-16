@@ -7,14 +7,14 @@ from writehistogram import write_histogram as wh
 import os
 
 #Setting variables
-Nloops = len(os.listdir('G:/data/watchman/20190514_watchman_spe/d1/d1_baseline_shifted'))
+Nloops = len(os.listdir('G:/data/watchman/20190516_watchman_spe/d1/d1_baseline_shifted'))
 numhead = 5
-writename = 'G:/data/watchman/20190514_watchman_spe/d1/d1_histograms/charge.txt'
+writename = 'G:/data/watchman/20190516_watchman_spe/d1/d1_histograms/charge.txt'
 
 #determining charge
 for i in range(Nloops):
     area = 0
-    filename = 'G:/data/watchman/20190514_watchman_spe/d1/d1_baseline_shifted/D1--waveforms--%05d.txt' % i
+    filename = 'G:/data/watchman/20190516_watchman_spe/d1/d1_baseline_shifted/D1--waveforms--%05d.txt' % i
     (t,y,header) = rw(filename,numhead)
     y_norm = y/min(y[370:1370])
     check = y_norm >= 0.1                                   #setting curve to be from 10% rising to 10% falling

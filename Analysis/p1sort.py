@@ -18,10 +18,10 @@ def p1_sort(filenum):
     numtaps = 51                #filter order + 1, chosen for balance of good performance and small transient size
     lowpass = signal.firwin(numtaps, cutoff = wc/np.pi, window = 'blackman')    #blackman windowed lowpass filter
 
-    filename = 'g:/data/watchman/20190514_watchman_spe/C2--waveforms--%05d.txt' % filenum
-    spe_wasname = 'g:/data/watchman/20190514_watchman_spe/d1/d1_raw/D1--waveforms--%05d.txt' % filenum
-    spe_not_there = 'g:/data/watchman/20190514_watchman_spe/d1/not_spe/D1--waveforms--%05d.txt' % filenum
-    spe_unsure = 'g:/data/watchman/20190514_watchman_spe/d1/unsure_if_spe/D1--waveforms--%05d.txt' % filenum
+    filename = 'g:/data/watchman/20190516_watchman_spe/C2--waveforms--%05d.txt' % filenum
+    spe_wasname = 'g:/data/watchman/20190516_watchman_spe/d1/d1_raw/D1--waveforms--%05d.txt' % filenum
+    spe_not_there = 'g:/data/watchman/20190516_watchman_spe/d1/not_spe/D1--waveforms--%05d.txt' % filenum
+    spe_unsure = 'g:/data/watchman/20190516_watchman_spe/d1/unsure_if_spe/D1--waveforms--%05d.txt' % filenum
     if os.path.isfile(spe_wasname):
         pass
     elif os.path.isfile(spe_not_there):
@@ -45,7 +45,7 @@ def p1_sort(filenum):
         if len(peaks) == 1:
             if min(y2[370:1370]) < -0.0025:
                 write_waveform(t2, y2, spe_wasname, header)
-                print(len(os.listdir('g:/data/watchman/20190514_watchman_spe/d1/d1_raw/')))
+                print(len(os.listdir('g:/data/watchman/20190516_watchman_spe/d1/d1_raw/')))
         else:
             if y_check_sum >= 2:
                 if min(y2[370:1370]) < -0.0015:
@@ -70,11 +70,11 @@ def p1_sort(filenum):
                     elif spe_check == 'u':
                         write_waveform(t2,y2,spe_unsure,header)
                     print('File #%05d: Done' % filenum)
-                    print(len(os.listdir('g:/data/watchman/20190514_watchman_spe/d1/d1_raw/')))
+                    print(len(os.listdir('g:/data/watchman/20190516_watchman_spe/d1/d1_raw/')))
             else:
                 if min(y2[370:1370]) < -0.0015:
                     write_waveform(t2,y2,spe_wasname,header)
-                    print(len(os.listdir('g:/data/watchman/20190514_watchman_spe/d1/d1_raw/')))
+                    print(len(os.listdir('g:/data/watchman/20190516_watchman_spe/d1/d1_raw/')))
     return
 
 if __name__ == '__main__':

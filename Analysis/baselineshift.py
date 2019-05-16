@@ -7,11 +7,11 @@ from writewaveform import write_waveform
 import os
 
 #shift baseline
-Nloops = len(os.listdir('G:/data/watchman/20190514_watchman_spe/d1/d1_renamed'))
+Nloops = len(os.listdir('G:/data/watchman/20190516_watchman_spe/d1/d1_renamed'))
 numhead = 5
 for i in range(Nloops):
-    filename = 'G:/data/watchman/20190514_watchman_spe/d1/d1_renamed/D1--waveforms--%05d.txt' % i
-    writename = 'G:/data/watchman/20190514_watchman_spe/d1/d1_baseline_shifted/D1--waveforms--%05d.txt' % i
+    filename = 'G:/data/watchman/20190516_watchman_spe/d1/d1_renamed/D1--waveforms--%05d.txt' % i
+    writename = 'G:/data/watchman/20190516_watchman_spe/d1/d1_baseline_shifted/D1--waveforms--%05d.txt' % i
     (t,y,header) = rw(filename,numhead)
     baseline = np.mean(y[0:200])                            #determining average value at beginning to establish baseline
     y_new = (y - baseline)                                  #reducing y to factor out baseline

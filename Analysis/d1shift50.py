@@ -7,14 +7,14 @@ from writewaveform import write_waveform
 import os
 
 #Setting variables
-Nloops = len(os.listdir('G:/data/watchman/20190514_watchman_spe/d1/d1_baseline_shifted'))
+Nloops = len(os.listdir('G:/data/watchman/20190516_watchman_spe/d1/d1_baseline_shifted'))
 numhead = 5
 
 #Determining average index location of center 50% rising point
 def center_check(Nloops,numhead):
     center_list = np.array([])
     for i in range(Nloops):
-        filename = 'G:/data/watchman/20190514_watchman_spe/d1/d1_baseline_shifted/D1--waveforms--%05d.txt' % i
+        filename = 'G:/data/watchman/20190516_watchman_spe/d1/d1_baseline_shifted/D1--waveforms--%05d.txt' % i
         (_,y,_) = rw(filename,numhead)
         y_norm = y/min(y[370:1370])                             #normalizing to make calculations easier
         check = y_norm >= 0.5                                   #50% crossing criteria
@@ -27,8 +27,8 @@ def center_check(Nloops,numhead):
 #shifting to align
 center_index = center_check(Nloops,numhead)
 for i in range(Nloops):
-    filename = 'G:/data/watchman/20190514_watchman_spe/d1/d1_baseline_shifted/D1--waveforms--%05d.txt' % i
-    writename = 'G:/data/watchman/20190514_watchman_spe/d1/d1_50centered/D1--waveforms--%05d.txt' % i
+    filename = 'G:/data/watchman/20190516_watchman_spe/d1/d1_baseline_shifted/D1--waveforms--%05d.txt' % i
+    writename = 'G:/data/watchman/20190516_watchman_spe/d1/d1_50centered/D1--waveforms--%05d.txt' % i
     (t,y,header) = rw(filename,numhead)
     y_norm = y/min(y[370:1370])
     check = y_norm >= 0.5
