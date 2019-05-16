@@ -12,7 +12,7 @@ from p1sort import p1_sort
 show_plot = False
 N = 4002                #signal window size
 fsps = 20000000000      #hz, samples/s
-NLoops = 10829          #number of files (This one is needed for p1_sort)
+NLoops = 100000          #number of files (This one is needed for p1_sort)
 vthr = -0.00025
 nhdr = 5                #size of header to ignore
 
