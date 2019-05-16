@@ -1,0 +1,20 @@
+#determine peak amplitude of waveform
+
+#import necessary
+import numpy as np
+import os
+from readwaveform import read_waveform as rw
+from writehistogram import write_histogram as wh
+
+#define constants
+Nloops = len(os.listdir('G:/data/watchman/20190514_watchman_spe/d1/d1_50centered'))
+numhead = 5
+writename = 'G:/data/watchman/20190514_watchman_spe/d1/d1_histograms/peak_amplitude.txt'
+
+#peak amplitude acquisition
+for i in range(Nloops):
+    filename = 'G:/data/watchman/20190514_watchman_spe/d1/d1_50centered/D1--waveforms--%05d.txt' % i
+    (_,y,_) = rw(filename,numhead)
+    index_min = np.where(y == min(y[370:1370]))
+    value = (-1*y[index_min])
+    wh(value,writename)
