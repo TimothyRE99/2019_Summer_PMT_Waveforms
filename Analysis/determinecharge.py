@@ -19,7 +19,7 @@ for i in range(Nloops):
     y_norm = y/min(y[370:1370])
     check = y_norm >= 0.1                                   #setting curve to be from 10% rising to 10% falling
     index = [k for k, x in enumerate(check) if x]
-    for i in range(len(index)):
+    for i in range(len(index)-1):
         area += ((t[i+1]-t[i]) * y[i])                      #determining area under curve
     charge = area/50                                        #area under curve/resistance gives charge
     wh(charge,writename)
