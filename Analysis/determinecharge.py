@@ -13,7 +13,7 @@ writename = 'G:/data/watchman/20190514_watchman_spe/d1/d1_histograms/charge.txt'
 
 #determining charge
 for i in range(Nloops):
-    charge = 0
+    area = 0
     filename = 'G:/data/watchman/20190514_watchman_spe/d1/d1_baseline_shifted/D1--waveforms--%05d.txt' % i
     (t,y,header) = rw(filename,numhead)
     y_norm = y/min(y[370:1370])
