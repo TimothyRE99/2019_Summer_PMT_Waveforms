@@ -17,9 +17,9 @@ for i in range(Nloops):
     filename = 'G:/data/watchman/20190514_watchman_spe/d1/d1_baseline_shifted/D1--waveforms--%05d.txt' % i
     (t,y,header) = rw(filename,numhead)
     y_norm = y/min(y[370:1370])
-    check = y_norm >= 0.1
+    check = y_norm >= 0.1                                   #setting curve to be from 10% rising to 10% falling
     index = [k for k, x in enumerate(check) if x]
     for i in len(index):
-        area += ((t[i+1]-t[i]) * y[i])
-    charge = area/50
+        area += ((t[i+1]-t[i]) * y[i])                      #determining area under curve
+    charge = area/50                                        #area under curve/resistance gives charge
     wh(charge,writename)

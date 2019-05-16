@@ -19,9 +19,9 @@ def center_check(Nloops,numhead):
         y_norm = y/min(y[370:1370])                             #normalizing to make calculations easier
         check = y_norm >= 0.5                                   #50% crossing criteria
         index = [k for k, x in enumerate(check) if x]           #code to enumerate index values
-        index_50 = int(index[0])
-        center_list = np.append(center_list,index_50)
-    center_index = int(round(np.mean(center_list)))
+        index_50 = int(index[0])                                #converting to integer
+        center_list = np.append(center_list,index_50)           #appending index location to list of index locations
+    center_index = int(round(np.mean(center_list)))             #establishing mean index location, rounding it, and converting to integer
     return(center_index)
 
 #shifting to align

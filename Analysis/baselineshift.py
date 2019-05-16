@@ -13,6 +13,6 @@ for i in range(Nloops):
     filename = 'G:/data/watchman/20190514_watchman_spe/d1/d1_renamed/D1--waveforms--%05d.txt' % i
     writename = 'G:/data/watchman/20190514_watchman_spe/d1/d1_baseline_shifted/D1--waveforms--%05d.txt' % i
     (t,y,header) = rw(filename,numhead)
-    baseline = np.mean(y[0:200])
-    y_new = (y - baseline)
+    baseline = np.mean(y[0:200])                            #determining average value at beginning to establish baseline
+    y_new = (y - baseline)                                  #reducing y to factor out baseline
     write_waveform(t,y_new,writename,header)

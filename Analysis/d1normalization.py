@@ -15,5 +15,5 @@ for i in range(Nloops):
     filename = 'G:/data/watchman/20190514_watchman_spe/d1/d1_50centered/D1--waveforms--%05d.txt' % i
     writename = 'G:/data/watchman/20190514_watchman_spe/d1/d1_normalized/D1--waveforms--%05d.txt' % i
     (t,y,header) = rw(filename,numhead)
-    y_norm = y/min(y[370:1370])
+    y_norm = y/min(y[370:1370])                                 #normalizing y to peak = 1
     write_waveform(t,y_norm,writename,header)
