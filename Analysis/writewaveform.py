@@ -2,8 +2,6 @@
 
 #import necessary
 import numpy as np
-import matplotlib.pyplot as plt
-import os
 
 #Write the data
 def write_waveform(x,y,filename,header):
