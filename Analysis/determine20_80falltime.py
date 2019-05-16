@@ -22,5 +22,5 @@ for i in range(Nloops):
     index_20 = int(index20[len(index20)-1])
     index80 = [k for k, x in enumerate(check80) if x]
     index_80 = int(index80[len(index80)-1])
-    fall_time = (t[index_20] - t[index_80])                         #fall time is time at 20% - time at 80%
+    fall_time = str(t[index_20] - t[index_80])                      #fall time is time at 20% - time at 80%
     wh(fall_time,writename)

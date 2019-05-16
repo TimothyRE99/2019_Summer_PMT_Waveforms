@@ -21,5 +21,5 @@ for i in range(Nloops):
     index = [k for k, x in enumerate(check) if x]
     for i in range(len(index)-1):
         area += ((t[i+1]-t[i]) * y[i])                      #determining area under curve
-    charge = area/50                                        #area under curve/resistance gives charge
+    charge = str(area/50)                                   #area under curve/resistance gives charge
     wh(charge,writename)

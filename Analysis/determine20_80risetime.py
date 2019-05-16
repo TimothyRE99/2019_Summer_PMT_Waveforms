@@ -22,5 +22,5 @@ for i in range(Nloops):
     index_20 = int(index20[0])
     index80 = [k for k, x in enumerate(check80) if x]
     index_80 = int(index80[0])
-    rise_time = (t[index_80] - t[index_20])                         #rise time is time at 80% - time at 10%
+    rise_time = str(t[index_80] - t[index_20])                      #rise time is time at 80% - time at 10%
     wh(rise_time,writename)

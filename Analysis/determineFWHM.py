@@ -20,5 +20,5 @@ for i in range(Nloops):
     index = [k for k, x in enumerate(check) if x]
     index_first = int(index[0])
     index_last = int(index[len(index)-1])
-    FWHM = (t[index_last] - t[index_first])        #FWHM is time at falling 50% - time at rising 50%
+    FWHM = str(t[index_last] - t[index_first])          #FWHM is time at falling 50% - time at rising 50%
     wh(FWHM,writename)
