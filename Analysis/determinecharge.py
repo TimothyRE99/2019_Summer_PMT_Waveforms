@@ -1,0 +1,25 @@
+#Determining charge of waveforms
+
+#import necessary
+import numpy as np
+from readwaveform import read_waveform as rw
+from writehistogram import write_histogram as wh
+import os
+
+#Setting variables
+Nloops = len(os.listdir('G:/data/watchman/20190514_watchman_spe/d1/d1_baseline_shifted'))
+numhead = 5
+writename = 'G:/data/watchman/20190514_watchman_spe/d1/d1_histograms/charge.txt'
+
+#determining charge
+for i in range(Nloops):
+    charge = 0
+    filename = 'G:/data/watchman/20190514_watchman_spe/d1/d1_baseline_shifted/D1--waveforms--%05d.txt' % i
+    (t,y,header) = rw(filename,numhead)
+    y_norm = y/min(y[370:1370])
+    check = y_norm >= 0.1
+    index = [k for k, x in enumerate(check) if x]
+    for i in len(index):
+        area += ((t[i+1]-t[i]) * y[i])
+    charge = area/50
+    wh(charge,writename)
