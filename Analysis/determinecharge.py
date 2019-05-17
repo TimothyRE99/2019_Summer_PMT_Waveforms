@@ -9,7 +9,7 @@ import os
 #Setting variables
 Nloops = len(os.listdir('G:/data/watchman/20190516_watchman_spe/d1/d1_baseline_shifted'))
 numhead = 5
-writename = 'G:/data/watchman/20190516_watchman_spe/d1/d1_histograms/charge.txt'
+writename = 'G:/data/watchman/20190516_watchman_spe/d1/d1_histograms/charge.csv'
 
 #determining charge
 for i in range(Nloops):

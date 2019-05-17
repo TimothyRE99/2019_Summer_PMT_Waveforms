@@ -9,7 +9,7 @@ import os
 #Setting variables
 Nloops = len(os.listdir('G:/data/watchman/20190516_watchman_spe/d1/d1_baseline_shifted'))
 numhead = 5
-writename = 'G:/data/watchman/20190516_watchman_spe/d1/d1_histograms/20_80_fall_time.txt'
+writename = 'G:/data/watchman/20190516_watchman_spe/d1/d1_histograms/20_80_fall_time.csv'
 
 #determine fall times
 for i in range(Nloops):

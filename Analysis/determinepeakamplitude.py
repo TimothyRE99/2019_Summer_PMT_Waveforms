@@ -9,7 +9,7 @@ from writehistogram import write_histogram as wh
 #define constants
 Nloops = len(os.listdir('G:/data/watchman/20190516_watchman_spe/d1/d1_baseline_shifted'))
 numhead = 5
-writename = 'G:/data/watchman/20190516_watchman_spe/d1/d1_histograms/peak_amplitude.txt'
+writename = 'G:/data/watchman/20190516_watchman_spe/d1/d1_histograms/peak_amplitude.csv'
 
 #peak amplitude acquisition
 for i in range(Nloops):
