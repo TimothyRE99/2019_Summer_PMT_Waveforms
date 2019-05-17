@@ -16,7 +16,7 @@ def read_histogram(filename, x_label, title, savename):
     plt.ylabel("count")                                     #set y-axis label
     plt.title(title)                                        #set title
     plt.show()                                              #show plot
-    fig.savefig('C:/Users/Timothy/Desktop/'+savename+'_hist.png',dpi = 300)
+    fig.savefig(''+savename+'_hist.png',dpi = 300)
 
 #For testing purposes
 if __name__ == '__main__':

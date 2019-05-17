@@ -4,12 +4,13 @@
 import numpy as np
 from readwaveform import read_waveform as rw
 from writehistogram import write_histogram as wh
+from readhistogram import read_histogram as rh
 import os
 
 #Setting variables
 Nloops = len(os.listdir('G:/data/watchman/20190516_watchman_spe/d1/d1_baseline_shifted'))
 numhead = 5
-writename = 'G:/data/watchman/20190516_watchman_spe/d1/d1_histograms/20_80_fall_time.csv'
+writename = 'G:/data/watchman/20190516_watchman_spe/d1/d1_histograms/20_80_fall_time.txt'
 
 #determine fall times
 for i in range(Nloops):
@@ -24,3 +25,6 @@ for i in range(Nloops):
     index_80 = int(index80[len(index80)-1])
     fall_time = str(t[index_20] - t[index_80])                      #fall time is time at 20% - time at 80%
     wh(fall_time,writename)
+
+#create histogram from saved file
+rh(writename,"Seconds","Histogram of 20-80 Fall Times","20_80_Fall")

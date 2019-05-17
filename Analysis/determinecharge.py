@@ -4,12 +4,13 @@
 import numpy as np
 from readwaveform import read_waveform as rw
 from writehistogram import write_histogram as wh
+from readhistogram import read_histogram as rh
 import os
 
 #Setting variables
 Nloops = len(os.listdir('G:/data/watchman/20190516_watchman_spe/d1/d1_baseline_shifted'))
 numhead = 5
-writename = 'G:/data/watchman/20190516_watchman_spe/d1/d1_histograms/charge.csv'
+writename = 'G:/data/watchman/20190516_watchman_spe/d1/d1_histograms/charge.txt'
 
 #determining charge
 for i in range(Nloops):
@@ -23,3 +24,6 @@ for i in range(Nloops):
         area += ((t[i+1]-t[i]) * y[i])                      #determining area under curve
     charge = str(area/50)                                   #area under curve/resistance gives charge
     wh(charge,writename)
+
+#create histogram from saved file
+rh(writename,"Volts","Histogram of Charges","Charge")

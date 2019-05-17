@@ -4,12 +4,13 @@
 import numpy as np
 from readwaveform import read_waveform as rw
 from writehistogram import write_histogram as wh
+from readhistogram import read_histogram as rh
 import os
 
 #Setting variables
 Nloops = len(os.listdir('G:/data/watchman/20190516_watchman_spe/d1/d1_baseline_shifted'))
 numhead = 5
-writename = 'G:/data/watchman/20190516_watchman_spe/d1/d1_histograms/FWHM.csv'
+writename = 'G:/data/watchman/20190516_watchman_spe/d1/d1_histograms/FWHM.txt'
 
 #determine rise times
 for i in range(Nloops):
@@ -22,3 +23,6 @@ for i in range(Nloops):
     index_last = int(index[len(index)-1])
     FWHM = str(t[index_last] - t[index_first])          #FWHM is time at falling 50% - time at rising 50%
     wh(FWHM,writename)
+
+#create histogram from saved file
+rh(writename,"Seconds","Histogram of Full Width Half Maximums","FWHM")
