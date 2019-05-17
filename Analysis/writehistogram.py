@@ -10,7 +10,7 @@ def write_histogram(value,filename):
     if os.stat(filename).st_size == 0:
         histogram.write(value)
     else:
-        histogram.write(","+value)
+        histogram.write(",\n"+value)
     histogram.close
     return
 
