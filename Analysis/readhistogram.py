@@ -1,20 +1,22 @@
 #reads a histogram csv and plots it
 
 #import necessary
-import csv
 import numpy as np
 import matplotlib.pyplot as plt
 
 #Read and display the data
 def read_histogram(filename, x_label, title):
-    with open(filename, 'r') as my_file:                    #gather data from csv into list
-        reader = csv.reader(my_file, delimiter = ',')
-        histo = list(reader)
-    plt.hist(histo, bins=50)                                #set histogram to divide contents into 50 bins
+    histo = np.array([])
+    fin = open(filename,'r')
+    for line in fin:
+        histo = np.append(histo, float(line.split(',')[0]))
+    fig = plt.figure(figsize=(6,4))
+    plt.hist(histo, bins=100)                               #set histogram to divide contents into 50 bins
     plt.xlabel(x_label)                                     #set x-axis label
     plt.ylabel("count")                                     #set y-axis label
     plt.title(title)                                        #set title
     plt.show()                                              #show plot
+    fig.savefig('C:/Users/Timothy/Desktop/'+x_label+'_hist.png',dpi = 300)
 
 #For testing purposes
 if __name__ == '__main__':
