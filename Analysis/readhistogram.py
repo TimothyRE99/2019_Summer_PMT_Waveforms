@@ -5,7 +5,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 #Read and display the data
-def read_histogram(filename, x_label, title):
+def read_histogram(filename, x_label, title, savename):
     histo = np.array([])
     fin = open(filename,'r')
     for line in fin:
@@ -16,7 +16,7 @@ def read_histogram(filename, x_label, title):
     plt.ylabel("count")                                     #set y-axis label
     plt.title(title)                                        #set title
     plt.show()                                              #show plot
-    fig.savefig('C:/Users/Timothy/Desktop/'+x_label+'_hist.png',dpi = 300)
+    fig.savefig('C:/Users/Timothy/Desktop/'+savename+'_hist.png',dpi = 300)
 
 #For testing purposes
 if __name__ == '__main__':
@@ -26,4 +26,4 @@ if __name__ == '__main__':
     parser.add_argument("--title",type=str,help="title of histogram",default='title')
     parser.add_argument("--filename",type=str,help="filename",default='C:/Users/Timothy/Desktop/Summer Work/Reference/signal_chain_studies/d1/rise_time.txt')
     args = parser.parse_args()
-    read_histogram(args.filename,args.x_label,args.title)
+    read_histogram(args.filename,args.x_label,args.title,"Test")
