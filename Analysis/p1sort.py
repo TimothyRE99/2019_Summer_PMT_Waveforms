@@ -35,39 +35,40 @@ def p1_sort(filenum,data_date,lowpass,numhead,numtaps):
         y_check = y_peaks <= -0.0017                                #Checks which peaks are below -.0017V
         y_check_sum = sum(y_check)                                  #Determines number of peaks below -.0017V
 
-        if len(peaks) == 1:                                         #Checking if only 1 peak exists
-            if min(y2[370:1370]) < -0.0015:                         #Checking if peak is below -.0015V in range 370 to 1370
-                write_waveform(t2, y2, spe_wasname, header)
-                print(len(os.listdir('g:/data/watchman/'+data_date+'_watchman_spe/d1/d1_raw/')))
-        else:
-            if y_check_sum >= 2:                                    #Triggers if # of peaks less than -.0017V is >= 2
-                if min(y2[370:1370]) < -0.0015:                     #Shows plot if min is less than -0.0015V in range 370 to 1370
-                    plt.figure()
-                    plt.plot(t,v,'b')
-                    plt.plot(t2,y2,'r',linewidth=2.5)
-                    plt.plot(t_peaks,y_peaks,'x',color='cyan')
-                    plt.grid(True)
-                    print('Displaying file #%05d' % filenum)
-                    plt.show(block = False)
-                    plt.pause(5)
-                    plt.close()
+        if len(peaks) != 0:                                         #Making sure there is a peak
+            if len(peaks) == 1:                                     #Checking if only 1 peak exists
+                if min(y2[370:1370]) < -0.0015:                     #Checking if peak is below -.0015V in range 370 to 1370
+                    write_waveform(t2, y2, spe_wasname, header)
+                    print(len(os.listdir('g:/data/watchman/'+data_date+'_watchman_spe/d1/d1_raw/')))
+            else:
+                if y_check_sum >= 2:                                #Triggers if # of peaks less than -.0017V is >= 2
+                    if min(y2[370:1370]) < -0.0015:                 #Shows plot if min is less than -0.0015V in range 370 to 1370
+                        plt.figure()
+                        plt.plot(t,v,'b')
+                        plt.plot(t2,y2,'r',linewidth=2.5)
+                        plt.plot(t_peaks,y_peaks,'x',color='cyan')
+                        plt.grid(True)
+                        print('Displaying file #%05d' % filenum)
+                        plt.show(block = False)
+                        plt.pause(5)
+                        plt.close()
 
-                    spe_check = 'pre-loop initialization'
-                    while spe_check != 'y' and spe_check != 'u' and spe_check != 'n':
-                        spe_check = input('Is there a single visible SPE? "y" or "n" or "u"\n')
-                    #writing data to proper folder
-                    if spe_check == 'y':
+                        spe_check = 'pre-loop initialization'
+                        while spe_check != 'y' and spe_check != 'u' and spe_check != 'n':
+                            spe_check = input('Is there a single visible SPE? "y" or "n" or "u"\n')
+                        #writing data to proper folder
+                        if spe_check == 'y':
+                            write_waveform(t2,y2,spe_wasname,header)
+                        elif spe_check == 'n':
+                            write_waveform(t2,y2,spe_not_there,header)
+                        elif spe_check == 'u':
+                            write_waveform(t2,y2,spe_unsure,header)
+                        print('File #%05d: Done' % filenum)
+                        print(len(os.listdir('g:/data/watchman/'+data_date+'_watchman_spe/d1/d1_raw/')))
+                else:                                               #Triggers if less than 2 peaks below -.0017V
+                    if min(y2[370:1370]) < -0.0015:                 #Checking if peak below -.0015V in range 370 to 1370
                         write_waveform(t2,y2,spe_wasname,header)
-                    elif spe_check == 'n':
-                        write_waveform(t2,y2,spe_not_there,header)
-                    elif spe_check == 'u':
-                        write_waveform(t2,y2,spe_unsure,header)
-                    print('File #%05d: Done' % filenum)
-                    print(len(os.listdir('g:/data/watchman/'+data_date+'_watchman_spe/d1/d1_raw/')))
-            else:                                                   #Triggers if less than 2 peaks below -.0017V
-                if min(y2[370:1370]) < -0.0015:                     #Checking if peak below -.0015V in range 370 to 1370
-                    write_waveform(t2,y2,spe_wasname,header)
-                    print(len(os.listdir('g:/data/watchman/'+data_date+'_watchman_spe/d1/d1_raw/')))
+                        print(len(os.listdir('g:/data/watchman/'+data_date+'_watchman_spe/d1/d1_raw/')))
     return
 
 if __name__ == '__main__':
