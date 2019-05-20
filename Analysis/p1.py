@@ -8,22 +8,22 @@ import time
 import os
 from p1sort import p1_sort
 
-#signal parameters (Unsure why needed, saving for potential future use)
-show_plot = False
-N = 4002                #signal window size
-fsps = 20000000000      #hz, samples/s
-NLoops = 100000          #number of files (This one is needed for p1_sort)
-vthr = -0.00025
-nhdr = 5                #size of header to ignore
+def p1(NLoops, data_date, numhead, fsps, fc, numtaps, j):
+    wc = 2.*np.pi*fc/fsps   #discrete radial frequency
+    lowpass = signal.firwin(numtaps, cutoff = wc/np.pi, window = 'blackman')    #blackman windowed lowpass filter
+    for i in range(j, NLoops):
+        p1_sort(i,data_date,lowpass,numhead,numtaps)          #running p1_sort function to sort files
 
-#parameters for the filter (Also unsure why needed)
-fc = 250000000          #hz, filter cutoff frequency
-wc = 2.*np.pi*fc/fsps   #discrete radial frequency
-print('wc',wc)
-numtaps = 51            #filter order + 1, chosen for balance of good performance and small transient size
-lowpass = signal.firwin(numtaps, cutoff = wc/np.pi, window = 'blackman')    #blackman windowed lowpass filter
+if __name__ == '__main__':
+    import argparse
+    parser = argparse.ArgumentParser(prog='p1 sort', description='Sorting through raw data to find good SPEs')
+    parser.add_argument('--NLoops',type = int,help = 'number of files to circle through',default = 100000)
+    parser.add_argument('--data_date',type = str,help = 'date when data was gathered, YYYYMMDD', default = '20190516')
+    parser.add_argument('--numhead',type=int,help='number of lines to ignore for header',default = 5)
+    parser.add_argument('--fsps',type=int,help='hz, samples/s',default = 20000000000)
+    parser.add_argument('--fc',type=int,help='hz, cutoff frequency',default = 250000000)
+    parser.add_argument('--numtaps',type=int,help='length of filter',default = 51)
+    parser.add_argument('--j',type=int,help='starting file number',default=0)
+    args = parser.parse_args()
 
-
-j = 0
-for i in range(j, NLoops):
-    p1_sort(i)          #running p1_sort function to sort files
+    p1(args.NLoops, args.data_date, args.numhead, args.fsps, args.fc, args.numtaps, args.j)
