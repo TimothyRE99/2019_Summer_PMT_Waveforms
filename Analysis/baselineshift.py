@@ -19,7 +19,6 @@ def baselineshift(data_date,numhead):
 
 if __name__ == '__main__':
     import argparse
-        import argparse
     parser = argparse.ArgumentParser(prog='baselineshift', description='Removing baseline from data')
     parser.add_argument('--data_date',type = str,help = 'date when data was gathered, YYYYMMDD', default = '20190516')
     parser.add_argument('--numhead',type=int,help='number of lines to ignore for header',default = 5)
