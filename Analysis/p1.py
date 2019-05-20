@@ -16,7 +16,7 @@ def p1(NLoops, data_date, numhead, fsps, fc, numtaps, j):
 
 if __name__ == '__main__':
     import argparse
-    parser = argparse.ArgumentParser(prog='p1 sort', description='Sorting through raw data to find good SPEs')
+    parser = argparse.ArgumentParser(prog='p1', description='Calculating lowpass filter and calling p1_sort')
     parser.add_argument('--NLoops',type = int,help = 'number of files to circle through',default = 100000)
     parser.add_argument('--data_date',type = str,help = 'date when data was gathered, YYYYMMDD', default = '20190516')
     parser.add_argument('--numhead',type=int,help='number of lines to ignore for header',default = 5)
