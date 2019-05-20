@@ -5,7 +5,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 #Read and display the data
-def read_histogram(filename, x_label, title, savename):
+def read_histogram(filename, x_label, title, savename, data_date):
     histo = np.array([])
     fin = open(filename,'r')
     for line in fin:
@@ -16,7 +16,7 @@ def read_histogram(filename, x_label, title, savename):
     plt.ylabel("count")                                     #set y-axis label
     plt.title(title)                                        #set title
     plt.show()                                              #show plot
-    fig.savefig('G:/data/watchman/20190516_watchman_spe/d1/d1_histograms/'+savename+'_hist.png',dpi = 300)
+    fig.savefig('G:/data/watchman/'+data_date+'_watchman_spe/d1/d1_histograms/'+savename+'_hist.png',dpi = 300)
 
 #For testing purposes
 if __name__ == '__main__':
@@ -25,5 +25,6 @@ if __name__ == '__main__':
     parser.add_argument("--x_label",type=str,help='label of x axis',default='x-axis')
     parser.add_argument("--title",type=str,help="title of histogram",default='title')
     parser.add_argument("--filename",type=str,help="filename",default='C:/Users/Timothy/Desktop/Summer Work/Reference/signal_chain_studies/d1/rise_time.txt')
+    parser.add_argument('--data_date',type = str,help = 'date when data was gathered, YYYYMMDD', default = '20190516')
     args = parser.parse_args()
-    read_histogram(args.filename,args.x_label,args.title,"Test")
+    read_histogram(args.filename,args.x_label,args.title,"Test",args.data_date)

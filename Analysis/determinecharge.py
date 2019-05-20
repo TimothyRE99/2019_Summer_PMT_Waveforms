@@ -14,7 +14,7 @@ def determine(data_date,numhead):
     for i in range(Nloops):
         area = 0
         filename = 'G:/data/watchman/'+data_date+'_watchman_spe/d1/d1_baseline_shifted/D1--waveforms--%05d.txt' % i
-        (t,y,header) = rw(filename,numhead)
+        (t,y,_) = rw(filename,numhead)
         y_norm = y/min(y[370:1370])
         check = y_norm >= 0.1                                   #setting curve to be from 10% rising to 10% falling
         index = [k for k, x in enumerate(check) if x]
@@ -23,7 +23,7 @@ def determine(data_date,numhead):
         charge = str(area/50)                                   #area under curve/resistance gives charge
         wh(charge,writename)
     #create histogram from saved file
-    rh(writename,"Volts","Histogram of Charges","Charge")
+    rh(writename,"Volts","Histogram of Charges","Charge",data_date)
 
 if __name__ == '__main__':
     import argparse
