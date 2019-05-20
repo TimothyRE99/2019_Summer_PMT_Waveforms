@@ -8,11 +8,11 @@ import time
 import os
 from p1sort import p1_sort
 
-def p1(NLoops, data_date, numhead, fsps, fc, numtaps, j):
+def p1(NLoops, data_date, numhead, fsps, fc, numtaps, j, threshold, baseline):
     wc = 2.*np.pi*fc/fsps   #discrete radial frequency
     lowpass = signal.firwin(numtaps, cutoff = wc/np.pi, window = 'blackman')    #blackman windowed lowpass filter
     for i in range(j, NLoops):
-        p1_sort(i,data_date,lowpass,numhead,numtaps)          #running p1_sort function to sort files
+        p1_sort(i,data_date,lowpass,numhead,numtaps,threshold,baseline)          #running p1_sort function to sort files
 
 if __name__ == '__main__':
     import argparse
@@ -24,6 +24,8 @@ if __name__ == '__main__':
     parser.add_argument('--fc',type=int,help='hz, cutoff frequency',default = 250000000)
     parser.add_argument('--numtaps',type=int,help='length of filter',default = 51)
     parser.add_argument('--j',type=int,help='starting file number',default=0)
+    parser.add_argument('--threshold',type = int,help='voltage threshold',default=-0.0015)
+    parser.add_argument('--baseline',type = int,help='baseline voltage',default=0)
     args = parser.parse_args()
 
-    p1(args.NLoops, args.data_date, args.numhead, args.fsps, args.fc, args.numtaps, args.j)
+    p1(args.NLoops, args.data_date, args.numhead, args.fsps, args.fc, args.numtaps, args.j, args.threshold, args.baseline)

@@ -10,7 +10,7 @@ from scipy import signal
 import os
 
 #Sort the data
-def p1_sort(filenum,data_date,lowpass,numhead,numtaps):
+def p1_sort(filenum,data_date,lowpass,numhead,numtaps,threshold,baseline):
     filename = 'g:/data/watchman/'+data_date+'_watchman_spe/C2--waveforms--%05d.txt' % filenum
     spe_wasname = 'g:/data/watchman/'+data_date+'_watchman_spe/d1/d1_raw/D1--waveforms--%05d.txt' % filenum
     spe_not_there = 'g:/data/watchman/'+data_date+'_watchman_spe/d1/not_spe/D1--waveforms--%05d.txt' % filenum
@@ -29,17 +29,18 @@ def p1_sort(filenum,data_date,lowpass,numhead,numtaps):
         t2 = t[numtaps:len(y)-1]
 
         y_flip = -1*y2
-        peaks, _ = signal.find_peaks(y_flip, 0.0015, distance = 350)
+        height = -1*(baseline+threshold)
+        peaks, _ = signal.find_peaks(y_flip, height, distance = 350)
         y_peaks = y2[peaks]
         t_peaks = t2[peaks]
 
         if len(peaks) != 0:                                         #Making sure there is a peak
             if len(peaks) == 1:                                     #Checking if only 1 peak exists
-                if min(y2[370:1370]) < -0.0015:                     #Checking if peak is below -.0015V in range 370 to 1370
+                if min(y2[370:1370]) < baseline+threshold:                     #Checking if peak is below -.0015V in range 370 to 1370
                     write_waveform(t2, y2, spe_wasname, header)
                     print(len(os.listdir('g:/data/watchman/'+data_date+'_watchman_spe/d1/d1_raw/')))
             else:
-                if min(y2[370:1370]) < -0.0015:                 #Shows plot if min is less than -0.0015V in range 370 to 1370
+                if min(y2[370:1370]) < baseline+threshold:                 #Shows plot if min is less than -0.0015V in range 370 to 1370
                     plt.figure()
                     plt.plot(t,v,'b')
                     plt.plot(t2,y2,'r',linewidth=2.5)
@@ -72,6 +73,8 @@ if __name__ == '__main__':
     parser.add_argument('--data_date',type = str,help = 'date when data was gathered, YYYYMMDD', default = '20190516')
     parser.add_argument('--numhead',type = int,help='number of lines to ignore for header',default = 5)
     parser.add_argument('--numtaps',type = int,help='length of filter',default=51)
+    parser.add_argument('--threshold',type = int,help='voltage threshold',default=-0.0015)
+    parser.add_argument('--baseline',type = int,help='baseline voltage, must be <= 0',default=0)
     args = parser.parse_args()
 
-    p1_sort(args.filenum, args.data_date, lowpass_default, args.numhead, args.numtaps)
+    p1_sort(args.filenum, args.data_date, lowpass_default, args.numhead, args.numtaps, args.threshold, args.baseline)
