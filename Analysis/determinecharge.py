@@ -23,7 +23,7 @@ def determine(data_date,numhead):
         charge = str(area/50)                                   #area under curve/resistance gives charge
         wh(charge,writename)
     #create histogram from saved file
-    rh(writename,"Volts","Histogram of Charges","Charge",data_date)
+    rh(writename,"Coulombs","Histogram of Charges","Charge",data_date)
 
 if __name__ == '__main__':
     import argparse
