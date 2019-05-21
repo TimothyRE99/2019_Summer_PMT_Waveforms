@@ -4,7 +4,6 @@ import matplotlib.pyplot as plt
 from scipy import signal
 from readwaveform import read_waveform as rw
 from writewaveform import write_waveform
-import time
 import os
 from p1sort import p1_sort
 
