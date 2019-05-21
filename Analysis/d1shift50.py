@@ -25,6 +25,7 @@ def center_check(Nloops,numhead,data_date):
 def d1shift50(data_date,numhead):
     Nloops = len(os.listdir('G:/data/watchman/'+data_date+'_watchman_spe/d1/d1_baseline_shifted'))
     center_index = center_check(Nloops,numhead,data_date)
+    print(center_index)
     for i in range(Nloops):
         filename = 'G:/data/watchman/'+data_date+'_watchman_spe/d1/d1_baseline_shifted/D1--waveforms--%05d.txt' % i
         writename = 'G:/data/watchman/'+data_date+'_watchman_spe/d1/d1_50centered/D1--waveforms--%05d.txt' % i
