@@ -21,7 +21,7 @@ def waveform_viewer(data_date,subfolder_name,numhead):
 
 if __name__ == '__main__':
     import argparse
-    parser = argparse.ArgumentParser(prog='determine10_90falltime', description='determining and writing histogram for 10-90 fall times')
+    parser = argparse.ArgumentParser(prog='waveformviewer', description='viewing all waveforms in a directory')
     parser.add_argument('--data_date',type = str,help = 'date when data was gathered, YYYYMMDD', default = '20190516')
     parser.add_argument('--subfolder_name',type = str,help = 'subfolder to cycle through',default = 'unsure_if_spe')
     parser.add_argument('--numhead',type=int,help='number of lines to ignore for header',default = 5)
