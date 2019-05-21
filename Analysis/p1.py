@@ -1,10 +1,6 @@
 #import necessary
 import numpy as np
-import matplotlib.pyplot as plt
 from scipy import signal
-from readwaveform import read_waveform as rw
-from writewaveform import write_waveform
-import os
 from p1sort import p1_sort
 
 def p1(NLoops, data_date, numhead, fsps, fc, numtaps, j, threshold, baseline):
