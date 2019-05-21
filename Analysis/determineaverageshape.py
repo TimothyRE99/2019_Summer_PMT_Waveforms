@@ -12,6 +12,7 @@ def determine_average_shape(data_date,numhead):
     Nloops = len(os.listdir('G:/data/watchman/'+data_date+'_watchman_spe/d1/d1_normalized'))
     writename = 'G:/data/watchman/'+data_date+'_watchman_spe/d1/d1_histograms/average_shape.txt'
     for i in range(Nloops):
+        print(i)
         filename = 'G:/data/watchman/'+data_date+'_watchman_spe/d1/d1_normalized/D1--waveforms--%05d.txt' % i
         (t,y,_) = rw(filename,numhead)
         if i == 0:
