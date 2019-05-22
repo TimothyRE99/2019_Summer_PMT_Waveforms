@@ -11,7 +11,7 @@ def read_histogram(filename, x_label, title, savename, data_date, histo_mean, hi
     fin = open(filename,'r')
     for line in fin:
         histo = np.append(histo, float(line.split(',')[0]))
-    x_axis = np.linspace(histo_mean - 3*histo_std, hist_mean + 3*histo_std, 1000)
+    x_axis = np.linspace(histo_mean - 3*histo_std, histo_mean + 3*histo_std, 1000)
     fig = plt.figure(figsize=(6,4))
     plt.plot(x_axis, norm.pdf(x_axis,histo_mean,histo_std))
     plt.hist(histo, bins=250)                               #set histogram to divide contents into 50 bins
