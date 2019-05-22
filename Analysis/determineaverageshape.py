@@ -16,16 +16,13 @@ def determine_average_shape(data_date,numhead):
         filename = 'G:/data/watchman/'+data_date+'_watchman_spe/d1/d1_normalized/D1--waveforms--%05d.txt' % i
         (t,y,_) = rw(filename,numhead)
         if i == 0:
-            tsum = t
             ysum = y
         else:
-            tsum = np.add(tsum,t)
             ysum = np.add(ysum,y)
-    tfinal = np.divide(tsum,(Nloops+1))
     yfinal = np.divide(ysum,(Nloops+1))
     header_name = "Average Waveform Shape"
-    write_waveform(tfinal,yfinal,writename,header_name)
-    return (tfinal,yfinal)
+    write_waveform(t,yfinal,writename,header_name)
+    return (t,yfinal)
 
 #Generate plot
 def generate_average_shape_plot(data_date,numhead):
