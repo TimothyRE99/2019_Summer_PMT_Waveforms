@@ -9,7 +9,7 @@ def gauss_histogram(filename):
     fin = open(filename,'r')                        #opening appropriate histogram to read
     for line in fin:                                #cycling through lines of histogram file
         histo = np.append(histo, float(line.split(',')[0]))             #adding lines as floats to histo array
-    np.sort(histo)                                  #sorting histo array from least to greatest
+    histo = np.sort(histo)                                  #sorting histo array from least to greatest
     #splitting off array into upper and lower halves
     histo_low = np.split(histo,2)[0]
     histo_high = np.split(histo,2)[1]
