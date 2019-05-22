@@ -18,7 +18,7 @@ def center_check(Nloops,numhead,data_date):
         index = [k for k, x in enumerate(check) if x]           #code to enumerate index values
         index_50 = 0
         k = 0
-        while index_50 < 370:
+        while index_50 < 370:                                   #making sure we don't cut off too soon
             index_50 = int(index[k])                            #converting to integer
             k += 1
         center_list = np.append(center_list,index_50)           #appending index location to list of index locations
@@ -44,8 +44,8 @@ def d1shift50(data_date,numhead):
         index = [k for k, x in enumerate(check) if x]
         index_50 = 0
         k=0
-        while index_50 < 370:
-            index_50 = int(index[k])
+        while index_50 < 370:                                       #making sure we don't cut off too soon
+            index_50 = int(index[k])                                #converting to int
             k+=1
         t_50 = t[index_50]
         t_new = (t - t_50)                                          #shifting t_50 to t=0s
