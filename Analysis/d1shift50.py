@@ -11,6 +11,7 @@ def center_check(Nloops,numhead,data_date):
     center_list = np.array([])
     too_small_list = np.array([])
     for i in range(Nloops):
+        print(i)
         filename = 'G:/data/watchman/'+data_date+'_watchman_spe/d1/d1_baseline_shifted/D1--waveforms--%05d.txt' % i
         (_,y,_) = rw(filename,numhead)
         y_norm = y/min(y[370:1370])                             #normalizing to make calculations easier
