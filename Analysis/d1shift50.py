@@ -15,7 +15,11 @@ def center_check(Nloops,numhead,data_date):
         y_norm = y/min(y[370:1370])                             #normalizing to make calculations easier
         check = y_norm >= 0.5                                   #50% crossing criteria
         index = [k for k, x in enumerate(check) if x]           #code to enumerate index values
-        index_50 = int(index[0])                                #converting to integer
+        index_50 = 0
+        k = 0
+        while index_50 < 370:
+            index_50 = int(index[k])                            #converting to integer
+            k += 1
         center_list = np.append(center_list,index_50)           #appending index location to list of index locations
     center_list = np.sort(center_list)                          #sort center_list array
     max_index = int(round(center_list[(len(center_list)-1)]))   #determine maximum index
@@ -37,7 +41,11 @@ def d1shift50(data_date,numhead):
         y_norm = y/min(y[370:1370])
         check = y_norm >= 0.5
         index = [k for k, x in enumerate(check) if x]
-        index_50 = int(index[0])
+        index_50 = 0
+        k=0
+        while index_50 < 370:
+            index_50 = int(index[k])
+            k+=1
         t_50 = t[index_50]
         t_new = (t - t_50)                                          #shifting t_50 to t=0s
         #rolling so 50 rising point is at center index
