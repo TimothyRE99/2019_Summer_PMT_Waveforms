@@ -20,7 +20,7 @@ def gauss_histogram(filename):
     #calculating outlier thresholds
     out_low = (medi_low - 1.5*iqr)
     out_high = (medi_low + 1.5*iqr)
-    histo_out_remove = histo[np.where(out_low <= histo <= out_high)]    #creating new array with outliers removed
+    histo_out_remove = histo[np.where((out_low <= histo) & (histo <= out_high))]    #creating new array with outliers removed
     print(histo_out_remove)
 
 if __name__ == '__main__':
