@@ -6,6 +6,7 @@ import os
 from readwaveform import read_waveform as rw
 from writehistogram import write_histogram as wh
 from readhistogram import read_histogram as rh
+from gausshistogram import gauss_histogram as gh
 
 def determine(data_date,numhead):
     Nloops = len(os.listdir('G:/data/watchman/'+data_date+'_watchman_spe/d1/d1_baseline_shifted'))
@@ -18,7 +19,8 @@ def determine(data_date,numhead):
         value = str((-1*y[index_min])[0])                               #flipping peak to positive
         wh(value,writename)
     #create histogram from saved file
-    rh(writename,"Volts","Histogram of Peak Amplitudes","Peak_Amplitude",data_date)
+    (histo_mean,histo_std) = gh(filename)
+    rh(writename,"Volts","Histogram of Peak Amplitudes","Peak_Amplitude",data_date,histo_mean,histo_std)
 
 if __name__ == '__main__':
     import argparse

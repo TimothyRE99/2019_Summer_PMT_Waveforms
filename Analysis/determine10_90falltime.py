@@ -5,6 +5,7 @@ import numpy as np
 from readwaveform import read_waveform as rw
 from writehistogram import write_histogram as wh
 from readhistogram import read_histogram as rh
+from gausshistogram import gauss_histogram as gh
 import os
 
 def determine(data_date,numhead):
@@ -24,7 +25,8 @@ def determine(data_date,numhead):
         fall_time = str(t[index_10] - t[index_90])                      #fall time is time at 10% - time at 90%
         wh(fall_time,writename)
     #create histogram from saved file
-    rh(writename,"Seconds","Histogram of 10-90 Fall Times","10_90_Fall",data_date)
+    (histo_mean,histo_std) = gh(filename)
+    rh(writename,"Seconds","Histogram of 10-90 Fall Times","10_90_Fall",data_date,histo_mean,histo_std)
 
 if __name__ == '__main__':
     import argparse

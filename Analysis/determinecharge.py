@@ -5,6 +5,7 @@ import numpy as np
 from readwaveform import read_waveform as rw
 from writehistogram import write_histogram as wh
 from readhistogram import read_histogram as rh
+from gausshistogram import gauss_histogram as gh
 import os
 
 def determine(data_date,numhead):
@@ -23,7 +24,8 @@ def determine(data_date,numhead):
         charge = str(area/50)                                   #area under curve/resistance gives charge
         wh(charge,writename)
     #create histogram from saved file
-    rh(writename,"Coulombs","Histogram of Charges","Charge",data_date)
+    (histo_mean,histo_std) = gh(filename)
+    rh(writename,"Coulombs","Histogram of Charges","Charge",data_date,histo_mean,histo_std)
 
 if __name__ == '__main__':
     import argparse

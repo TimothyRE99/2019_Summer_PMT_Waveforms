@@ -5,6 +5,7 @@ import numpy as np
 from readwaveform import read_waveform as rw
 from writehistogram import write_histogram as wh
 from readhistogram import read_histogram as rh
+from gausshistogram import gauss_histogram as gh
 import os
 
 def determine(data_date,numhead):
@@ -22,7 +23,8 @@ def determine(data_date,numhead):
         FWHM = str(t[index_last] - t[index_first])          #FWHM is time at falling 50% - time at rising 50%
         wh(FWHM,writename)
     #create histogram from saved file
-    rh(writename,"Seconds","Histogram of Full Width Half Maximums","FWHM",data_date)
+    (histo_mean,histo_std) = gh(filename)
+    rh(writename,"Seconds","Histogram of Full Width Half Maximums","FWHM",data_date,histo_mean,histo_std)
 
 if __name__ == '__main__':
     import argparse
