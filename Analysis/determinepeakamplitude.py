@@ -20,7 +20,7 @@ def determine(data_date,numhead):
         value = str((-1*y[index_min])[0])                               #flipping peak to positive
         wh(value,writename)
     #create histogram from saved file
-    (histo_mean,histo_std) = gh(filename)
+    (histo_mean,histo_std) = gh(writename)
     rh(writename,"Volts","Histogram of Peak Amplitudes","Peak_Amplitude",data_date,histo_mean,histo_std)
 
 if __name__ == '__main__':

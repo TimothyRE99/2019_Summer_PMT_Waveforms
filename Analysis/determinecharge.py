@@ -25,7 +25,7 @@ def determine(data_date,numhead):
         charge = str(area/50)                                   #area under curve/resistance gives charge
         wh(charge,writename)
     #create histogram from saved file
-    (histo_mean,histo_std) = gh(filename)
+    (histo_mean,histo_std) = gh(writename)
     rh(writename,"Coulombs","Histogram of Charges","Charge",data_date,histo_mean,histo_std)
 
 if __name__ == '__main__':

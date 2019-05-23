@@ -26,7 +26,7 @@ def determine(data_date,numhead):
         fall_time = str(t[index_20] - t[index_80])                      #fall time is time at 20% - time at 80%
         wh(fall_time,writename)
     #create histogram from saved file
-    (histo_mean,histo_std) = gh(filename)
+    (histo_mean,histo_std) = gh(writename)
     rh(writename,"Seconds","Histogram of 20-80 Fall Times","20_80_Fall",data_date,histo_mean,histo_std)
 
 if __name__ == '__main__':

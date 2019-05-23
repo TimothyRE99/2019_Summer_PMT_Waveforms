@@ -24,7 +24,7 @@ def determine(data_date,numhead):
         FWHM = str(t[index_last] - t[index_first])          #FWHM is time at falling 50% - time at rising 50%
         wh(FWHM,writename)
     #create histogram from saved file
-    (histo_mean,histo_std) = gh(filename)
+    (histo_mean,histo_std) = gh(writename)
     rh(writename,"Seconds","Histogram of Full Width Half Maximums","FWHM",data_date,histo_mean,histo_std)
 
 if __name__ == '__main__':
