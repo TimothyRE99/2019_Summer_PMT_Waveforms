@@ -13,6 +13,7 @@ def determine(data_date,numhead):
     writename = 'G:/data/watchman/'+data_date+'_watchman_spe/d1/d1_histograms/peak_amplitude.txt'
     #peak amplitude acquisition
     for i in range(Nloops):
+        print(i)
         filename = 'G:/data/watchman/'+data_date+'_watchman_spe/d1/d1_50centered/D1--waveforms--%05d.txt' % i
         (_,y,_) = rw(filename,numhead)
         index_min = np.where(y == min(y[370:1370]))                     #determining index of peak

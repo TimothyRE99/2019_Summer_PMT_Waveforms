@@ -13,6 +13,7 @@ def determine(data_date,numhead):
     writename = 'G:/data/watchman/'+data_date+'_watchman_spe/d1/d1_histograms/20_80_fall_time.txt'
     #determine fall times
     for i in range(Nloops):
+        print(i)
         filename = 'G:/data/watchman/'+data_date+'_watchman_spe/d1/d1_baseline_shifted/D1--waveforms--%05d.txt' % i
         (t,y,_) = rw(filename,numhead)
         y_norm = y/min(y[370:1370])

@@ -13,6 +13,7 @@ def determine(data_date,numhead):
     writename = 'G:/data/watchman/'+data_date+'_watchman_spe/d1/d1_histograms/charge.txt'
     #determining charge
     for i in range(Nloops):
+        print(i)
         area = 0
         filename = 'G:/data/watchman/'+data_date+'_watchman_spe/d1/d1_baseline_shifted/D1--waveforms--%05d.txt' % i
         (t,y,_) = rw(filename,numhead)
