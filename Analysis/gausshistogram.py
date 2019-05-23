@@ -11,8 +11,8 @@ def gauss_histogram(filename):
         histo = np.append(histo, float(line.split(',')[0]))             #adding lines as floats to histo array
     histo = np.sort(histo)                                  #sorting histo array from least to greatest
     #splitting off array into upper and lower halves
-    histo_low = np.split(histo,2)[0]
-    histo_high = np.split(histo,2)[1]
+    histo_low = np.array_split(histo,2)[0]
+    histo_high = np.array_split(histo,2)[1]
     #determining median of each half (aka, 1st and 3rd quartiles)
     medi_low = np.median(histo_low)
     medi_high = np.median(histo_high)
