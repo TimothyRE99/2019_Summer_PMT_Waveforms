@@ -14,7 +14,7 @@ def read_histogram(filename, x_label, title, savename, data_date, histo_mean, hi
     x_axis = np.linspace(histo_mean - 4*histo_std, histo_mean + 4*histo_std, 1000)
     fig = plt.figure(figsize=(6,4))
     plt.plot(x_axis, norm.pdf(x_axis,histo_mean,histo_std), color = 'orange')
-    plt.hist(histo, bins=125, density=True)                               #set histogram to divide contents into 50 bins
+    plt.hist(histo, bins=300)                               #set histogram to divide contents into 50 bins
     plt.xlabel(x_label)                                     #set x-axis label
     plt.ylabel("count")                                     #set y-axis label
     plt.title(title+'\nGaussian Fit Values:\nMean = '+str(histo_mean)+' '+x_label+'\nStandard Deviation = '+str(histo_std)+' '+x_label) #set title
@@ -25,11 +25,11 @@ def read_histogram(filename, x_label, title, savename, data_date, histo_mean, hi
 if __name__ == '__main__':
     import argparse
     parser = argparse.ArgumentParser(prog="read histogram",description="read the histogram datafile.")
-    parser.add_argument("--x_label",type=str,help='label of x axis',default='x-axis')
-    parser.add_argument("--title",type=str,help="title of histogram",default='title')
-    parser.add_argument("--filename",type=str,help="filename",default='C:/Users/Timothy/Desktop/Summer Work/Reference/signal_chain_studies/d1/rise_time.txt')
+    parser.add_argument("--x_label",type=str,help='label of x axis',default='Volts')
+    parser.add_argument("--title",type=str,help="title of histogram",default='Histogram of Peak Amplitudes')
+    parser.add_argument("--filename",type=str,help="filename",default='G:/data/watchman/20190516_watchman_spe/d1/d1_histograms/peak_amplitude.txt')
     parser.add_argument('--data_date',type = str,help = 'date when data was gathered, YYYYMMDD', default = '20190516')
-    parser.add_argument('--histo_mean',type = float,help = 'mean of the histogram without outliers', default = 50.0)
-    parser.add_argument('--histo_std',type = float,help = 'standard deviation of the histogram without outliers', default = 5.0)
+    parser.add_argument('--histo_mean',type = float,help = 'mean of the histogram without outliers', default = 0.005929415296781179)
+    parser.add_argument('--histo_std',type = float,help = 'standard deviation of the histogram without outliers', default = 0.0016710917336072292)
     args = parser.parse_args()
     read_histogram(args.filename,args.x_label,args.title,"Test",args.data_date,args.histo_mean,args.histo_std)
