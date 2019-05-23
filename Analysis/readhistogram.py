@@ -17,7 +17,7 @@ def read_histogram(filename, x_label, title, savename, data_date, histo_mean, hi
     plt.hist(histo, bins=250, density=True)                               #set histogram to divide contents into 50 bins
     plt.xlabel(x_label)                                     #set x-axis label
     plt.ylabel("count")                                     #set y-axis label
-    plt.title(title)                                        #set title
+    plt.title(title+'\nGaussian Fit Values:\nMean = '+str(histo_mean)+' '+x_label+'\nStandard Deviation = '+str(histo_std)+' '+x_label) #set title
     plt.show()                                              #show plot
     fig.savefig('G:/data/watchman/'+data_date+'_watchman_spe/d1/d1_histograms/'+savename+'_hist.png',dpi = 300)
 
