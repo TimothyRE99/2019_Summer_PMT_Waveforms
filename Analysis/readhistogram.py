@@ -14,7 +14,7 @@ def read_histogram(filename, x_label, title, savename, data_date, histo_mean, hi
     x_axis = np.linspace(histo_mean - 4*histo_std, histo_mean + 4*histo_std, 1000)
     fig = plt.figure(figsize=(6,4))
     plt.plot(x_axis, norm.pdf(x_axis,histo_mean,histo_std), color = 'orange')
-    plt.hist(histo, bins=300, range = (histo.min(),histo_mean + 6*histo_std), density = True)   #set histogram to divide contents into bins
+    plt.hist(histo, bins=75, range = (histo.min(),histo_mean + 6*histo_std), density = True)   #set histogram to divide contents into bins
     plt.xlabel(x_label)                                     #set x-axis label
     plt.ylabel("Density of Probability")                    #set y-axis label
     plt.title(title+'\nGaussian Fit Values:\nMean = '+str(histo_mean)+' '+x_label+'\nStandard Deviation = '+str(histo_std)+' '+x_label) #set title
@@ -25,11 +25,11 @@ def read_histogram(filename, x_label, title, savename, data_date, histo_mean, hi
 if __name__ == '__main__':
     import argparse
     parser = argparse.ArgumentParser(prog="read histogram",description="read the histogram datafile.")
-    parser.add_argument("--x_label",type=str,help='label of x axis',default='Coulombs')
-    parser.add_argument("--title",type=str,help="title of histogram",default='Histogram of Charges')
-    parser.add_argument("--filename",type=str,help="filename",default='G:/data/watchman/20190516_watchman_spe/d1/d1_histograms/charge.txt')
+    parser.add_argument("--x_label",type=str,help='label of x axis',default='Seconds')
+    parser.add_argument("--title",type=str,help="title of histogram",default='Histogram of 20-80 Rise Times')
+    parser.add_argument("--filename",type=str,help="filename",default='G:/data/watchman/20190516_watchman_spe/d1/d1_histograms/20_80_rise_time.txt')
     parser.add_argument('--data_date',type = str,help = 'date when data was gathered, YYYYMMDD', default = '20190516')
-    parser.add_argument('--histo_mean',type = float,help = 'mean of the histogram without outliers', default = -1.2586599703850984e-12)
-    parser.add_argument('--histo_std',type = float,help = 'standard deviation of the histogram without outliers', default = 2.739416142895365e-13)
+    parser.add_argument('--histo_mean',type = float,help = 'mean of the histogram without outliers', default = 2.3388931256128115e-09)
+    parser.add_argument('--histo_std',type = float,help = 'standard deviation of the histogram without outliers', default = 8.978200114877416e-11)
     args = parser.parse_args()
-    read_histogram(args.filename,args.x_label,args.title,"Charge",args.data_date,args.histo_mean,args.histo_std)
+    read_histogram(args.filename,args.x_label,args.title,"20_80_Rise",args.data_date,args.histo_mean,args.histo_std)
