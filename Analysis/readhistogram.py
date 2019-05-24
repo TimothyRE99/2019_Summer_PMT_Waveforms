@@ -20,7 +20,7 @@ def read_histogram(filename, x_label, title, savename, data_date, histo_mean, hi
     binscenters = np.array([0.5 * (bins_data[i] + bins_data[i+1]) for i in range(len(bins_data)-1)])
     b_guess = (len(histo) * binwidth)
     x_values = np.linspace(histo_mean - 6*histo_std, histo_mean+6*histo_std, 100000)
-    popt, _ = cf(fit_function,xdata = binscenters,ydata = histo_data, p0 = [b_guess,histo_mean,histo_std])
+    popt, _ = cf(fit_function,xdata = binscenters,ydata = histo_data, p0 = [b_guess,histo_mean,histo_std], maxfev = 10000)
     gauss_mean = '%s' % float('%.5g' % popt[1])
     gauss_std = '%s' % float('%.5g' % popt[2])
     fig = plt.figure(figsize=(6,4))
