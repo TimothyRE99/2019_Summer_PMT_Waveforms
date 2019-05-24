@@ -16,7 +16,7 @@ def determine(data_date,numhead):
         print(i)
         filename = 'G:/data/watchman/'+data_date+'_watchman_spe/d1/d1_50centered/D1--waveforms--%05d.txt' % i
         (_,y,_) = rw(filename,numhead)
-        index_min = np.where(y == min(y[370:1370]))                     #determining index of peak
+        index_min = np.where(y == min(y))                     #determining index of peak
         value = str((-1*y[index_min])[0])                               #flipping peak to positive
         wh(value,writename)
     #create histogram from saved file

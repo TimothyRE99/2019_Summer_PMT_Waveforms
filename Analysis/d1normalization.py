@@ -13,7 +13,7 @@ def d1normalization(data_date,numhead):
         filename = 'G:/data/watchman/'+data_date+'_watchman_spe/d1/d1_50centered/D1--waveforms--%05d.txt' % i
         writename = 'G:/data/watchman/'+data_date+'_watchman_spe/d1/d1_normalized/D1--waveforms--%05d.txt' % i
         (t,y,header) = rw(filename,numhead)
-        y_norm = y/min(y[370:1370])                                 #normalizing y to peak = 1
+        y_norm = y/min(y)                                 #normalizing y to peak = 1
         write_waveform(t,y_norm,writename,header)
 
 if __name__ == '__main__':

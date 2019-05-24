@@ -16,7 +16,7 @@ def determine(data_date,numhead):
         print(i)
         filename = 'G:/data/watchman/'+data_date+'_watchman_spe/d1/d1_baseline_shifted/D1--waveforms--%05d.txt' % i
         (t,y,_) = rw(filename,numhead)
-        y_norm = y/min(y[370:1370])
+        y_norm = y/min(y)
         check = y_norm <= .5                                #determining where 50% falling and rising are located
         check_peak = y_norm == 1
         index_peak = np.asarray([k for k, x in enumerate(check_peak) if x])

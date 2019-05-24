@@ -8,7 +8,7 @@ from scipy.optimize import curve_fit as cf
 
 #Read and display the data
 def fit_function(x,B,mu,sigma):
-    return (B * np.exp(-1.0 * (x - mu)**2 / (2 * sigma**2)))
+    return (B * (1/np.sqrt(2 * np.pi * sigma**2)) * np.exp(-1.0 * (x - mu)**2 / (2 * sigma**2)))
 
 def read_histogram(filename, x_label, title, savename, data_date, histo_mean, histo_std):
     histo = np.array([])
@@ -16,13 +16,15 @@ def read_histogram(filename, x_label, title, savename, data_date, histo_mean, hi
     for line in fin:
         histo = np.append(histo, float(line.split(',')[0]))
     histo_data, bins_data = np.histogram(histo, bins = 100)
+    binwidth = (bins_data[1] - bins_data[0])
     binscenters = np.array([0.5 * (bins_data[i] + bins_data[i+1]) for i in range(len(bins_data)-1)])
+    b_guess = (len(histo) * binwidth)
     x_values = np.linspace(histo_mean - 6*histo_std, histo_mean+6*histo_std, 100000)
-    popt, _ = cf(fit_function,xdata = binscenters,ydata = histo_data, p0 = [10,histo_mean,histo_std])
+    popt, _ = cf(fit_function,xdata = binscenters,ydata = histo_data, p0 = [b_guess,histo_mean,histo_std])
     gauss_mean = '%s' % float('%.5g' % popt[1])
     gauss_std = '%s' % float('%.5g' % popt[2])
     fig = plt.figure(figsize=(6,4))
-    plt.bar(binscenters, histo_data, width=bins_data[1] - bins_data[0])
+    plt.bar(binscenters, histo_data, width=binwidth)
     plt.plot(x_values, fit_function(x_values, *popt), color='darkorange')
     plt.xlabel(x_label)
     plt.ylabel('Count')

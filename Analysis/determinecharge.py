@@ -17,7 +17,7 @@ def determine(data_date,numhead):
         area = 0
         filename = 'G:/data/watchman/'+data_date+'_watchman_spe/d1/d1_baseline_shifted/D1--waveforms--%05d.txt' % i
         (t,y,_) = rw(filename,numhead)
-        y_norm = y/min(y[370:1370])
+        y_norm = y/min(y)
         check = y_norm >= 0.1                                   #setting curve to be from 10% rising to 10% falling
         check_checker = y_norm <= 0.1
         check_peak = y_norm == 1                                #determining peak location
