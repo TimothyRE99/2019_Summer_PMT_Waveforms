@@ -18,10 +18,21 @@ def determine(data_date,numhead):
         filename = 'G:/data/watchman/'+data_date+'_watchman_spe/d1/d1_baseline_shifted/D1--waveforms--%05d.txt' % i
         (t,y,_) = rw(filename,numhead)
         y_norm = y/min(y[370:1370])
-        check = y_norm >= 0.2                                   #setting curve to be from 20% rising to 20% falling
-        index = [k for k, x in enumerate(check) if x]
+        check = y_norm >= 0.1                                   #setting curve to be from 10% rising to 10% falling
+        check_checker = y_norm <= 0.1
+        check_peak = y_norm = 1                                 #determining peak location
+        index_pre = [k for k, x in enumerate(check) if x]
+        index_checker = [k for k, x in enumerate(check_checker) if x]
+        index_peak = [k for k, x in enumerate(check_peak) if x]
+        peak_index = int(index_peak[0])                         #making peak location an integer
+        index_checker_low = index_checker[np.where(index_checker < peak_index)]
+        index_checker_high = index_checker[np.where(index_checker > peak_index)]
+        low_index = int(index_checker_low[len(index_checker_low)-1])
+        high_index = int(index_checker_high[0])
+        index = index_pre[low_index:high_index+1]
+        #determining area under curve
         for i in range(len(index)-1):
-            area += ((t[index[i+1]]-t[index[i]]) * y[index[i]])                      #determining area under curve
+            area += ((t[index[i+1]]-t[index[i]]) * y[index[i]])
         charge = str(area/50)                                   #area under curve/resistance gives charge
         wh(charge,writename)
     #create histogram from saved file
