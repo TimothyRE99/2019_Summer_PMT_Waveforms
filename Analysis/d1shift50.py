@@ -16,11 +16,7 @@ def center_check(Nloops,numhead,data_date):
         y_norm = y/min(y[370:1370])                             #normalizing to make calculations easier
         check = y_norm >= 0.5                                   #50% crossing criteria
         index = [k for k, x in enumerate(check) if x]           #code to enumerate index values
-        index_50 = 0
-        k = 0
-        while index_50 < 370:                                   #making sure we don't cut off too soon
-            index_50 = int(index[k])                            #converting to integer
-            k += 1
+        index_50 = int(index[0])                                #making into integer
         center_list = np.append(center_list,index_50)           #appending index location to list of index locations
     center_list = np.sort(center_list)                          #sort center_list array
     max_index = int(round(center_list[(len(center_list)-1)]))   #determine maximum index
