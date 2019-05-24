@@ -33,7 +33,7 @@ def determine(data_date,numhead):
         #determining area under curve
         for i in range(len(index)-1):
             area += ((t[index[i+1]]-t[index[i]]) * y[index[i]])
-        charge = str(area/50)                                   #area under curve/resistance gives charge
+        charge = -1*str(area/50)                                #area under curve/resistance gives charge, made positive for graphical reasons
         wh(charge,writename)
     #create histogram from saved file
     (histo_mean,histo_std) = gh(writename)
