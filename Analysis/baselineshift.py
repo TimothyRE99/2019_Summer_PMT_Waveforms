@@ -14,6 +14,8 @@ def baselineshift(data_date,numhead):
         writename = 'G:/data/watchman/'+data_date+'_watchman_spe/d1/d1_baseline_shifted/D1--waveforms--%05d.txt' % i
         (t,y,header) = rw(filename,numhead)
         baseline = np.mean(y[0:200])                            #determining average value at beginning to establish baseline
+        if abs(baseline) >= 0.0005:
+                print(str(baseline)+', '+str(i))
         y_new = (y - baseline)                                  #reducing y to factor out baseline
         write_waveform(t,y_new,writename,header)
 
