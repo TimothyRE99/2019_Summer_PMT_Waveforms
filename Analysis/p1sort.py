@@ -35,7 +35,7 @@ def p1_sort(filenum,data_date,lowpass,numhead,numtaps,threshold,baseline):
         t_peaks = t2[peaks]
 
         if len(peaks) != 0:                                         #Making sure there is a peak
-            if len(peaks) == 1:                                     #Checking if only 1 peak exists
+            if len(peaks) == 1 and peaks[0] >= 370:                 #Checking if only 1 peak exists, making sure it's in proper range
                 if min(y2[370:1370]) < baseline+threshold:                     #Checking if peak is below -.0015V in range 370 to 1370
                     write_waveform(t2, y2, spe_wasname, header)
                     print(len(os.listdir('g:/data/watchman/'+data_date+'_watchman_spe/d1/d1_raw/')))
