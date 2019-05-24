@@ -19,8 +19,8 @@ def determine(data_date,numhead):
         y_norm = y/min(y[370:1370])
         check20 = y_norm <= .2                                          #determining where 20% and 80% rising are located
         check80 = y_norm >= .8
-        index20 = [k for k, x in enumerate(check20) if x]
-        index80 = [k for k, x in enumerate(check80) if x]
+        index20 = np.asarray([k for k, x in enumerate(check20) if x])
+        index80 = np.asarray([k for k, x in enumerate(check80) if x])
         index_80 = int(index80[0])
         index20_removed = index20[np.where(index20 < index_80)]
         index_20 = int(index20_removed[len(index20_removed)-1])

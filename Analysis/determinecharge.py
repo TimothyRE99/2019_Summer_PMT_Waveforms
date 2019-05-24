@@ -21,9 +21,9 @@ def determine(data_date,numhead):
         check = y_norm >= 0.1                                   #setting curve to be from 10% rising to 10% falling
         check_checker = y_norm <= 0.1
         check_peak = y_norm == 1                                #determining peak location
-        index_pre = [k for k, x in enumerate(check) if x]
-        index_checker = [k for k, x in enumerate(check_checker) if x]
-        index_peak = [k for k, x in enumerate(check_peak) if x]
+        index_pre = np.asarray([k for k, x in enumerate(check) if x])
+        index_checker = np.asarray([k for k, x in enumerate(check_checker) if x])
+        index_peak = np.asarray([k for k, x in enumerate(check_peak) if x])
         peak_index = int(index_peak[0])                         #making peak location an integer
         index_checker_low = index_checker[np.where(index_checker < peak_index)]
         index_checker_high = index_checker[np.where(index_checker > peak_index)]

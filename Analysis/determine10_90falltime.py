@@ -19,8 +19,8 @@ def determine(data_date,numhead):
         y_norm = y/min(y[370:1370])
         check10 = y_norm <= .1                                          #determining where 10% and 90% falling are located
         check90 = y_norm >= .9
-        index10 = [k for k, x in enumerate(check10) if x]
-        index90 = [k for k, x in enumerate(check90) if x]
+        index10 = np.asarray([k for k, x in enumerate(check10) if x])
+        index90 = np.asarray([k for k, x in enumerate(check90) if x])
         index_90 = int(index90[len(index90)-1])
         index10_removed = index10[np.where(index10 > index_90)]
         index_10 = int(index10_removed[0])
