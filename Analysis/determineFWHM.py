@@ -18,7 +18,7 @@ def determine(data_date,numhead):
         (t,y,_) = rw(filename,numhead)
         y_norm = y/min(y[370:1370])
         check = y_norm <= .5                                #determining where 50% falling and rising are located
-        check_peak = y_norm = 1
+        check_peak = y_norm == 1
         index_peak = [k for k, x in enumerate(check_peak) if x]
         peak_index = int(index_peak[0])
         index = [k for k, x in enumerate(check) if x]

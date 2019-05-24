@@ -20,7 +20,7 @@ def determine(data_date,numhead):
         y_norm = y/min(y[370:1370])
         check = y_norm >= 0.1                                   #setting curve to be from 10% rising to 10% falling
         check_checker = y_norm <= 0.1
-        check_peak = y_norm = 1                                 #determining peak location
+        check_peak = y_norm == 1                                #determining peak location
         index_pre = [k for k, x in enumerate(check) if x]
         index_checker = [k for k, x in enumerate(check_checker) if x]
         index_peak = [k for k, x in enumerate(check_peak) if x]
