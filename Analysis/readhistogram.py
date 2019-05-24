@@ -4,22 +4,29 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.stats import norm
+from scipy.optimize import curve_fit as cf
 
 #Read and display the data
+def fit_function(x,B,mu,sigma):
+    return (B * np.exp(-1.0 * (x - mu)**2 / (2 * sigma**2)))
+
 def read_histogram(filename, x_label, title, savename, data_date, histo_mean, histo_std):
     histo = np.array([])
     fin = open(filename,'r')
     for line in fin:
         histo = np.append(histo, float(line.split(',')[0]))
-    x_axis = np.linspace(histo_mean - 4*histo_std, histo_mean + 4*histo_std, 1000)
+    histo_data, bins_data = np.histogram(histo, bins = 100)
+    binscenters = np.array([0.5 * (bins_data[i] + bins_data[i+1]) for i in range(len(bins_data)-1)])
+    x_values = np.linspace(histo_mean - 4*histo_std, histo_mean+4*histo_std, 100000)
+    popt, _ = cf(fit_function,xdata = binscenters,ydata = histo_data, p0 = [10,histo_mean,histo_std])
     fig = plt.figure(figsize=(6,4))
-    plt.plot(x_axis, norm.pdf(x_axis,histo_mean,histo_std), color = 'orange')
-    plt.hist(histo, bins=75, range = (histo.min(),histo_mean + 6*histo_std), density = True)   #set histogram to divide contents into bins
-    plt.xlabel(x_label)                                     #set x-axis label
-    plt.ylabel("Density of Probability")                    #set y-axis label
-    plt.title(title+'\nGaussian Fit Values:\nMean = '+str(histo_mean)+' '+x_label+'\nStandard Deviation = '+str(histo_std)+' '+x_label) #set title
-    plt.show()                                              #show plot
-    fig.savefig('G:/data/watchman/'+data_date+'_watchman_spe/d1/d1_histograms/'+savename+'_hist.png',dpi = 300)
+    plt.bar(binscenters, histo_data, width=bins_data[1] - bins_data[0])
+    plt.plot(x_values, fit_function(x_values, *popt), color='darkorange')
+    plt.xlabel(x_label)
+    plt.ylabel('Count')
+    plt.title(title+'\nGaussian Fit Values:\nMean = '+str(popt[1])+' '+x_label+'\nStandard Deviation = '+str(popt[2])+' '+x_label)
+    plt.show()
+    fig.savefig('G:/data/watchman/'+data_date+'_watchman_spe/d1/d1_histograms/'+savename+'_hist.png',dpi = 500)
 
 #For testing purposes
 if __name__ == '__main__':
