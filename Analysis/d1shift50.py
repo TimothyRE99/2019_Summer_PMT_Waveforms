@@ -18,9 +18,9 @@ def center_check(Nloops,numhead,data_date):
         index = [k for k, x in enumerate(check) if x]           #code to enumerate index values
         index_50 = int(index[0])                                #making into integer
         center_list = np.append(center_list,index_50)           #appending index location to list of index locations
-    center_list = np.sort(center_list)                          #sort center_list array
-    max_index = int(round(center_list[(len(center_list)-1)]))   #determine maximum index
-    min_index = int(round(center_list[0]))                      #determine minimum index
+    center_list_sorted = np.sort(center_list)                   #sort center_list array
+    max_index = int(round(center_list_sorted[(len(center_list_sorted)-1)]))     #determine maximum index
+    min_index = int(round(center_list_sorted[0]))               #determine minimum index
     center_index = int(round(np.mean(center_list)))             #establishing mean index location, rounding it, and converting to integer
     return(max_index,min_index,center_index,center_list)
 
