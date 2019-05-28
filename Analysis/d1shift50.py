@@ -22,12 +22,12 @@ def center_check(Nloops,numhead,data_date):
     max_index = int(round(center_list[(len(center_list)-1)]))   #determine maximum index
     min_index = int(round(center_list[0]))                      #determine minimum index
     center_index = int(round(np.mean(center_list)))             #establishing mean index location, rounding it, and converting to integer
-    return(max_index,min_index,center_index)
+    return(max_index,min_index,center_index,center_list)
 
 #shifting to align
 def d1shift50(data_date,numhead):
     Nloops = len(os.listdir('G:/data/watchman/'+data_date+'_watchman_spe/d1/d1_baseline_shifted'))
-    (max_index,min_index,center_index) = center_check(Nloops,numhead,data_date)
+    (max_index,min_index,center_index,center_list) = center_check(Nloops,numhead,data_date)
     print(min_index)
     print(center_index)
     print(max_index)
@@ -35,10 +35,7 @@ def d1shift50(data_date,numhead):
         filename = 'G:/data/watchman/'+data_date+'_watchman_spe/d1/d1_baseline_shifted/D1--waveforms--%05d.txt' % i
         writename = 'G:/data/watchman/'+data_date+'_watchman_spe/d1/d1_50centered/D1--waveforms--%05d.txt' % i
         (t,y,header) = rw(filename,numhead)
-        y_norm = y/min(y[370:1370])
-        check = y_norm >= 0.5
-        index = [k for k, x in enumerate(check) if x]
-        index_50 = int(index[0])                                    #converting to int
+        index_50 = int(center_list[i])                              #converting to int
         t_50 = t[index_50]
         t_new = (t - t_50)                                          #shifting t_50 to t=0s
         #rolling so 50 rising point is at center index
