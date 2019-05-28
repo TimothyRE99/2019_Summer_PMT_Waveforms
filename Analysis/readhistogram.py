@@ -3,7 +3,6 @@
 #import necessary
 import numpy as np
 import matplotlib.pyplot as plt
-from scipy.stats import norm
 from scipy.optimize import curve_fit as cf
 
 #Read and display the data
