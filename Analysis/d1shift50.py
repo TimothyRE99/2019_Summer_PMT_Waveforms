@@ -38,11 +38,7 @@ def d1shift50(data_date,numhead):
         y_norm = y/min(y[370:1370])
         check = y_norm >= 0.5
         index = [k for k, x in enumerate(check) if x]
-        index_50 = 0
-        k=0
-        while index_50 < 370:                                       #making sure we don't cut off too soon
-            index_50 = int(index[k])                                #converting to int
-            k+=1
+        index_50 = int(index[0])                                    #converting to int
         t_50 = t[index_50]
         t_new = (t - t_50)                                          #shifting t_50 to t=0s
         #rolling so 50 rising point is at center index
