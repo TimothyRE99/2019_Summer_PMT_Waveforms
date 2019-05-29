@@ -17,13 +17,11 @@ def read_histogram(filename, x_label, title, savename, data_date, histo_mean, hi
     histo_data, bins_data = np.histogram(histo, bins = 200)
     binwidth = (bins_data[1] - bins_data[0])
     binscenters = np.array([0.5 * (bins_data[i] + bins_data[i+1]) for i in range(len(bins_data)-1)])
-    histo_low_sig = histo_mean - 2*histo_std
-    histo_high_sig = histo_mean + 2*histo_std
-    x_values = np.linspace(histo_low_sig, histo_high_sig, 100000)
     b_guess = (len(histo) * binwidth)
-    histo_data_center = histo_data[np.where((histo_low_sig <= histo_data) & (histo_data <= histo_high_sig))]
-    binscenters_center = binscenters[np.where((histo_low_sig <= histo_data) & (histo_data <= histo_high_sig))]
-    popt, _ = cf(fit_function,xdata = binscenters_center,ydata = histo_data_center, p0 = [b_guess,histo_mean,histo_std], maxfev = 10000)
+    x_values_low = histo_mean - 2*histo_std
+    x_values_high = histo_mean+2*histo_std
+    x_values = np.linspace(x_values_low, x_values_high, 100000)
+    popt, _ = cf(fit_function,xdata = binscenters,ydata = histo_data, p0 = [b_guess,histo_mean,histo_std], bounds = (x_values_low, x_values_high),maxfev = 10000)
     gauss_mean = '%s' % float('%.5g' % popt[1])
     gauss_std = '%s' % float('%.5g' % popt[2])
     fig = plt.figure(figsize=(6,4))
