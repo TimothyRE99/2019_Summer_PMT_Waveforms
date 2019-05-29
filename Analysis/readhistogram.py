@@ -23,7 +23,8 @@ def read_histogram(filename, x_label, title, savename, data_date, histo_mean, hi
     x_values = np.linspace(x_values_low, x_values_high, 100000)
     histo_sorted = np.sort(histo)
     histo_center = histo_sorted[np.where((x_values_low <= histo_sorted) & (histo_sorted <= x_values_high))]
-    histo_data_center, bins_data_center = np.histogram(histo_center, bins = 200)
+    new_bins = int((histo_center[len(histo_center)-1] - histo_center[0]) / binwidth)
+    histo_data_center, bins_data_center = np.histogram(histo_center, bins = new_bins)
     binscenters_center = np.array([0.5 * (bins_data_center[i] + bins_data_center[i+1]) for i in range(len(bins_data_center)-1)])
     popt, _ = cf(fit_function,xdata = binscenters_center,ydata = histo_data_center, p0 = [b_guess,histo_mean,histo_std], maxfev = 10000)
     gauss_mean = '%s' % float('%.5g' % popt[1])
