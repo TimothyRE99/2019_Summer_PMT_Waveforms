@@ -28,7 +28,9 @@ def gauss_histogram(filename):
 if __name__ == '__main__':
     import argparse
     parser = argparse.ArgumentParser(prog='gausshistogram', description='creating gaussian fit for histograms')
-    parser.add_argument('--filename',type = str,help = 'path to location',default = "G:/data/watchman/20190515_watchman_spe/d1/d1_histograms/FWHM.txt")
+    parser.add_argument('--filename',type = str,help = 'path to location',default = "G:/data/watchman/20190516_watchman_spe/d1/d1_histograms/FWHM.txt")
     args = parser.parse_args()
 
-    gauss_histogram(args.filename)
+    (histo_mean,histo_std) = gauss_histogram(args.filename)
+    print(histo_mean)
+    print(histo_std)
