@@ -34,7 +34,7 @@ def read_histogram(filename, x_label, title, savename, data_date, histo_mean, hi
     plt.ylabel('Count')
     plt.title(title+'\nGaussian Fit Values:\nMean = '+gauss_mean+' '+x_label+'\nStandard Deviation = '+gauss_std+' '+x_label)
     plt.show()
-    fig.savefig('G:/data/watchman/'+data_date+'_watchman_spe/d1/d1_histograms/'+savename+'_hist.png',dpi = 500)
+    fig.savefig('G:/data/watchman/'+data_date+'_watchman_spe/d1/d1_histograms/histogram_images/'+savename+'_hist.png',dpi = 500)
 
 #For testing purposes
 if __name__ == '__main__':
