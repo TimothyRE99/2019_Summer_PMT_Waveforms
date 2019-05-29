@@ -34,10 +34,10 @@ def determine(data_date,numhead):
         index_80 = int(index80[0])
         index20_removed = index20[np.where(index20 < index_80)]
         index_20 = int(index20_removed[len(index20_removed)-1])
-        t10 = t[index_10]
-        t20 = t[index_20]
-        t80 = t[index_80]
-        t90 = t[index_90]
+        t10 = str(t[index_10])
+        t20 = str(t[index_20])
+        t80 = str(t[index_80])
+        t90 = str(t[index_90])
         wh(t10,writename10)
         wh(t20,writename20)
         wh(t80,writename80)
