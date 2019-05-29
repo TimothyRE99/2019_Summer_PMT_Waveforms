@@ -9,7 +9,7 @@ from readhistogram import read_histogram as rh
 from gausshistogram import gauss_histogram as gh
 
 def determine(data_date,numhead):
-    Nloops = len(os.listdir('G:/data/watchman/'+data_date+'_watchman_spe/d1/d1_baseline_shifted'))
+    Nloops = len(os.listdir('G:/data/watchman/'+data_date+'_watchman_spe/d1/d1_50centered'))
     writename = 'G:/data/watchman/'+data_date+'_watchman_spe/d1/d1_histograms/peak_amplitude.txt'
     #peak amplitude acquisition
     for i in range(Nloops):
