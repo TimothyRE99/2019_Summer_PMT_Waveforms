@@ -14,12 +14,16 @@ def read_histogram(filename, x_label, title, savename, data_date, histo_mean, hi
     fin = open(filename,'r')
     for line in fin:
         histo = np.append(histo, float(line.split(',')[0]))
-    histo_data, bins_data = np.histogram(histo, bins = 100)
+    histo_data, bins_data = np.histogram(histo, bins = 200)
     binwidth = (bins_data[1] - bins_data[0])
     binscenters = np.array([0.5 * (bins_data[i] + bins_data[i+1]) for i in range(len(bins_data)-1)])
+    histo_low_sig = histo_mean - 2*histo_std
+    histo_high_sig = histo_mean + 2*histo_std
+    x_values = np.linspace(histo_low_sig, histo_high_sig, 100000)
     b_guess = (len(histo) * binwidth)
-    x_values = np.linspace(histo_mean - 6*histo_std, histo_mean+6*histo_std, 100000)
-    popt, _ = cf(fit_function,xdata = binscenters,ydata = histo_data, p0 = [b_guess,histo_mean,histo_std], maxfev = 10000)
+    histo_data_center = histo_data[np.where((histo_low_sig <= histo_data) & (histo_data <= histo_high_sig))]
+    binscenters_center = binscenters[np.where((histo_low_sig <= histo_data) & (histo_data <= histo_high_sig))]
+    popt, _ = cf(fit_function,xdata = binscenters_center,ydata = histo_data_center, p0 = [b_guess,histo_mean,histo_std], maxfev = 10000)
     gauss_mean = '%s' % float('%.5g' % popt[1])
     gauss_std = '%s' % float('%.5g' % popt[2])
     fig = plt.figure(figsize=(6,4))
@@ -27,7 +31,7 @@ def read_histogram(filename, x_label, title, savename, data_date, histo_mean, hi
     plt.plot(x_values, fit_function(x_values, *popt), color='darkorange')
     plt.xlabel(x_label)
     plt.ylabel('Count')
-    plt.xlim(float(gauss_mean)-8*float(gauss_std),float(gauss_mean)+20*float(gauss_std))
+    #plt.xlim(float(gauss_mean)-8*float(gauss_std),float(gauss_mean)+20*float(gauss_std))
     plt.title(title+'\nGaussian Fit Values:\nMean = '+gauss_mean+' '+x_label+'\nStandard Deviation = '+gauss_std+' '+x_label)
     plt.show()
     fig.savefig('G:/data/watchman/'+data_date+'_watchman_spe/d1/d1_histograms/'+savename+'_hist.png',dpi = 500)
