@@ -41,7 +41,7 @@ if __name__ == '__main__':
     import argparse
     parser = argparse.ArgumentParser(prog="read histogram",description="read the histogram datafile.")
     parser.add_argument("--x_label",type=str,help='label of x axis',default='Seconds')
-    parser.add_argument("--title",type=str,help="title of histogram",default='Histogram of 20-80 Rises')
+    parser.add_argument("--title",type=str,help="title of histogram",default='Histogram of 20-80 Rise Times')
     parser.add_argument("--filename",type=str,help="filename",default='G:/data/watchman/20190516_watchman_spe/d1/d1_histograms/20_80_rise_time.txt')
     parser.add_argument('--data_date',type = str,help = 'date when data was gathered, YYYYMMDD', default = '20190516')
     parser.add_argument('--histo_mean',type = float,help = 'mean of the histogram without outliers', default = 2.3890246551536875e-09)
