@@ -19,7 +19,7 @@ def read_histogram(filename, x_label, title, savename, data_date, histo_mean, hi
     binscenters = np.array([0.5 * (bins_data[i] + bins_data[i+1]) for i in range(len(bins_data)-1)])
     b_guess = (len(histo) * binwidth)
     histo_sorted = np.sort(histo)
-    histo_center = histo_sorted[np.where(((histo_mean - 1.5*histo_std) <= histo_sorted) & (histo_sorted <= (histo_mean + 1.5*histo_std)))]
+    histo_center = histo_sorted[np.where(((histo_mean - 2*histo_std) <= histo_sorted) & (histo_sorted <= (histo_mean + 2*histo_std)))]
     new_bins = int((histo_center[len(histo_center)-1] - histo_center[0]) / binwidth)
     histo_data_center, bins_data_center = np.histogram(histo_center, bins = new_bins)
     binscenters_center = np.array([0.5 * (bins_data_center[i] + bins_data_center[i+1]) for i in range(len(bins_data_center)-1)])
@@ -41,10 +41,10 @@ if __name__ == '__main__':
     import argparse
     parser = argparse.ArgumentParser(prog="read histogram",description="read the histogram datafile.")
     parser.add_argument("--x_label",type=str,help='label of x axis',default='Seconds')
-    parser.add_argument("--title",type=str,help="title of histogram",default='Histogram of FWHMs')
-    parser.add_argument("--filename",type=str,help="filename",default='G:/data/watchman/20190516_watchman_spe/d1/d1_histograms/FWHM.txt')
+    parser.add_argument("--title",type=str,help="title of histogram",default='Histogram of 20-80 Rises')
+    parser.add_argument("--filename",type=str,help="filename",default='G:/data/watchman/20190516_watchman_spe/d1/d1_histograms/20_80_rise_time.txt')
     parser.add_argument('--data_date',type = str,help = 'date when data was gathered, YYYYMMDD', default = '20190516')
-    parser.add_argument('--histo_mean',type = float,help = 'mean of the histogram without outliers', default = 8.05458875833598e-09)
-    parser.add_argument('--histo_std',type = float,help = 'standard deviation of the histogram without outliers', default = 2.778089082291875e-10)
+    parser.add_argument('--histo_mean',type = float,help = 'mean of the histogram without outliers', default = 2.3890246551536875e-09)
+    parser.add_argument('--histo_std',type = float,help = 'standard deviation of the histogram without outliers', default = 8.978658875273273e-11)
     args = parser.parse_args()
-    read_histogram(args.filename,args.x_label,args.title,"FWHM",args.data_date,args.histo_mean,args.histo_std)
+    read_histogram(args.filename,args.x_label,args.title,"20_80_rise_time",args.data_date,args.histo_mean,args.histo_std)
