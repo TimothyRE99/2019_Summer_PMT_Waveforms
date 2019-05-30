@@ -21,6 +21,7 @@ def gauss_histogram(filename):
     out_low = (medi_low - 1.5*iqr)
     out_high = (medi_low + 1.5*iqr)
     histo_out_remove = histo[np.where((out_low <= histo) & (histo <= out_high))]    #creating new array with outliers removed
+    #determining mean and std guesses for central data
     histo_mean = np.mean(histo_out_remove)
     histo_std = np.std(histo_out_remove)
     return (histo_mean,histo_std)

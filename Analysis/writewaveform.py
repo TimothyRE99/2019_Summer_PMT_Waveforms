@@ -6,8 +6,10 @@ import numpy as np
 #Write the data
 def write_waveform(x,y,filename,header):
     fileout = open(filename,'w')
+    #writing header data to file
     for entry in header:
         fileout.write(entry)
+    #writing line data to file
     for ix,iy in zip(x,y):
         line = '%.7E,%f\n' % (ix,iy)
         fileout.write(line)

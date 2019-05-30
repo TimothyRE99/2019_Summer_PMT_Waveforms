@@ -7,8 +7,10 @@ import os
 #write the data
 def write_histogram(value,filename):
     histogram = open(filename,"a")
+    #writing line without a newline or comma before it if it is the first line
     if os.stat(filename).st_size == 0:
         histogram.write(value)
+    #writing line including comma and newline for every other line (this prevents an extra comma and newline at end of file)
     else:
         histogram.write(",\n"+value)
     histogram.close

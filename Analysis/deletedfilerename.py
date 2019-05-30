@@ -5,10 +5,13 @@ import os
 
 #main body
 def delete_rename(directory,data_date,deleted_number):
-    os.remove('G:/data/watchman/'+data_date+'_watchman_spe/d1/'+directory+'/D1--waveforms--%0.05d.txt' % deleted_number)
+    #determine length of directory
     Nloops = len(os.listdir('G:/data/watchman/'+data_date+'_watchman_spe/d1/'+directory))
-    for i in range(deleted_number+1,Nloops+1):
+    #delete file in question based on delete_number variable
+    os.remove('G:/data/watchman/'+data_date+'_watchman_spe/d1/'+directory+'/D1--waveforms--%0.05d.txt' % deleted_number)
+    for i in range(deleted_number+1,Nloops):            #loop through directory starting at the file after deleted number
         print(i)
+        #rename all files looped through to one lower than their current number
         os.rename('G:/data/watchman/'+data_date+'_watchman_spe/d1/'+directory+'/D1--waveforms--%.05d.txt' % i, 'G:/data/watchman/'+data_date+'_watchman_spe/d1/'+directory+'/D1--waveforms--%.05d.txt' % (i-1))
 
 if __name__ == '__main__':

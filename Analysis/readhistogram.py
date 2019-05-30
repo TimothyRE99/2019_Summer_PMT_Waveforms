@@ -7,33 +7,44 @@ from scipy.optimize import curve_fit as cf
 
 #Read and display the data
 def fit_function(x,B,mu,sigma):
+    #funcion for a gaussian scaled by factor B
     return (B * (1/np.sqrt(2 * np.pi * sigma**2)) * np.exp(-1.0 * (x - mu)**2 / (2 * sigma**2)))
 
 def read_histogram(filename, x_label, title, savename, data_date, histo_mean, histo_std):
-    histo = np.array([])
-    fin = open(filename,'r')
+    histo = np.array([])            #initializing array
+    fin = open(filename,'r')        #opening histogram txt file in read mode
+    #appending values from histogram txt file to array in order
     for line in fin:
         histo = np.append(histo, float(line.split(',')[0]))
-    histo_data, bins_data = np.histogram(histo, bins = 200)
-    binwidth = (bins_data[1] - bins_data[0])
+    histo_data, bins_data = np.histogram(histo, bins = 200)     #establishing histogram data
+    binwidth = (bins_data[1] - bins_data[0])                    #determining bin width
+    #determining bin centers
     binscenters = np.array([0.5 * (bins_data[i] + bins_data[i+1]) for i in range(len(bins_data)-1)])
-    b_guess = (len(histo) * binwidth)
-    histo_sorted = np.sort(histo)
+    b_guess = (len(histo) * binwidth)   #using area approximation to guess at B value
+    histo_sorted = np.sort(histo)       #establishing sorted version of histo array
+    #establishing histo array only including "central" data (within 2 guessed std of guessed mean)
     histo_center = histo_sorted[np.where(((histo_mean - 2*histo_std) <= histo_sorted) & (histo_sorted <= (histo_mean + 2*histo_std)))]
+    #determning new number of bins by dividing value span of histo_center array by the binwidth to ensure same bin width is kept
     new_bins = int((histo_center[len(histo_center)-1] - histo_center[0]) / binwidth)
+    #establishing histogram data for central information
     histo_data_center, bins_data_center = np.histogram(histo_center, bins = new_bins)
+    #establishing centers of bins for central information
     binscenters_center = np.array([0.5 * (bins_data_center[i] + bins_data_center[i+1]) for i in range(len(bins_data_center)-1)])
+    #range limited curve fit using central information
     popt, _ = cf(fit_function,xdata = binscenters_center,ydata = histo_data_center, p0 = [b_guess,histo_mean,histo_std], maxfev = 10000)
+    #establishing 5 significant figure versions of the mean and std from curve fit
     gauss_mean = '%s' % float('%.5g' % popt[1])
     gauss_std = '%s' % float('%.5g' % popt[2])
-    x_values = np.linspace(popt[1] - 1.5*popt[2], popt[1] + 1.5*popt[2], 100000)
-    fig = plt.figure(figsize=(6,4))
-    plt.bar(binscenters, histo_data, width=binwidth)
-    plt.plot(x_values, fit_function(x_values, *popt), color='darkorange')
+    x_values = np.linspace(popt[1] - 1.5*popt[2], popt[1] + 1.5*popt[2], 100000)    #creating 100,000 x values to map curvefit gaussian to
+    fig = plt.figure(figsize=(6,4))                         #intializing saving the figure
+    plt.bar(binscenters, histo_data, width=binwidth)        #plotting histogram
+    plt.plot(x_values, fit_function(x_values, *popt), color='darkorange')   #plotting curve fit
+    #establishing plot labels
     plt.xlabel(x_label)
     plt.ylabel('Count')
     plt.title(title+'\nGaussian Fit Values:\nMean = '+gauss_mean+' '+x_label+'\nStandard Deviation = '+gauss_std+' '+x_label)
-    plt.show()
+    plt.show()      #showing plot for confirmation
+    #finalizing plot saving
     fig.savefig('G:/data/watchman/'+data_date+'_watchman_spe/d1/d1_histograms/histogram_images/'+savename+'_hist.png',dpi = 500)
 
 #For testing purposes

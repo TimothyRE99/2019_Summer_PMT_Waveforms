@@ -17,17 +17,17 @@ def determine(data_date,numhead):
         filename = 'G:/data/watchman/'+data_date+'_watchman_spe/d1/d1_baseline_shifted/D1--waveforms--%05d.txt' % i
         (t,y,_) = rw(filename,numhead)
         y_norm = y/min(y)
-        check = y_norm <= .5                                #determining where 50% falling and rising are located
-        check_peak = y_norm == 1
+        check = y_norm <= .5                                #determining where values under 50% are
+        check_peak = y_norm == 1                            #determining where peak is
         index_peak = np.asarray([k for k, x in enumerate(check_peak) if x])
-        peak_index = int(index_peak[0])
+        peak_index = int(index_peak[0])                     #turning peak index into int
         index = np.asarray([k for k, x in enumerate(check) if x])
-        index_low = index[np.where(index < peak_index)]
-        index_high = index[np.where(index > peak_index)]
-        index_first = int(index_low[len(index_low)-1])
-        index_last = int(index_high[0])
+        index_low = index[np.where(index < peak_index)]     #removing all values after peak
+        index_high = index[np.where(index > peak_index)]    #removing all values before peak
+        index_first = int(index_low[len(index_low)-1])      #turning last 50% point before peak into int
+        index_last = int(index_high[0])                     #turning first 50% point after peak into int
         FWHM = str(t[index_last] - t[index_first])          #FWHM is time at falling 50% - time at rising 50%
-        wh(FWHM,writename)
+        wh(FWHM,writename)                                  #writing to histogram txt file
     #create histogram from saved file
     (histo_mean,histo_std) = gh(writename)
     rh(writename,"Seconds","Histogram of Full Width Half Maximums","FWHM",data_date,histo_mean,histo_std)

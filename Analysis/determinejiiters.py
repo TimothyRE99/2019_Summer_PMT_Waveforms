@@ -24,24 +24,27 @@ def determine(data_date,numhead):
         check90 = y_norm >= .9
         index10 = np.asarray([k for k, x in enumerate(check10) if x])
         index90 = np.asarray([k for k, x in enumerate(check90) if x])
-        index_90 = int(index90[0])
-        index10_removed = index10[np.where(index10 < index_90)]
-        index_10 = int(index10_removed[len(index10_removed)-1])
-        check20 = y_norm <= .2                                          #determining where 20% and 80% rising are located
+        index_90 = int(index90[0])                                  #turning 90% rising point into int
+        index10_removed = index10[np.where(index10 < index_90)]     #removing all 10% points after 90% index
+        index_10 = int(index10_removed[len(index10_removed)-1])     #turning last 10% index before 90% index into int
+        check20 = y_norm <= .2                                      #determining where 20% and 80% rising are located
         check80 = y_norm >= .8
         index20 = np.asarray([k for k, x in enumerate(check20) if x])
         index80 = np.asarray([k for k, x in enumerate(check80) if x])
-        index_80 = int(index80[0])
-        index20_removed = index20[np.where(index20 < index_80)]
-        index_20 = int(index20_removed[len(index20_removed)-1])
+        index_80 = int(index80[0])                                  #turning 80% rising point into int
+        index20_removed = index20[np.where(index20 < index_80)]     #removing all 20% points after 80% index
+        index_20 = int(index20_removed[len(index20_removed)-1])     #turning last 20% index before 90% index into int
+        #gathering times at rising 10,20,80,90% points
         t10 = str(t[index_10])
         t20 = str(t[index_20])
         t80 = str(t[index_80])
         t90 = str(t[index_90])
+        #writing values to respective histogram files
         wh(t10,writename10)
         wh(t20,writename20)
         wh(t80,writename80)
         wh(t90,writename90)
+    #create histograms from saved files
     (histo_mean10,histo_std10) = gh(writename10)
     (histo_mean20,histo_std20) = gh(writename20)
     (histo_mean80,histo_std80) = gh(writename80)
