@@ -16,6 +16,7 @@ def read_histogram(filename, x_label, title, savename, data_date, histo_mean, hi
     #appending values from histogram txt file to array in order
     for line in fin:
         histo = np.append(histo, float(line.split(',')[0]))
+    fin.close
     histo_data, bins_data = np.histogram(histo, bins = 200)     #establishing histogram data
     binwidth = (bins_data[1] - bins_data[0])                    #determining bin width
     #determining bin centers
