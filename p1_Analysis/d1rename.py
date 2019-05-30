@@ -1,8 +1,7 @@
 #rename d1_raw files and move to new folder
 
 #import necessary
-from readwaveform import read_waveform as rw
-from writewaveform import write_waveform
+import shutil
 import os
 
 #moves files
@@ -11,8 +10,7 @@ def d1rename(datadate,numhead):
     for i in range(len(files)):
         filename = 'G:/data/watchman/'+datadate+'_watchman_spe/d1/d1_raw/' + files[i]   #appending directory to filename values
         writename = 'G:/data/watchman/'+datadate+'_watchman_spe/d1/d1_renamed/D1--waveforms--%05d.txt' % i      #renaming files to correspond with position in directory and moving to new folder
-        (t,y,header) = rw(filename,numhead)             #reading files from filename directory
-        write_waveform(t,y,writename,header)            #writing files to writename directory
+        shutil.copy2(filename,writename)
 
 if __name__ == '__main__':
     import argparse
