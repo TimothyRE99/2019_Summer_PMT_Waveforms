@@ -8,12 +8,12 @@ from writewaveform import write_waveform
 import os
 
 #Determining average shape
-def determine_average_shape(data_date,numhead):
-    Nloops = len(os.listdir('G:/data/watchman/'+data_date+'_watchman_spe/d1/d1_normalized'))
-    writename = 'G:/data/watchman/'+data_date+'_watchman_spe/d1/d1_histograms/average_shape.txt'
+def determine_average_shape(datadate,numhead):
+    Nloops = len(os.listdir('G:/data/watchman/'+datadate+'_watchman_spe/d1/d1_normalized'))
+    writename = 'G:/data/watchman/'+datadate+'_watchman_spe/d1/d1_histograms/average_shape.txt'
     for i in range(Nloops):
         print(i)
-        filename = 'G:/data/watchman/'+data_date+'_watchman_spe/d1/d1_normalized/D1--waveforms--%05d.txt' % i
+        filename = 'G:/data/watchman/'+datadate+'_watchman_spe/d1/d1_normalized/D1--waveforms--%05d.txt' % i
         (t,y,_) = rw(filename,numhead)
         #starting array if this is first file
         if i == 0:
@@ -27,8 +27,8 @@ def determine_average_shape(data_date,numhead):
     return (t,yfinal)
 
 #Generate plot
-def generate_average_shape_plot(data_date,numhead):
-    (x,y) = determine_average_shape(data_date,numhead)  #gathering t and v information as x and y from above function
+def generate_average_shape_plot(datadate,numhead):
+    (x,y) = determine_average_shape(datadate,numhead)  #gathering t and v information as x and y from above function
     fig = plt.figure(figsize=(6,4))                     #initializing figure image saving
     plt.plot(x,y)                           #plotting x vs y
     #setting plot labels
@@ -37,13 +37,13 @@ def generate_average_shape_plot(data_date,numhead):
     plt.title('Average Wave Shape')
     plt.show()                              #show plot for confirmation
     #finalize plot saving
-    fig.savefig('G:/data/watchman/'+data_date+'_watchman_spe/d1/d1_histograms/average_shape.png',dpi = 300)
+    fig.savefig('G:/data/watchman/'+datadate+'_watchman_spe/d1/d1_histograms/average_shape.png',dpi = 300)
 
 if __name__ == '__main__':
     import argparse
     parser = argparse.ArgumentParser(prog='determineaverageshape', description='determining and writing plot of average waveform shape')
-    parser.add_argument('--data_date',type = str,help = 'date when data was gathered, YYYYMMDD', default = '20190516')
+    parser.add_argument('--datadate',type = str,help = 'date when data was gathered, YYYYMMDD', default = '20190516')
     parser.add_argument('--numhead',type=int,help='number of lines to ignore for header',default = 5)
     args = parser.parse_args()
 
-    generate_average_shape_plot(args.data_date,args.numhead)
+    generate_average_shape_plot(args.datadate,args.numhead)

@@ -8,13 +8,13 @@ from readhistogram import read_histogram as rh
 from gausshistogram import gauss_histogram as gh
 import os
 
-def determine(data_date,numhead):
-    Nloops = len(os.listdir('G:/data/watchman/'+data_date+'_watchman_spe/d1/d1_baseline_shifted'))
-    writename = 'G:/data/watchman/'+data_date+'_watchman_spe/d1/d1_histograms/10_90_rise_time.txt'
+def determine(datadate,numhead):
+    Nloops = len(os.listdir('G:/data/watchman/'+datadate+'_watchman_spe/d1/d1_baseline_shifted'))
+    writename = 'G:/data/watchman/'+datadate+'_watchman_spe/d1/d1_histograms/10_90_rise_time.txt'
     #determine rise times
     for i in range(Nloops):
         print(i)
-        filename = 'G:/data/watchman/'+data_date+'_watchman_spe/d1/d1_baseline_shifted/D1--waveforms--%05d.txt' % i
+        filename = 'G:/data/watchman/'+datadate+'_watchman_spe/d1/d1_baseline_shifted/D1--waveforms--%05d.txt' % i
         (t,y,_) = rw(filename,numhead)
         y_norm = y/min(y)
         check10 = y_norm <= .1                                      #determining where 10% and 90% are located
@@ -28,13 +28,13 @@ def determine(data_date,numhead):
         wh(rise_time,writename)                                     #writing value to histogram txt file
     #create histogram from saved file
     (histo_mean,histo_std) = gh(writename)
-    rh(writename,"Seconds","Histogram of 10-90 Rise Times","10_90_Rise",data_date,histo_mean,histo_std)
+    rh(writename,"Seconds","Histogram of 10-90 Rise Times","10_90_Rise",datadate,histo_mean,histo_std)
 
 if __name__ == '__main__':
     import argparse
     parser = argparse.ArgumentParser(prog='determine10_90risetime', description='determining and writing histogram for 10-90 rise times')
-    parser.add_argument('--data_date',type = str,help = 'date when data was gathered, YYYYMMDD', default = '20190516')
+    parser.add_argument('--datadate',type = str,help = 'date when data was gathered, YYYYMMDD', default = '20190516')
     parser.add_argument('--numhead',type=int,help='number of lines to ignore for header',default = 5)
     args = parser.parse_args()
 
-    determine(args.data_date,args.numhead)
+    determine(args.datadate,args.numhead)

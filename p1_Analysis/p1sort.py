@@ -10,11 +10,11 @@ from scipy import signal
 import os
 
 #Sort the data
-def p1_sort(filenum,data_date,lowpass,numhead,numtaps,threshold,baseline):
-    filename = 'g:/data/watchman/'+data_date+'_watchman_spe/C2--waveforms--%05d.txt' % filenum
-    spe_wasname = 'g:/data/watchman/'+data_date+'_watchman_spe/d1/d1_raw/D1--waveforms--%05d.txt' % filenum
-    spe_not_there = 'g:/data/watchman/'+data_date+'_watchman_spe/d1/not_spe/D1--waveforms--%05d.txt' % filenum
-    spe_unsure = 'g:/data/watchman/'+data_date+'_watchman_spe/d1/unsure_if_spe/D1--waveforms--%05d.txt' % filenum
+def p1_sort(filenum,datadate,lowpass,numhead,numtaps,threshold,baseline):
+    filename = 'g:/data/watchman/'+datadate+'_watchman_spe/C2--waveforms--%05d.txt' % filenum
+    spe_wasname = 'g:/data/watchman/'+datadate+'_watchman_spe/d1/d1_raw/D1--waveforms--%05d.txt' % filenum
+    spe_not_there = 'g:/data/watchman/'+datadate+'_watchman_spe/d1/not_spe/D1--waveforms--%05d.txt' % filenum
+    spe_unsure = 'g:/data/watchman/'+datadate+'_watchman_spe/d1/unsure_if_spe/D1--waveforms--%05d.txt' % filenum
     if os.path.isfile(spe_wasname):
         pass
     elif os.path.isfile(spe_not_there):
@@ -38,7 +38,7 @@ def p1_sort(filenum,data_date,lowpass,numhead,numtaps,threshold,baseline):
             if len(peaks) == 1 and peaks[0] >= 450:                 #Checking if only 1 peak exists, making sure it's in proper range
                 if min(y2[370:1370]) < baseline+threshold:                     #Checking if peak is below -.0015V in range 370 to 1370
                     write_waveform(t2, y2, spe_wasname, header)
-                    print(len(os.listdir('g:/data/watchman/'+data_date+'_watchman_spe/d1/d1_raw/')))
+                    print(len(os.listdir('g:/data/watchman/'+datadate+'_watchman_spe/d1/d1_raw/')))
             else:
                 if min(y2[370:1370]) < baseline+threshold:                 #Shows plot if min is less than -0.0015V in range 370 to 1370
                     plt.figure()
@@ -62,7 +62,7 @@ def p1_sort(filenum,data_date,lowpass,numhead,numtaps,threshold,baseline):
                     elif spe_check == 'u':
                         write_waveform(t2,y2,spe_unsure,header)
                     print('File #%05d: Done' % filenum)
-                    print(len(os.listdir('g:/data/watchman/'+data_date+'_watchman_spe/d1/d1_raw/')))
+                    print(len(os.listdir('g:/data/watchman/'+datadate+'_watchman_spe/d1/d1_raw/')))
     return
 
 if __name__ == '__main__':
@@ -70,11 +70,11 @@ if __name__ == '__main__':
     import argparse
     parser = argparse.ArgumentParser(prog='p1 sort', description='Sorting through raw data to find good SPEs')
     parser.add_argument('--filenum',type = int,help = 'file number to begin at')
-    parser.add_argument('--data_date',type = str,help = 'date when data was gathered, YYYYMMDD', default = '20190516')
+    parser.add_argument('--datadate',type = str,help = 'date when data was gathered, YYYYMMDD', default = '20190516')
     parser.add_argument('--numhead',type = int,help='number of lines to ignore for header',default = 5)
     parser.add_argument('--numtaps',type = int,help='length of filter',default=51)
     parser.add_argument('--threshold',type = int,help='voltage threshold',default=-0.0015)
     parser.add_argument('--baseline',type = int,help='baseline voltage, must be <= 0',default=0)
     args = parser.parse_args()
 
-    p1_sort(args.filenum, args.data_date, lowpass_default, args.numhead, args.numtaps, args.threshold, args.baseline)
+    p1_sort(args.filenum, args.datadate, lowpass_default, args.numhead, args.numtaps, args.threshold, args.baseline)
