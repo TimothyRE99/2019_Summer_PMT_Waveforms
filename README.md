@@ -4,7 +4,7 @@
 
 ### Preliminary Steps
 
-* Set up directories (This ensures programs work properly when saving files)
+1. Set up directories (This ensures programs work properly when saving files)
 
     * Base directory: G:/data/watchman/YYYYMMDD_watchman_spe/ in which "YYYYMMDD" is the date of data collection in that format
 
@@ -31,9 +31,9 @@
 
             * unsure_if_spe
 
-* Collect data from pulse generator/oscilloscope/PMT setup, save to base directory
+1. Collect data from pulse generator/oscilloscope/PMT setup, save to base directory
 
-* Create d0_info.txt file including information from physical setup, save to base directory (format below)
+1. Create d0_info.txt file including information from physical setup, save to base directory (format below)
 
     * Data acquisition,<VALUE>
 
