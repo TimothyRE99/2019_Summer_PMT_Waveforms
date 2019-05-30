@@ -58,20 +58,20 @@
 
 ### Processing Steps
 
-* p1/p1_sort (sort is called by p1, applies lowpass filter, determines which waveforms are SPEs or not)
+1. p1/p1_sort (sort is called by p1, applies lowpass filter, determines which waveforms are SPEs or not)
 
-* d1rename (renames SPE files to have sequential numbers while keeping order, removing gaps)
+1. d1rename (renames SPE files to have sequential numbers while keeping order, removing gaps)
 
-* baselineshift (calculates and removes remaining baseline from SPE files)
+1. baselineshift (calculates and removes remaining baseline from SPE files)
 
-* d1shift50 (calculates average index location of 50% rising point, shifts all 50% rising points to that location, makes time = 0 at that location, and chops off any indices that rolled over)
+1. d1shift50 (calculates average index location of 50% rising point, shifts all 50% rising points to that location, makes time = 0 at that location, and chops off any indices that rolled over)
 
-* d1normalization (normalizes 50% rising centered waveforms for later use)
-* Histograms/Average Waveform
+1. d1normalization (normalizes 50% rising centered waveforms for later use)
+1. Histograms/Average Waveform
 
     * These can be done in any order, but must be done before final p1b step as p1b uses products of this step
 
-* p1b (processes waveforms to remove lingering doubles by comparing peak and charge to means of the histogram, creates d1_info.txt and adds to final dataset)
+1. p1b (processes waveforms to remove lingering doubles by comparing peak and charge to means of the histogram, creates d1_info.txt and adds to final dataset)
 
 
 ## p2/3
