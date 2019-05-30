@@ -2,17 +2,20 @@
 
 #import necessary
 import numpy as np
-import os
 from info_file import info_file
 from readwaveform import read_waveform as rw
 from writewaveform import write_waveform
+import matplotlib.pyplot as plt
 
 #sorting out double SPEs
 def p1b_sort(datadate,charge_mean,peak_mean,numhead):
+    #set file locations for charge and peak histograms
     charge_name = 'G:/data/watchman/'+datadate+'_watchman_spe/d1/d1_histograms/charge.txt'
     peak_name = 'G:/data/watchman/'+datadate+'_watchman_spe/d1/d1_histograms/peak_amplitude.txt'
+    #initialize histogram arrays
     charge_histo = np.array([])
     peak_histo = np.array([])
+    #read histogram txt files int othe arrays
     charge_fin = open(charge_name,'r')
     for line in charge_fin:
         charge_histo = np.append(charge_histo, float(line.split(',')[0]))
@@ -21,14 +24,21 @@ def p1b_sort(datadate,charge_mean,peak_mean,numhead):
     for line in peak_fin:
         peak_histo = np.append(peak_histo, float(line.split(',')[0]))
     peak_fin.close
-    charge_doubles = np.where(charge_histo >= 2*charge_mean)
-    peak_doubles = np.where(peak_histo >= 2*peak_mean)
+    #setting up arrays listing indices of where the value is twice the mean or greater
+    charge_doubles = np.asarray(charge_histo >= 2*charge_mean).nonzero()
+    charge_doubles = charge_doubles[0]
+    peak_doubles = np.asarray(peak_histo >= 2*peak_mean).nonzero()
+    peak_doubles = peak_doubles[0]
     for i in range(len(charge_histo)):
+        print(i)
+        #setting location of files to read
         filename = 'G:/data/watchman/'+datadate+'_watchman_spe/d1/d1_50centered/D1--waveforms--%05d.txt' % i
+        #setting up locations to write each file to
         writename_double = 'G:/data/watchman/'+datadate+'_watchman_spe/d1/d1_final_doubles/D1--waveforms--%05d.txt' % i
         writename_single = 'G:/data/watchman/'+datadate+'_watchman_spe/d1/d1_final_spes/D1--waveforms--%05d.txt' % i
-        t,v,header = rw(filename,numhead)
-        if i in charge_doubles and i in peak_doubles:
+        t,v,header = rw(filename,numhead)                                   #reading data from waveform file
+        if np.any(charge_doubles == i) and np.any(peak_doubles == i):       #checking if both charge and peak are greater than twice the mean
+            print("Was double!")
             write_waveform(t,v,writename_double,header)
         else:
             write_waveform(t,v,writename_single,header)
@@ -44,4 +54,4 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     p1b_sort(args.datadate,args.charge_mean,args.peak_mean,args.numhead)
-    info_file(args.datadate)
+    info_file(args.datadate)                    #generate d1_info.txt file
