@@ -7,7 +7,7 @@ import os
 
 #moves files
 def d1rename(datadate,numhead):
-    files = os.listdir('G:/data/watchman/'+datadate+'_watchman_spe/d1/d1_raw')          #creating list of files in d1_raw directory
+    files = sorted(os.listdir('G:/data/watchman/'+datadate+'_watchman_spe/d1/d1_raw'))          #creating list of files in d1_raw directory
     for i in range(len(files)):
         filename = 'G:/data/watchman/'+datadate+'_watchman_spe/d1/d1_raw/' + files[i]   #appending directory to filename values
         writename = 'G:/data/watchman/'+datadate+'_watchman_spe/d1/d1_renamed/D1--waveforms--%05d.txt' % i      #renaming files to correspond with position in directory and moving to new folder
