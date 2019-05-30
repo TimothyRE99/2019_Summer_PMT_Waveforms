@@ -45,6 +45,7 @@ def info_file(datadate):
     myfile.write('Oscilloscope noise filter (bits),' + str(nfilter))    # oscilloscope noise filter from previous info file
     myfile.write('Oscilloscope resistance (ohms),' + str(r))            # resistance of oscilloscope from previous info file
     myfile.close()
+    return
 
 if __name__ == "__main__":
     import argparse
