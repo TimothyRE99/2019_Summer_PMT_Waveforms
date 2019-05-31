@@ -12,10 +12,15 @@ def p1b_sort(datadate,charge_mean,peak_mean,FWHM_mean,numhead):
     #set file locations for charge and peak histograms
     charge_name = 'G:/data/watchman/'+datadate+'_watchman_spe/d1/d1_histograms/charge.txt'
     peak_name = 'G:/data/watchman/'+datadate+'_watchman_spe/d1/d1_histograms/peak_amplitude.txt'
+    FWHM_name = 'G:/data/watchman/'+datadate+'_watchman_spe/d1/d1_histograms/FWHM.txt'
+    ten_jitter_name = 'G:/data/watchman/'+datadate+'_watchman_spe/d1/d1_histograms/10_jitter.txt'
+    twenty_jitter_name = 'G:/data/watchman/'+datadate+'_watchman_spe/d1/d1_histograms/20_jitter.txt'
     #initialize histogram arrays
     charge_histo = np.array([])
     peak_histo = np.array([])
     FWHM_histo = np.array([])
+    ten_jitter_histo = np.array([])
+    twenty_jitter_histo = np.array([])
     #read histogram txt files int othe arrays
     charge_fin = open(charge_name,'r')
     for line in charge_fin:
@@ -25,10 +30,18 @@ def p1b_sort(datadate,charge_mean,peak_mean,FWHM_mean,numhead):
     for line in peak_fin:
         peak_histo = np.append(peak_histo, float(line.split(',')[0]))
     peak_fin.close
-    FWHM_fin = open(peak_name,'r')
+    FWHM_fin = open(FWHM_name,'r')
     for line in FWHM_fin:
-        FWHM_histo = np.append(peak_histo, float(line.split(',')[0]))
+        FWHM_histo = np.append(FWHM_histo, float(line.split(',')[0]))
     FWHM_fin.close
+    ten_jitter_fin = open(ten_jitter_name,'r')
+    for line in ten_jitter_fin:
+        ten_jitter_histo = np.append(ten_jitter_histo, float(line.split(',')[0]))
+    ten_jitter_fin.close
+    twenty_jitter_fin = open(twenty_jitter_name,'r')
+    for line in twenty_jitter_fin:
+        twenty_jitter_histo = np.append(twenty_jitter_histo, float(line.split(',')[0]))
+    twenty_jitter_fin.close
     #setting up arrays listing indices of where the value is twice the mean or greater
     charge_doubles = np.asarray(charge_histo >= 2*charge_mean).nonzero()
     charge_doubles = charge_doubles[0]
@@ -36,6 +49,10 @@ def p1b_sort(datadate,charge_mean,peak_mean,FWHM_mean,numhead):
     peak_doubles = peak_doubles[0]
     FWHM_doubles = np.asarray(FWHM_histo >= 2*FWHM_mean).nonzero()
     FWHM_doubles = FWHM_doubles[0]
+    ten_jitter_positive = np.asarray(ten_jitter_histo > 0).nonzero()
+    ten_jitter_positive = ten_jitter_positive[0]
+    twenty_jitter_positive = np.asarray(twenty_jitter_histo > 0).nonzero()
+    twenty_jitter_positive = twenty_jitter_positive[0]
     for i in range(len(charge_histo)):
         print(i)
         #setting location of files to read
@@ -48,13 +65,18 @@ def p1b_sort(datadate,charge_mean,peak_mean,FWHM_mean,numhead):
         if (np.any(charge_doubles == i) and np.any(peak_doubles == i)) or (np.any(FWHM_doubles == i) and np.any(charge_doubles == i)):
             print("Was double!")
             write_waveform(t,v,writename_double,header)
-        elif any([np.any(charge_doubles == i), np.any(peak_doubles == i), np.any(FWHM_doubles == i)]):
+        elif any([np.any(charge_doubles == i), np.any(peak_doubles == i), np.any(FWHM_doubles == i), np.any(ten_jitter_positive == i), np.any(twenty_jitter_positive == i)]):
             if np.any(charge_doubles == i):
                 print("Charge")
             if np.any(peak_doubles == i):
                 print("Peak")
             if np.any(FWHM_doubles == i):
                 print("FWHM")
+            if np.any(ten_jitter_positive == i):
+                print("10% Jitter")
+            if np.any(twenty_jitter_positive == i):
+                print("20% Jitter")
+            plt.title(filename)
             plt.plot(t,v)
             plt.show()
             double_check = 'Initialization.'
@@ -74,7 +96,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(prog='p1b', description='Calculating doubles and running info_file.py')
     parser.add_argument('--datadate',type = str,help = 'date when data was gathered, YYYYMMDD', default = '20190516')
     parser.add_argument('--charge_mean',type = float,help = 'mean calculated from charge histogram plot', default = 1.6799e-12)
-    parser.add_argument('--peak_mean',type = float,help = 'mean calculated from peak histogram plot', default = 0.0064251)
+    parser.add_argument('--peak_mean',type = float,help = 'mean calculated from peak histogram plot', default = 0.0063228)
     parser.add_argument('--FWHM_mean',type = float,help = 'mean calculated from peak histogram plot', default = 7.9859e-9)
     parser.add_argument('--numhead',type = int,help = 'number of lines to skip for header', default = 5)
     args = parser.parse_args()
