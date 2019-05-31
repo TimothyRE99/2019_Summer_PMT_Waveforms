@@ -14,7 +14,7 @@ def p23_prelim(datadate):
         if filename == 'G:/data/watchman/'+datadate+'_watchman_spe/d1/d1_final_spes/d1_info.txt':
             writename = 'G:/data/watchman/'+datadate+'_watchman_spe/d2/d2_raw/d1_info.txt'
         else:
-            writename = 'G:/data/watchman/'+datadate+'_watchman_spe/d2/d2_raw/D2--waveforms--%05d.txt' % (i-1)
+            writename = 'G:/data/watchman/'+datadate+'_watchman_spe/d2/d2_raw/D2--waveforms--%05d.txt' % i
         shutil.copy2(filename,writename)
 
 if __name__ == '__main__':
