@@ -17,7 +17,7 @@ def p2(datadate,numhead,fsps):
     #creating write directories if they're not there
     if not os.path.exists(writedir_two):
         os.makedirs(writedir_two)
-    if not os.path.exists(writedir_four:
+    if not os.path.exists(writedir_four):
         os.makedirs(writedir_four)
     if not os.path.exists(writedir_eight):
         os.makedirs(writedir_eight)
