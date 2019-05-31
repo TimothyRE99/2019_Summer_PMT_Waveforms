@@ -50,7 +50,12 @@
 * writehistogram: Takes in values that need to go into histograms and the labels based on those values and writes a histogram txt file
 * writewaveform: Takes in arrays for time, volts, and headers and writes them to a waveform txt file
 
-## p2/3
+## p2
+### Processing Steps
+1. p2_prelim (moves files from d1_final_spes to d2_raw, including info file, and renames appropriately)
+1. 
+
+## p3
 
 ## Extraneous
 ### Additional Programs
