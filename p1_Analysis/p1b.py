@@ -97,7 +97,7 @@ if __name__ == '__main__':
     parser.add_argument('--datadate',type = str,help = 'date when data was gathered, YYYYMMDD', default = '20190516')
     parser.add_argument('--charge_mean',type = float,help = 'mean calculated from charge histogram plot', default = 1.6799e-12)
     parser.add_argument('--peak_mean',type = float,help = 'mean calculated from peak histogram plot', default = 0.0063228)
-    parser.add_argument('--FWHM_mean',type = float,help = 'mean calculated from peak histogram plot', default = 7.9859e-9)
+    parser.add_argument('--FWHM_mean',type = float,help = 'mean calculated from peak histogram plot', default = 8.0225e-9)
     parser.add_argument('--numhead',type = int,help = 'number of lines to skip for header', default = 5)
     args = parser.parse_args()
 
