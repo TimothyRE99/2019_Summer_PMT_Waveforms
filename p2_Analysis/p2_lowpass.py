@@ -2,7 +2,6 @@
 
 #import necessary
 import numpy as np
-import matplotlib.pyplot as plt
 
 #low pass filter
 def lpfFirstOrder(v,tau,fsps):
