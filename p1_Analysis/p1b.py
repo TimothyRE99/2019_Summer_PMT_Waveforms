@@ -48,6 +48,12 @@ def p1b_sort(datadate,charge_mean,peak_mean,FWHM_mean,numhead):
             print("Was double!")
             write_waveform(t,v,writename_double,header)
         elif any([np.any(charge_doubles == i), np.any(peak_doubles == i), np.any(FWHM_doubles == i)]):
+            if np.any(charge_doubles == i):
+                print("Charge")
+            if np.any(peak_doubles == i):
+                print("Peak")
+            if np.any(FWHM_doubles == i):
+                print("FWHM")
             plt.plot(t,v)
             plt.show()
             double_check = 'Initialization.'
