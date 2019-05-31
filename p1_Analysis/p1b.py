@@ -44,7 +44,8 @@ def p1b_sort(datadate,charge_mean,peak_mean,FWHM_mean,numhead):
         writename_double = 'G:/data/watchman/'+datadate+'_watchman_spe/d1/d1_final_doubles/D1--waveforms--%05d.txt' % i
         writename_single = 'G:/data/watchman/'+datadate+'_watchman_spe/d1/d1_final_spes/D1--waveforms--%05d.txt' % i
         t,v,header = rw(filename,numhead)                                   #reading data from waveform file
-        if (np.any(charge_doubles == i) and np.any(peak_doubles == i)) or (np.any(FWHM_doubles == i) and np.any(charge_doubles == i)):       #checking if both charge and peak are greater than twice the mean
+        #checking if both charge and peak or charge and FWHM are greater than twice the mean
+        if (np.any(charge_doubles == i) and np.any(peak_doubles == i)) or (np.any(FWHM_doubles == i) and np.any(charge_doubles == i)):
             print("Was double!")
             write_waveform(t,v,writename_double,header)
         elif any([np.any(charge_doubles == i), np.any(peak_doubles == i), np.any(FWHM_doubles == i)]):
