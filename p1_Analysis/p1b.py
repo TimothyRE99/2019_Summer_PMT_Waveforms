@@ -65,7 +65,9 @@ def p1b_sort(datadate,charge_mean,peak_mean,FWHM_mean,numhead):
         if (np.any(charge_doubles == i) and np.any(peak_doubles == i)) or (np.any(FWHM_doubles == i) and np.any(charge_doubles == i)):
             print("Was double!")
             write_waveform(t,v,writename_double,header)
+        #checking if any charge, peak, or FWHM are greater than twice the mean or if 10% or 20% rise times are positive
         elif any([np.any(charge_doubles == i), np.any(peak_doubles == i), np.any(FWHM_doubles == i), np.any(ten_jitter_positive == i), np.any(twenty_jitter_positive == i)]):
+            #printing off what caused the graph to display for manual selection
             if np.any(charge_doubles == i):
                 print("Charge")
             if np.any(peak_doubles == i):
@@ -77,7 +79,7 @@ def p1b_sort(datadate,charge_mean,peak_mean,FWHM_mean,numhead):
             if np.any(twenty_jitter_positive == i):
                 print("20% Jitter")
             plt.title(filename)
-            plt.plot(t,v)
+            plt.plot(t,v)                   #plotting waveform in question
             plt.show()
             double_check = 'Initialization.'
             while double_check != 's' and double_check != 'd':

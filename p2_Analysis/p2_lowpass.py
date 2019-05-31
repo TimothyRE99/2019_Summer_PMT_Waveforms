@@ -7,15 +7,16 @@ from readwaveform import read_waveform as rw
 
 #low pass filter
 def lpfFirstOrder(v,tau,fsps):
-    alpha = 1-np.exp(-1/(fsps*tau))
-    y = np.zeros(len(v))
+    alpha = 1-np.exp(-1/(fsps*tau))                     #calcuating alpha variable for later use
+    y = np.zeros(len(v))                                #initializing y array
     for i in range(len(v)):
         if i == 0:
-            y[i] = v[i]
+            y[i] = v[i]                                 #setting first index to be the same
         else:
-            y[i] = v[i]*alpha + (1-alpha)*y[i-1]
+            y[i] = v[i]*alpha + (1-alpha)*y[i-1]        #calculating new values for subsequent indices
     return y
 
+#for testing purposes
 if __name__ == '__main__':
     import argparse
     parser = argparse.ArgumentParser(prog="p2 lowpass",description="applies lowpass filter to waveform.")
