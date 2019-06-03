@@ -27,6 +27,16 @@ def average_waveform(datadate,numhead):
 #checking tau vs. rise time
 def risetime_check(datadate,numhead,x_values,fsps):
     (t,v) = average_waveform(datadate,numhead)
+    #determining rise time of average waveform
+    v_norm_notau = v/max(v)
+    check10_notau = v_norm_notau <= .1                                      #determining where 10% and 90% are located
+    check90_notau = v_norm_notau >= .9
+    index10_notau = np.asarray([k for k, x in enumerate(check10_notau) if x])
+    index90_notau = np.asarray([k for k, x in enumerate(check90_notau) if x])
+    index_90_notau = int(index90_notau[0])
+    index10_removed_notau = index10_notau[np.where(index10_notau < index_90_notau)]     #removing all values after 90% rise index
+    index_10_notau = int(index10_removed_notau[len(index10_removed_notau)-1])     #turning last 10% rise index into int
+    rise_time_notau = float(t[index_90_notau] - t[index_10_notau])                  #rise time is time at 90% - time at 10%
     tau_check = np.linspace(1e-9,5e-6,x_values)
     risetime = np.array([])
     for i in range(len(tau_check)):
@@ -44,12 +54,12 @@ def risetime_check(datadate,numhead,x_values,fsps):
         risetime = np.append(risetime,rise_time)
     fig = plt.figure(figsize=(6,4))
     plt.plot(tau_check,risetime)
-    plt.axhline(y=7.1686e-9,color='red')
-    plt.axhline(y=1.43372e-8,color='orange')
-    plt.axhline(y=2.86744e-8,color='yellow')
-    idx_doub = int(np.argwhere(np.diff(np.sign(risetime - 7.1686e-9))).flatten()[0])
-    idx_quart = int(np.argwhere(np.diff(np.sign(risetime - 1.43372e-8))).flatten()[0])
-    idx_oct = int(np.argwhere(np.diff(np.sign(risetime - 2.86744e-8))).flatten()[0])
+    plt.axhline(y=(rise_time_notau*2),color='red')
+    plt.axhline(y=(rise_time_notau*4),color='orange')
+    plt.axhline(y=(rise_time_notau*8),color='yellow')
+    idx_doub = int(np.argwhere(np.diff(np.sign(risetime - (rise_time_notau*2)))).flatten()[0])
+    idx_quart = int(np.argwhere(np.diff(np.sign(risetime - (rise_time_notau*4)))).flatten()[0])
+    idx_oct = int(np.argwhere(np.diff(np.sign(risetime - (rise_time_notau*8)))).flatten()[0])
     plt.title('Double Risetime Tau = '+str(tau_check[idx_doub])+'\nQuadruple Risetime Tau = '+str(tau_check[idx_quart])+'\nOctuple Risetime Tau = '+str(tau_check[idx_oct]))
     plt.xlabel("Tau")
     plt.ylabel("10-90 Rise Time")
@@ -62,7 +72,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(prog="p2 risetime check",description="Runs lowpass program on average waveforms to compare rise times")
     parser.add_argument('--datadate',type = str,help = 'date when data was gathered, YYYYMMDD', default = '20190516')
     parser.add_argument('--numhead',type=int,help='number of lines to ignore for header',default = 5)
-    parser.add_argument("--x_values",type=int,help="number of taus to generate",default=50000)
+    parser.add_argument("--x_values",type=int,help="number of taus to generate",default=10000)
     parser.add_argument("--fsps",type=float,help="hz, samples/s",default=20000000000.0)
     args = parser.parse_args()
 
