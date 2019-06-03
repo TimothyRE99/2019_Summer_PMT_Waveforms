@@ -14,6 +14,8 @@ def lpfFirstOrder(v,tau,fsps):
             y[i] = v[i]                                 #setting first index to be the same
         else:
             y[i] = v[i]*alpha + (1-alpha)*y[i-1]        #calculating new values for subsequent indices
+    baseline = np.mean(y[0:100])
+    y = (y - baseline)
     return y
 
 #for testing purposes
