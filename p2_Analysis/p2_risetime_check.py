@@ -27,7 +27,7 @@ def average_waveform(datadate,numhead):
 #checking tau vs. rise time
 def risetime_check(datadate,numhead,x_values,fsps):
     (t,v) = average_waveform(datadate,numhead)
-    tau_check = np.linspace(1e-9,1e-6,x_values)
+    tau_check = np.linspace(1e-9,5e-6,x_values)
     risetime = np.array([])
     for i in range(len(tau_check)):
         print(i)
@@ -44,6 +44,13 @@ def risetime_check(datadate,numhead,x_values,fsps):
         risetime = np.append(risetime,rise_time)
     fig = plt.figure(figsize=(6,4))
     plt.plot(tau_check,risetime)
+    plt.axhline(y=7.1686e-9,color='red')
+    plt.axhline(y=1.43372e-8,color='orange')
+    plt.axhline(y=2.86744e-8,color='yellow')
+    idx_doub = int(np.argwhere(np.diff(np.sign(risetime - 7.1686e-9))).flatten()[0])
+    idx_quart = int(np.argwhere(np.diff(np.sign(risetime - 1.43372e-8))).flatten()[0])
+    idx_oct = int(np.argwhere(np.diff(np.sign(risetime - 2.86744e-8))).flatten()[0])
+    plt.title('Double Risetime Tau = '+str(tau_check[idx_doub])+'\nQuadruple Risetime Tau = '+str(tau_check[idx_quart])+'\nOctuple Risetime Tau = '+str(tau_check[idx_oct]))
     plt.xlabel("Tau")
     plt.ylabel("10-90 Rise Time")
     plt.show()
@@ -55,7 +62,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(prog="p2 risetime check",description="Runs lowpass program on average waveforms to compare rise times")
     parser.add_argument('--datadate',type = str,help = 'date when data was gathered, YYYYMMDD', default = '20190516')
     parser.add_argument('--numhead',type=int,help='number of lines to ignore for header',default = 5)
-    parser.add_argument("--x_values",type=int,help="number of taus to generate",default=10000)
+    parser.add_argument("--x_values",type=int,help="number of taus to generate",default=50000)
     parser.add_argument("--fsps",type=float,help="hz, samples/s",default=20000000000.0)
     args = parser.parse_args()
 
