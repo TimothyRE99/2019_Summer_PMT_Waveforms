@@ -40,12 +40,13 @@ def risetime_check(datadate,numhead,x_values,fsps):
         index_90 = int(index90[0])
         index10_removed = index10[np.where(index10 < index_90)]     #removing all values after 90% rise index
         index_10 = int(index10_removed[len(index10_removed)-1])     #turning last 10% rise index into int
-        rise_time = str(t[index_90] - t[index_10])                  #rise time is time at 90% - time at 10%
-        np.append(risetime,rise_time)
+        rise_time = float(t[index_90] - t[index_10])                  #rise time is time at 90% - time at 10%
+        risetime = np.append(risetime,rise_time)
     fig = plt.figure(figsize=(6,4))
     plt.plot(tau_check,risetime)
     plt.xlabel("Tau")
     plt.ylabel("10-90 Rise Time")
+    plt.show()
     fig.savefig('G:/data/watchman/'+datadate+'_watchman_spe/d2/tau_compare.png',dpi = 500)
 
 #main function
