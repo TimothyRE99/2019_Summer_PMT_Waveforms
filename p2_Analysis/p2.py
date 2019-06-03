@@ -25,6 +25,7 @@ def p2(datadate,numhead,fsps,x_values):
     Nloops = len(os.listdir('G:/data/watchman/'+datadate+'_watchman_spe/d2/d2_raw')) - 1
     #cycling through all waveform files in directory
     for i in range(Nloops):
+        print(i)
         #establishing file names for reading and writing
         filename = filedir + 'D2--waveforms--%05d.txt' % i
         writename_two = writedir_two + 'D2--waveforms--%05d.txt' % i
@@ -47,9 +48,8 @@ def p2(datadate,numhead,fsps,x_values):
         tau_check = np.linspace(1e-9,5e-6,x_values)                 #setting up tau values
         risetime = np.array([])                                     #initializing risetime array
         for i in range(len(tau_check)):                             #cycling through tau values
-            print(i)
             v_taued = lpf(v,tau_check[i],fsps)                      #applying tau value LPF
-            v_norm = v_taued/max(v_taued)                           #normalizing result
+            v_norm = v_taued/min(v_taued)                           #normalizing result
             #determining where 10% and 90% are located
             check10 = v_norm <= .1
             check90 = v_norm >= .9
@@ -61,6 +61,10 @@ def p2(datadate,numhead,fsps,x_values):
             index_10 = int(index10_removed[len(index10_removed)-1])     #turning last 10% rise index into int
             rise_time = float(t[index_90] - t[index_10])                #rise time is time at 90% - time at 10%
             risetime = np.append(risetime,rise_time)                    #appending risetime to risetime array
+        print(rise_time_notau*2)
+        print(rise_time_notau*4)
+        print(rise_time_notau*8)
+        print(risetime[len(risetime)-1])
         #calculating intersection point of lines and tau vs. risetime
         idx_doub = int(np.argwhere(np.diff(np.sign(risetime - (rise_time_notau*2)))).flatten()[0])
         idx_quart = int(np.argwhere(np.diff(np.sign(risetime - (rise_time_notau*4)))).flatten()[0])
