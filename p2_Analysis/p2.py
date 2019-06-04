@@ -36,7 +36,7 @@ def p2(datadate,numhead,fsps,x_values):
         baseline = np.mean(v[0:100])
         v = (v - baseline)
         #establishing base risetime
-        v_norm_notau = v/max(v)
+        v_norm_notau = v/min(v)
         #determining where 10% and 90% are located
         check10_notau = v_norm_notau <= .1
         check90_notau = v_norm_notau >= .9
