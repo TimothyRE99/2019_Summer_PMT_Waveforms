@@ -54,6 +54,7 @@
 ### Processing Steps
 1. p2_prelim (moves files from d1_final_spes to d2_raw, including info file, and renames appropriately)
 1. p2 (calculates taus needed to double, quadruple, and octuple rise time and applies them to waveforms)
+1. p2_review (redoes p2 with range of taus increase for files that didn't have quads or octs)
 
 ### Additional Programs
 * p2_lowpass: Lowpass filter formula/function to be called from p2 processing stages
