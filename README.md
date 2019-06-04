@@ -53,7 +53,14 @@
 ## p2
 ### Processing Steps
 1. p2_prelim (moves files from d1_final_spes to d2_raw, including info file, and renames appropriately)
-1. 
+1. p2 (calculates taus needed to double, quadruple, and octuple rise time and applies them to waveforms)
+
+### Additional Programs
+* p2_lowpass: Lowpass filter formula/function to be called from p2 processing stages
+* p2_risetime_check: Test and check program for tau vs. risetime graph on average waveform
+* readwaveform: same as p1, ported over to allow use by p2 files
+* waveform_viewer: same as p1, ported over to allow use by p2 files
+* writewaveform: same as p1, ported over to allow use by p2 files
 
 ## p3
 
