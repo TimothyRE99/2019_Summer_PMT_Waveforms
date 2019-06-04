@@ -45,7 +45,7 @@ def p2(datadate,numhead,fsps,x_values):
         index_10_notau = int(index10_removed_notau[len(index10_removed_notau)-1])               #turning last 10% rise index into int
         rise_time_notau = float(t[index_90_notau] - t[index_10_notau])                          #rise time is time at 90% - time at 10%
         #determining tau vs. risetime
-        tau_check = np.linspace(1e-9,5e-6,x_values)                 #setting up tau values
+        tau_check = np.linspace(1e-10,1e-5,x_values)                 #setting up tau values
         risetime = np.array([])                                     #initializing risetime array
         for i in range(len(tau_check)):                             #cycling through tau values
             if i % 100 == 0:
@@ -68,19 +68,19 @@ def p2(datadate,numhead,fsps,x_values):
         print(rise_time_notau*8)
         print(risetime[len(risetime)-1])
         #calculating intersection point of lines and tau vs. risetime
-        if np.any(risetime > rise_time_notau*8):
+        if np.any(risetime > rise_time_notau*8) and np.any(risetime < rise_time_notau*8):
             idx_oct = int(np.argwhere(np.diff(np.sign(risetime - (rise_time_notau*8)))).flatten()[0])
             octuples = True
         else:
             print("No Octuples!")
             octuples = False
-        if np.any(risetime > rise_time_notau*4):
+        if np.any(risetime > rise_time_notau*4) and np.any(risetime < rise_time_notau*4):
             idx_quart = int(np.argwhere(np.diff(np.sign(risetime - (rise_time_notau*4)))).flatten()[0])
             quadruples = True
         else:
             print("No Quadruples!")
             quadruples = False
-        if np.any(risetime > rise_time_notau*2):
+        if np.any(risetime > rise_time_notau*2) and np.any(risetime < rise_time_notau*2):
             idx_doub = int(np.argwhere(np.diff(np.sign(risetime - (rise_time_notau*2)))).flatten()[0])
             doubles = True
         else:
