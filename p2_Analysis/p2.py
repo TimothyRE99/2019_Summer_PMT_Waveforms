@@ -25,7 +25,7 @@ def p2(datadate,numhead,fsps,x_values):
     Nloops = len(os.listdir('G:/data/watchman/'+datadate+'_watchman_spe/d2/d2_raw')) - 1
     #cycling through all waveform files in directory
     for i in range(Nloops):
-        print(i)
+        print("File: %05d" % i)
         #establishing file names for reading and writing
         filename = filedir + 'D2--waveforms--%05d.txt' % i
         writename_two = writedir_two + 'D2--waveforms--%05d.txt' % i
@@ -48,6 +48,8 @@ def p2(datadate,numhead,fsps,x_values):
         tau_check = np.linspace(1e-9,5e-6,x_values)                 #setting up tau values
         risetime = np.array([])                                     #initializing risetime array
         for i in range(len(tau_check)):                             #cycling through tau values
+            if i % 100 == 0:
+                print(i)
             v_taued = lpf(v,tau_check[i],fsps)                      #applying tau value LPF
             v_norm = v_taued/min(v_taued)                           #normalizing result
             #determining where 10% and 90% are located
@@ -78,7 +80,7 @@ def p2(datadate,numhead,fsps,x_values):
         else:
             print("No Quadruples!")
             quadruples = False
-        if np.any(risetime > rise_time_notau*4):
+        if np.any(risetime > rise_time_notau*2):
             idx_oct = int(np.argwhere(np.diff(np.sign(risetime - (rise_time_notau*2)))).flatten()[0])
             doubles = True
         else:
