@@ -32,6 +32,9 @@ def p2(datadate,numhead,fsps,x_values):
         writename_four = writedir_four + 'D2--waveforms--%05d.txt' % i
         writename_eight = writedir_eight + 'D2--waveforms--%05d.txt' % i
         (t,v,header) = rw(filename,numhead)         #taking in information from waveform
+        #removing baseline
+        baseline = np.mean(v[0:100])
+        v = (v - baseline)
         #establishing base risetime
         v_norm_notau = v/max(v)
         #determining where 10% and 90% are located
@@ -63,6 +66,7 @@ def p2(datadate,numhead,fsps,x_values):
             index_10 = int(index10_removed[len(index10_removed)-1])     #turning last 10% rise index into int
             rise_time = float(t[index_90] - t[index_10])                #rise time is time at 90% - time at 10%
             risetime = np.append(risetime,rise_time)                    #appending risetime to risetime array
+        print(risetime[0])
         print(rise_time_notau*2)
         print(rise_time_notau*4)
         print(rise_time_notau*8)
