@@ -66,21 +66,45 @@ def p2(datadate,numhead,fsps,x_values):
         print(rise_time_notau*8)
         print(risetime[len(risetime)-1])
         #calculating intersection point of lines and tau vs. risetime
-        idx_doub = int(np.argwhere(np.diff(np.sign(risetime - (rise_time_notau*2)))).flatten()[0])
-        idx_quart = int(np.argwhere(np.diff(np.sign(risetime - (rise_time_notau*4)))).flatten()[0])
-        idx_oct = int(np.argwhere(np.diff(np.sign(risetime - (rise_time_notau*8)))).flatten()[0])
+        if np.any(risetime > rise_time_notau*8):
+            idx_doub = int(np.argwhere(np.diff(np.sign(risetime - (rise_time_notau*8)))).flatten()[0])
+            octuples = True
+        else:
+            print("No Octuples!")
+            octuples = False
+        if np.any(risetime > rise_time_notau*4):
+            idx_quart = int(np.argwhere(np.diff(np.sign(risetime - (rise_time_notau*4)))).flatten()[0])
+            quadruples = True
+        else:
+            print("No Quadruples!")
+            quadruples = False
+        if np.any(risetime > rise_time_notau*4):
+            idx_oct = int(np.argwhere(np.diff(np.sign(risetime - (rise_time_notau*2)))).flatten()[0])
+            doubles = True
+        else:
+            print("No Doubles!")
+            doubles = False
         #setting taus based on value necessary to double, quadruple, and octuple rise time
-        tau_two = tau_check[idx_doub]
-        tau_four = tau_check[idx_quart]
-        tau_eight = tau_check[idx_oct]
+        if doubles:
+            tau_two = tau_check[idx_doub]
+        if quadruples:
+            tau_four = tau_check[idx_quart]
+        if octuples:
+            tau_eight = tau_check[idx_oct]
         #running low pass filter for each tau
-        y_two = lpf(v,tau_two,fsps)
-        y_four = lpf(v,tau_four,fsps)
-        y_eight = lpf(v,tau_eight,fsps)
+        if doubles:
+            y_two = lpf(v,tau_two,fsps)
+        if quadruples:
+            y_four = lpf(v,tau_four,fsps)
+        if octuples:
+            y_eight = lpf(v,tau_eight,fsps)
         #writing results of each lpf to proper location
-        write_waveform(t,y_two,writename_two,header)
-        write_waveform(t,y_four,writename_four,header)
-        write_waveform(t,y_eight,writename_eight,header)
+        if doubles:
+            write_waveform(t,y_two,writename_two,header)
+        if quadruples:
+            write_waveform(t,y_four,writename_four,header)
+        if octuples:
+            write_waveform(t,y_eight,writename_eight,header)
 
 #main function
 if __name__ == '__main__':
