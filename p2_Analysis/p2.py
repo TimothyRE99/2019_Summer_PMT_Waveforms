@@ -69,7 +69,7 @@ def p2(datadate,numhead,fsps,x_values):
         print(risetime[len(risetime)-1])
         #calculating intersection point of lines and tau vs. risetime
         if np.any(risetime > rise_time_notau*8):
-            idx_doub = int(np.argwhere(np.diff(np.sign(risetime - (rise_time_notau*8)))).flatten()[0])
+            idx_oct = int(np.argwhere(np.diff(np.sign(risetime - (rise_time_notau*8)))).flatten()[0])
             octuples = True
         else:
             print("No Octuples!")
@@ -81,7 +81,7 @@ def p2(datadate,numhead,fsps,x_values):
             print("No Quadruples!")
             quadruples = False
         if np.any(risetime > rise_time_notau*2):
-            idx_oct = int(np.argwhere(np.diff(np.sign(risetime - (rise_time_notau*2)))).flatten()[0])
+            idx_doub = int(np.argwhere(np.diff(np.sign(risetime - (rise_time_notau*2)))).flatten()[0])
             doubles = True
         else:
             print("No Doubles!")
