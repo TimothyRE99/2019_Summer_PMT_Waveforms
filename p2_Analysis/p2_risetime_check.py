@@ -6,6 +6,7 @@ from readwaveform import read_waveform as rw
 from p2_lowpass import lpfFirstOrder as lpf
 import os
 import matplotlib.pyplot as plt
+from writewaveform import write_waveform
 
 #generating average waveform
 def average_waveform(datadate,numhead):
@@ -27,6 +28,7 @@ def average_waveform(datadate,numhead):
 #checking tau vs. rise time
 def risetime_check(datadate,numhead,x_values,fsps):
     (t,v) = average_waveform(datadate,numhead)
+    write_waveform(t,v,'G:/data/watchman/'+datadate+'_watchman_spe/d2/d2_average.txt',"Average Waveform")
     #determining rise time of average waveform
     v_norm_notau = v/max(v)
     #determining where 10% and 90% are located
