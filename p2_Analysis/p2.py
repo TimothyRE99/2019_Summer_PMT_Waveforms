@@ -10,9 +10,9 @@ from writewaveform import write_waveform
 #applying lowpass filter and writing
 def p2(datadate,numhead,fsps,x_values):
     #establish tau values from average waveform
-    tau_double = 2e-8
-    tau_quadruple = 2e-8
-    tau_octuple = 2e-8
+    tau_double = 2.18e-8
+    tau_quadruple = 1.13e-8
+    tau_octuple = 4.15e-8
     #establish directories for reading and writing waveforms
     filedir = 'g:/data/watchman/'+datadate+'_watchman_spe/d2/d2_raw/'
     writedir_two = 'g:/data/watchman/'+datadate+'_watchman_spe/d2/d2_rise_doubled/'
