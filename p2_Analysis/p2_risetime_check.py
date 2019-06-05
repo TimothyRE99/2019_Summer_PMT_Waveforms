@@ -76,7 +76,7 @@ def risetime_check(datadate,numhead,x_values,fsps):
     plt.ylabel("10-90 Rise Time")
     #showing and saving plot
     plt.show()
-    fig.savefig('G:/data/watchman/'+datadate+'_watchman_spe/d2/tau_compare.png',dpi = 2500)
+    fig.savefig('G:/data/watchman/'+datadate+'_watchman_spe/d2/d2_images/tau_compare.png',dpi = 2500)
 
 #main function
 if __name__ == '__main__':
