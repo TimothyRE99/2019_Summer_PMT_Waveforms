@@ -10,7 +10,7 @@ from writewaveform import write_waveform
 
 #checking tau vs. rise time
 def risetime_check(datadate,x_values,fsps):
-    (t,v,_) = rw('G:/data/watchman/'+datadate+'_watchman_spe/d2/d2_average.txt',1)      #reading in average waveform
+    (t,v,_) = rw('G:/data/watchman/'+datadate+'_watchman_spe/d2/d2_average_quadrupled.txt',1)      #reading in average waveform
     #determining rise time of average waveform
     v_norm_notau = v/max(v)
     #determining where 10% and 90% are located
@@ -46,19 +46,15 @@ def risetime_check(datadate,x_values,fsps):
     plt.plot(tau_check,risetime)                            #plotting tau vs. risetime
     #plotting horizontal lines at 2x, 4x, and 8x risetime
     plt.axhline(y=(rise_time_notau*2),color='red')
-    plt.axhline(y=(rise_time_notau*4),color='orange')
-    plt.axhline(y=(rise_time_notau*8),color='yellow')
     #calculating intersection point of lines and tau vs. risetime
     idx_doub = int(np.argwhere(np.diff(np.sign(risetime - (rise_time_notau*2)))).flatten()[0])
-    idx_quart = int(np.argwhere(np.diff(np.sign(risetime - (rise_time_notau*4)))).flatten()[0])
-    idx_oct = int(np.argwhere(np.diff(np.sign(risetime - (rise_time_notau*8)))).flatten()[0])
     #setting up title (taus for each risetime value) and labels
-    plt.title('Double Risetime Tau = '+str(tau_check[idx_doub])+'\nQuadruple Risetime Tau = '+str(tau_check[idx_quart])+'\nOctuple Risetime Tau = '+str(tau_check[idx_oct]))
+    plt.title('Double Risetime Tau = '+str(tau_check[idx_doub]))
     plt.xlabel("Tau")
     plt.ylabel("10-90 Rise Time")
     #showing and saving plot
     plt.show()
-    fig.savefig('G:/data/watchman/'+datadate+'_watchman_spe/d2/d2_images/tau_compare.png',dpi = 2500)
+    fig.savefig('G:/data/watchman/'+datadate+'_watchman_spe/d2/d2_images/tau_compare_quadruple.png',dpi = 2500)
 
 #main function
 if __name__ == '__main__':
