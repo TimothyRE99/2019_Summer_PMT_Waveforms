@@ -39,6 +39,7 @@ def risetime_check(datadate,numhead,x_values,fsps):
     index10_removed_notau = index10_notau[np.where(index10_notau < index_90_notau)]         #removing all values after 90% rise index
     index_10_notau = int(index10_removed_notau[len(index10_removed_notau)-1])               #turning last 10% rise index into int
     rise_time_notau = float(t[index_90_notau] - t[index_10_notau])                          #rise time is time at 90% - time at 10%
+    print(rise_time_notau)
     #determining tau vs. risetime graph
     tau_check = np.linspace(1e-10,1e-5,x_values)                 #setting up tau values
     risetime = np.array([])                                     #initializing risetime array
