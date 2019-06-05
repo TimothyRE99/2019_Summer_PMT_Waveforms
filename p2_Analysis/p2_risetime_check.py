@@ -8,27 +8,9 @@ import os
 import matplotlib.pyplot as plt
 from writewaveform import write_waveform
 
-#generating average waveform
-def average_waveform(datadate,numhead):
-    Nloops = len(os.listdir('G:/data/watchman/'+datadate+'_watchman_spe/d2/d2_raw')) - 1
-    for i in range(Nloops):
-        print(i)
-        filename = 'G:/data/watchman/'+datadate+'_watchman_spe/d2/d2_raw/D2--waveforms--%05d.txt' % i
-        (t,y,_) = rw(filename,numhead)
-        y = y/min(y)                #normalizing y values
-        #starting array if this is first file
-        if i == 0:
-            ysum = y
-        #adding additional normalized files to the array index-wise
-        else:
-            ysum = np.add(ysum,y)
-    yfinal = np.divide(ysum,Nloops)
-    return (t,yfinal)
-
 #checking tau vs. rise time
-def risetime_check(datadate,numhead,x_values,fsps):
-    (t,v) = average_waveform(datadate,numhead)
-    write_waveform(t,v,'G:/data/watchman/'+datadate+'_watchman_spe/d2/d2_average.txt',"Average Waveform")
+def risetime_check(datadate,x_values,fsps):
+    (t,v,_) = rw('G:/data/watchman/'+datadate+'_watchman_spe/d2/d2_average.txt',1)      #reading in average waveform
     #determining rise time of average waveform
     v_norm_notau = v/max(v)
     #determining where 10% and 90% are located
@@ -41,7 +23,6 @@ def risetime_check(datadate,numhead,x_values,fsps):
     index10_removed_notau = index10_notau[np.where(index10_notau < index_90_notau)]         #removing all values after 90% rise index
     index_10_notau = int(index10_removed_notau[len(index10_removed_notau)-1])               #turning last 10% rise index into int
     rise_time_notau = float(t[index_90_notau] - t[index_10_notau])                          #rise time is time at 90% - time at 10%
-    print(rise_time_notau)
     #determining tau vs. risetime graph
     tau_check = np.linspace(1e-10,1e-5,x_values)                 #setting up tau values
     risetime = np.array([])                                     #initializing risetime array
@@ -60,6 +41,7 @@ def risetime_check(datadate,numhead,x_values,fsps):
         index_10 = int(index10_removed[len(index10_removed)-1])     #turning last 10% rise index into int
         rise_time = float(t[index_90] - t[index_10])                #rise time is time at 90% - time at 10%
         risetime = np.append(risetime,rise_time)                    #appending risetime to risetime array
+    print(rise_time_notau)
     fig = plt.figure(figsize=(6,4))                         #initializing figure saving
     plt.plot(tau_check,risetime)                            #plotting tau vs. risetime
     #plotting horizontal lines at 2x, 4x, and 8x risetime
@@ -83,9 +65,8 @@ if __name__ == '__main__':
     import argparse
     parser = argparse.ArgumentParser(prog="p2 risetime check",description="Runs lowpass program on average waveforms to compare rise times")
     parser.add_argument('--datadate',type = str,help = 'date when data was gathered, YYYYMMDD', default = '20190516')
-    parser.add_argument('--numhead',type=int,help='number of lines to ignore for header',default = 5)
     parser.add_argument("--x_values",type=int,help="number of taus to generate",default=100000)
     parser.add_argument("--fsps",type=float,help="hz, samples/s",default=20000000000.0)
     args = parser.parse_args()
 
-    risetime_check(args.datadate,args.numhead,args.x_values,args.fsps)
+    risetime_check(args.datadate,args.x_values,args.fsps)
