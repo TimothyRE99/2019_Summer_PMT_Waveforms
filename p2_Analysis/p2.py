@@ -9,6 +9,10 @@ from writewaveform import write_waveform
 
 #applying lowpass filter and writing
 def p2(datadate,numhead,fsps,x_values):
+    #establish tau values from average waveform
+    tau_double = 2e-8
+    tau_quadruple = 2e-8
+    tau_octuple = 2e-8
     #establish directories for reading and writing waveforms
     filedir = 'g:/data/watchman/'+datadate+'_watchman_spe/d2/d2_raw/'
     writedir_two = 'g:/data/watchman/'+datadate+'_watchman_spe/d2/d2_rise_doubled/'
@@ -31,86 +35,18 @@ def p2(datadate,numhead,fsps,x_values):
         writename_two = writedir_two + 'D2--waveforms--%05d.txt' % i
         writename_four = writedir_four + 'D2--waveforms--%05d.txt' % i
         writename_eight = writedir_eight + 'D2--waveforms--%05d.txt' % i
-        (t,v,header) = rw(filename,numhead)         #taking in information from waveform
-        #removing baseline
-        baseline = np.mean(v[0:100])
-        v = (v - baseline)
-        #establishing base risetime
-        v_norm_notau = v/min(v)
-        #determining where 10% and 90% are located
-        check10_notau = v_norm_notau <= .1
-        check90_notau = v_norm_notau >= .9
-        #converting to array of indices
-        index10_notau = np.asarray([k for k, x in enumerate(check10_notau) if x])
-        index90_notau = np.asarray([k for k, x in enumerate(check90_notau) if x])
-        index_90_notau = int(index90_notau[0])
-        index10_removed_notau = index10_notau[np.where(index10_notau < index_90_notau)]         #removing all values after 90% rise index
-        index_10_notau = int(index10_removed_notau[len(index10_removed_notau)-1])               #turning last 10% rise index into int
-        rise_time_notau = float(t[index_90_notau] - t[index_10_notau])                          #rise time is time at 90% - time at 10%
-        #determining tau vs. risetime
-        tau_check = np.linspace(1e-10,1e-5,x_values)                 #setting up tau values
-        risetime = np.array([])                                     #initializing risetime array
-        for i in range(len(tau_check)):                             #cycling through tau values
-            if i % 100 == 0:
-                print(i)
-            v_taued = lpf(v,tau_check[i],fsps)                      #applying tau value LPF
-            v_norm = v_taued/min(v_taued)                           #normalizing result
-            #determining where 10% and 90% are located
-            check10 = v_norm <= .1
-            check90 = v_norm >= .9
-            #converting to array of indices
-            index10 = np.asarray([k for k, x in enumerate(check10) if x])
-            index90 = np.asarray([k for k, x in enumerate(check90) if x])
-            index_90 = int(index90[0])
-            index10_removed = index10[np.where(index10 < index_90)]     #removing all values after 90% rise index
-            index_10 = int(index10_removed[len(index10_removed)-1])     #turning last 10% rise index into int
-            rise_time = float(t[index_90] - t[index_10])                #rise time is time at 90% - time at 10%
-            risetime = np.append(risetime,rise_time)                    #appending risetime to risetime array
-        print(risetime[0])
-        print(rise_time_notau*2)
-        print(rise_time_notau*4)
-        print(rise_time_notau*8)
-        print(risetime[len(risetime)-1])
-        #calculating intersection point of lines and tau vs. risetime
-        if np.any(risetime > rise_time_notau*8) and np.any(risetime < rise_time_notau*8):
-            idx_oct = int(np.argwhere(np.diff(np.sign(risetime - (rise_time_notau*8)))).flatten()[0])
-            octuples = True
-        else:
-            print("No Octuples!")
-            octuples = False
-        if np.any(risetime > rise_time_notau*4) and np.any(risetime < rise_time_notau*4):
-            idx_quart = int(np.argwhere(np.diff(np.sign(risetime - (rise_time_notau*4)))).flatten()[0])
-            quadruples = True
-        else:
-            print("No Quadruples!")
-            quadruples = False
-        if np.any(risetime > rise_time_notau*2) and np.any(risetime < rise_time_notau*2):
-            idx_doub = int(np.argwhere(np.diff(np.sign(risetime - (rise_time_notau*2)))).flatten()[0])
-            doubles = True
-        else:
-            print("No Doubles!")
-            doubles = False
-        #setting taus based on value necessary to double, quadruple, and octuple rise time
-        if doubles:
-            tau_two = tau_check[idx_doub]
-        if quadruples:
-            tau_four = tau_check[idx_quart]
-        if octuples:
-            tau_eight = tau_check[idx_oct]
-        #running low pass filter for each tau
-        if doubles:
-            y_two = lpf(v,tau_two,fsps)
-        if quadruples:
-            y_four = lpf(v,tau_four,fsps)
-        if octuples:
-            y_eight = lpf(v,tau_eight,fsps)
-        #writing results of each lpf to proper location
-        if doubles:
-            write_waveform(t,y_two,writename_two,header)
-        if quadruples:
-            write_waveform(t,y_four,writename_four,header)
-        if octuples:
-            write_waveform(t,y_eight,writename_eight,header)
+        #calculating and writing double files
+        (t,v,header) = rw(filename,numhead)
+        v_taued = lpf(v,tau_double,fsps)
+        write_waveform(t,v_taued,writename_two,header)
+        #calculating and writing quadruple files
+        (t,v,header) = rw(writename_two,numhead)
+        v_taued = lpf(v,tau_quadruple,fsps)
+        write_waveform(t,v_taued,writename_four,header)
+        #calculating and writing octuple files
+        (t,v,header) = rw(writename_four,numhead)
+        v_taued = lpf(v,tau_octuple,fsps)
+        write_waveform(t,v_taued,writename_eight,header)
 
 #main function
 if __name__ == '__main__':
