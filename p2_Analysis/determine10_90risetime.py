@@ -10,6 +10,8 @@ import os
 
 def determine(datadate,numhead,directory):
     Nloops = len(os.listdir('G:/data/watchman/'+datadate+'_watchman_spe/d2/d2_'+directory))
+    if directory == 'raw':
+        Nloops -= 1
     writename = 'G:/data/watchman/'+datadate+'_watchman_spe/d2/d2_histograms/10_90_rise_time_'+directory+'.txt'
     #determine rise times
     for i in range(Nloops):
