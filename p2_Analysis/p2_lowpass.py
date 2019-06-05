@@ -30,6 +30,6 @@ if __name__ == '__main__':
     parser.add_argument("--fsps",type=float,help="hz, samples/s",default=20e9)
     args = parser.parse_args()
 
-    t,v,header = rw(args.filename,args.numhead)
-    v_taued = lpfFirstOrder(v,args.tau,args.fsps)
-    write_waveform(t,v_taued,args.writename,header)
+    t,v,header = rw(args.filename,args.numhead)         #reading in information
+    v_taued = lpfFirstOrder(v,args.tau,args.fsps)       #appling lpf
+    write_waveform(t,v_taued,args.writename,header)     #saving new average waveform txt file

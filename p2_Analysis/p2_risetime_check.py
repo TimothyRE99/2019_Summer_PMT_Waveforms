@@ -41,14 +41,14 @@ def risetime_check(datadate,x_values,fsps):
         index_10 = int(index10_removed[len(index10_removed)-1])     #turning last 10% rise index into int
         rise_time = float(t[index_90] - t[index_10])                #rise time is time at 90% - time at 10%
         risetime = np.append(risetime,rise_time)                    #appending risetime to risetime array
-    print(rise_time_notau)
+    print(rise_time_notau)                                  #printing risetime for comparison to average
     fig = plt.figure(figsize=(6,4))                         #initializing figure saving
     plt.plot(tau_check,risetime)                            #plotting tau vs. risetime
-    #plotting horizontal lines at 2x, 4x, and 8x risetime
+    #plotting horizontal line at 2x risetime
     plt.axhline(y=(rise_time_notau*2),color='red')
     #calculating intersection point of lines and tau vs. risetime
     idx_doub = int(np.argwhere(np.diff(np.sign(risetime - (rise_time_notau*2)))).flatten()[0])
-    #setting up title (taus for each risetime value) and labels
+    #setting up title (tau for double rise time) and labels
     plt.title('Double Risetime Tau = '+str(tau_check[idx_doub]))
     plt.xlabel("Tau")
     plt.ylabel("10-90 Rise Time")
