@@ -65,6 +65,7 @@
 * readhistogram: same as p1, ported over to allow use by p2 files
 * writehistogram: same as p1, ported over to allow use by p2 files
 * gausshistogram: same as p1, ported over to allow use by p2 files
+* determine10_90risetime: same as p1, ported over to allow use by p2 files
 
 ## p3
 
