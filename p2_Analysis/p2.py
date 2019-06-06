@@ -7,17 +7,28 @@ from p2_lowpass import lpfFirstOrder as lpf
 from readwaveform import read_waveform as rw
 from writewaveform import write_waveform
 
+#applying noise to waveform
+def noise_add(v,noise):
+    noise_array = np.random.normal(loc=0.0, scale = noise, size = len(v))
+    v_final = np.add(v, noise_array)
+    return(v_final)
+
 #applying lowpass filter and writing
-def p2(datadate,numhead,fsps,x_values):
+def p2(datadate,numhead,fsps,x_values,noise):
     #establish tau values from average waveform
     tau_double = 2.18e-8
     tau_quadruple = 1.13e-8
     tau_octuple = 4.15e-8
     #establish directories for reading and writing waveforms
     filedir = 'g:/data/watchman/'+datadate+'_watchman_spe/d2/d2_raw/'
-    writedir_two = 'g:/data/watchman/'+datadate+'_watchman_spe/d2/d2_rise_doubled/'
-    writedir_four = 'g:/data/watchman/'+datadate+'_watchman_spe/d2/d2_rise_quadrupled/'
-    writedir_eight = 'g:/data/watchman/'+datadate+'_watchman_spe/d2/d2_rise_octupled/'
+    if noise == 0:
+        writedir_two = 'g:/data/watchman/'+datadate+'_watchman_spe/d2/d2_rise_doubled/'
+        writedir_four = 'g:/data/watchman/'+datadate+'_watchman_spe/d2/d2_rise_quadrupled/'
+        writedir_eight = 'g:/data/watchman/'+datadate+'_watchman_spe/d2/d2_rise_octupled/'
+    else:
+        writedir_two = 'g:/data/watchman/'+datadate+'_watchman_spe/d2/d2_rise_doubled_noise=' + str(noise) + 'V/'
+        writedir_four = 'g:/data/watchman/'+datadate+'_watchman_spe/d2/d2_rise_quadrupled_noise=' + str(noise) + 'V/'
+        writedir_eight = 'g:/data/watchman/'+datadate+'_watchman_spe/d2/d2_rise_octupled_noise=' + str(noise) + 'V/'
     #creating write directories if they're not there
     if not os.path.exists(writedir_two):
         os.makedirs(writedir_two)
@@ -38,14 +49,20 @@ def p2(datadate,numhead,fsps,x_values):
         #calculating and writing double files
         (t,v,header) = rw(filename,numhead)
         v_taued = lpf(v,tau_double,fsps)
+        if noise != 0:
+            v_taued = noise_add(v_taued,noise)
         write_waveform(t,v_taued,writename_two,header)
         #calculating and writing quadruple files
         (t,v,header) = rw(writename_two,numhead)
         v_taued = lpf(v,tau_quadruple,fsps)
+        if noise != 0:
+            v_taued = noise_add(v_taued,noise)
         write_waveform(t,v_taued,writename_four,header)
         #calculating and writing octuple files
         (t,v,header) = rw(writename_four,numhead)
         v_taued = lpf(v,tau_octuple,fsps)
+        if noise != 0:
+            v_taued = noise_add(v_taued,noise)
         write_waveform(t,v_taued,writename_eight,header)
 
 #main function
@@ -56,6 +73,7 @@ if __name__ == '__main__':
     parser.add_argument('--numhead',type=int,help='number of lines to ignore for header',default = 5)
     parser.add_argument("--fsps",type=float,help="hz, samples/s",default=20000000000.0)
     parser.add_argument("--x_values",type=int,help="number of taus to generate",default=5000)
+    parser.add_argument("--noise",type=float,help="standard deviation of noise gaussian",default=0.0002)
     args = parser.parse_args()
 
-    p2(args.datadate,args.numhead,args.fsps,args.x_values)
+    p2(args.datadate,args.numhead,args.fsps,args.x_values,args.noise)
