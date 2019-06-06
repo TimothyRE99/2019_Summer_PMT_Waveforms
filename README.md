@@ -4,7 +4,7 @@
 ### Preliminary Steps
 1. Set up directories (This ensures programs work properly when saving files)
     * Base directory: G:/data/watchman/YYYYMMDD_watchman_spe/ in which "YYYYMMDD" is the date of data collection in that format
-        * d1/
+        * d1
             * d1_50centered
             * d1_baseline_shifted
             * d1_final_doubles
@@ -51,6 +51,15 @@
 * writewaveform: Takes in arrays for time, volts, and headers and writes them to a waveform txt file
 
 ## p2
+### Preliminary Steps
+1. Set up directories (This ensures programs work properly when saving files)
+    * Base directory: G:/data/watchman/YYYYMMDD_watchman_spe/ in which "YYYYMMDD" is the date of data collection in that format
+        * d2
+            * d2_histograms
+                * histogram_images
+            * d2_images
+            * d2_raw
+
 ### Processing Steps
 1. p2_prelim (moves files from d1_final_spes to d2_raw, including info file, and renames appropriately)
 1. p2_risetime_check/p2_lowpass(manually) (Used to establish comparison graphs of tau vs. rise time and determine proper taus to use in p2 for doubling each step of the rise time, will need to run each of these three times, once for each double, quadruple, and octuple, changing which files you're using each time)
