@@ -35,6 +35,7 @@ def generate_average_shape_plot(datadate,numhead):
     plt.xlabel('Time')
     plt.ylabel('Ratio to Peak Height')
     plt.title('Average Wave Shape')
+    plt.get_current_fig_manager().window.showMaximized()        #maximizes plot
     plt.show()                              #show plot for confirmation
     #finalize plot saving
     fig.savefig('G:/data/watchman/'+datadate+'_watchman_spe/d1/d1_histograms/average_shape.png',dpi = 300)

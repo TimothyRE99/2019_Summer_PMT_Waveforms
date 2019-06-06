@@ -17,6 +17,7 @@ def waveform_viewer(datadate,subfolder_name,numhead):
         print(filename)                                 #print name of file
         plt.plot(x,y)                                   #plot data from file
         plt.title(files[i])                             #title plot with name of file
+        plt.get_current_fig_manager().window.showMaximized()    #maximizes plot
         plt.show()                                      #show plot, with pause in code
 
 if __name__ == '__main__':

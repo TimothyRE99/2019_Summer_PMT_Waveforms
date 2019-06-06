@@ -80,6 +80,7 @@ def p1b_sort(datadate,charge_mean,peak_mean,FWHM_mean,numhead):
                 print("20% Jitter")
             plt.title(filename)
             plt.plot(t,v)                   #plotting waveform in question
+            plt.get_current_fig_manager().window.showMaximized()        #maximizes plot
             plt.show()
             double_check = 'Initialization.'
             while double_check != 's' and double_check != 'd':

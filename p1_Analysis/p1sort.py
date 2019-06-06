@@ -47,8 +47,8 @@ def p1_sort(filenum,datadate,lowpass,numhead,numtaps,threshold,baseline):
                     plt.plot(t_peaks,y_peaks,'x',color='cyan')
                     plt.grid(True)
                     print('Displaying file #%05d' % filenum)
-                    plt.show(block = False)
-                    plt.pause(5)
+                    plt.get_current_fig_manager().window.showMaximized()        #maximizes plot
+                    plt.show()
                     plt.close()
 
                     spe_check = 'pre-loop initialization'

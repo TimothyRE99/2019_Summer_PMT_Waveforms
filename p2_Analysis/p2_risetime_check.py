@@ -53,6 +53,7 @@ def risetime_check(datadate,x_values,fsps):
     plt.xlabel("Tau")
     plt.ylabel("10-90 Rise Time")
     #showing and saving plot
+    plt.get_current_fig_manager().window.showMaximized()        #maximizes plot
     plt.show()
     fig.savefig('G:/data/watchman/'+datadate+'_watchman_spe/d2/d2_images/tau_compare_quadruple.png',dpi = 2500)
 

@@ -30,4 +30,5 @@ if __name__ == '__main__':
     x,y,header = read_waveform(args.filename,args.numhead)
     print(header)
     plt.plot(x,y)
+    plt.get_current_fig_manager().window.showMaximized()        #maximizes plot
     plt.show()
