@@ -58,10 +58,13 @@
 
 ### Additional Programs
 * p2_lowpass: Lowpass filter formula/function to be called from p2 processing stages
-* p2_lpf_plotting: Plots the four versions of d2 data for each file, cycling through to compare
+* p2_lpf_plotting: Plots the four versions of d2 data for each file, cycling through to compare, set title to include rise times
 * readwaveform: same as p1, ported over to allow use by p2 files
 * waveform_viewer: same as p1, ported over to allow use by p2 files
 * writewaveform: same as p1, ported over to allow use by p2 files
+* readhistogram: same as p1, ported over to allow use by p2 files
+* writehistogram: same as p1, ported over to allow use by p2 files
+* gausshistogram: same as p1, ported over to allow use by p2 files
 
 ## p3
 
