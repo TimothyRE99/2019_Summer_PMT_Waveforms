@@ -38,13 +38,7 @@
 
 ## p2
 ### Preliminary Steps
-1. Set up directories (This ensures programs work properly when saving files)
-    * Base directory: G:/data/watchman/YYYYMMDD_watchman_spe/ in which "YYYYMMDD" is the date of data collection in that format
-        * d2
-            * d2_histograms
-                * histogram_images
-            * d2_images
-            * d2_raw
+* No preliminary steps for P2. All functions create their own directories as needed
 
 ### Processing Steps
 1. p2_prelim (moves files from d1_final_spes to d2_raw, including info file, and renames appropriately)
