@@ -73,7 +73,7 @@ if __name__ == '__main__':
     parser.add_argument('--numhead',type=int,help='number of lines to ignore for header',default = 5)
     parser.add_argument("--fsps",type=float,help="hz, samples/s",default=20000000000.0)
     parser.add_argument("--x_values",type=int,help="number of taus to generate",default=5000)
-    parser.add_argument("--noise",type=float,help="standard deviation of noise gaussian",default=0.0002)
+    parser.add_argument("--noise",type=float,help="standard deviation of noise gaussian",default=0)
     args = parser.parse_args()
 
     p2(args.datadate,args.numhead,args.fsps,args.x_values,args.noise)
