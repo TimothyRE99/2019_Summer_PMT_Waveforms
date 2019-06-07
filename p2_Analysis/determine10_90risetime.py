@@ -13,6 +13,8 @@ def determine(datadate,numhead,directory):
     if directory == 'raw':
         Nloops -= 1
     writename = 'G:/data/watchman/'+datadate+'_watchman_spe/d2/d2_histograms/10_90_rise_time_'+directory+'.txt'
+    if not os.path.exists('G:/data/watchman/'+datadate+'_watchman_spe/d2/d2_histograms/histogram_images/'):
+        os.makedirs('G:/data/watchman/'+datadate+'_watchman_spe/d2/d2_histograms/histogram_images/')
     #determine rise times
     for i in range(Nloops):
         print(i)

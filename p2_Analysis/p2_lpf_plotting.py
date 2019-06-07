@@ -22,13 +22,16 @@ def risetimes(t,v):
     return(risetime)
 
 #plotting the waveforms
-Nloops = len(os.listdir('G:/data/watchman/20190516_watchman_spe/d2/d2_raw')) - 1
+datadate = '20190516'
+Nloops = len(os.listdir('G:/data/watchman/'+datadate+'_watchman_spe/d2/d2_raw')) - 1
+if not os.path.exists('G:/data/watchman/'+datadate+'_watchman_spe/d2/d2_images/'):
+    os.makedirs('G:/data/watchman/'+datadate+'_watchman_spe/d2/d2_images/')
 for i in range(Nloops):
     print('File: %05d' % i)
-    (t_single,v_single,_) = rw('g:/data/watchman/20190516_watchman_spe/d2/d2_raw/D2--waveforms--%05d.txt' % i,5)
-    (t_double,v_double,_) = rw('g:/data/watchman/20190516_watchman_spe/d2/d2_rise_doubled/D2--waveforms--%05d.txt' % i,5)
-    (t_quadruple,v_quadruple,_) = rw('g:/data/watchman/20190516_watchman_spe/d2/d2_rise_quadrupled/D2--waveforms--%05d.txt' % i,5)
-    (t_octuple,v_octuple,_) = rw('g:/data/watchman/20190516_watchman_spe/d2/d2_rise_octupled/D2--waveforms--%05d.txt' % i,5)
+    (t_single,v_single,_) = rw('g:/data/watchman/'+datadate+'_watchman_spe/d2/d2_raw/D2--waveforms--%05d.txt' % i,5)
+    (t_double,v_double,_) = rw('g:/data/watchman/'+datadate+'_watchman_spe/d2/d2_rise_doubled/D2--waveforms--%05d.txt' % i,5)
+    (t_quadruple,v_quadruple,_) = rw('g:/data/watchman/'+datadate+'_watchman_spe/d2/d2_rise_quadrupled/D2--waveforms--%05d.txt' % i,5)
+    (t_octuple,v_octuple,_) = rw('g:/data/watchman/'+datadate+'_watchman_spe/d2/d2_rise_octupled/D2--waveforms--%05d.txt' % i,5)
     #running risetime calculation
     risetime_single = risetimes(t_single,v_single)
     risetime_double = risetimes(t_double,v_double)

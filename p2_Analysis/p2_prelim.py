@@ -7,6 +7,8 @@ import shutil
 #move and rename code
 def p2_prelim(datadate):
     files = sorted(os.listdir('G:/data/watchman/'+datadate+'_watchman_spe/d1/d1_final_spes'))          #creating list of files in d1_final_spes directory
+    if not os.path.exists('G:/data/watchman/'+datadate+'_watchman_spe/d2/d2_raw/'):
+        os.makedirs('G:/data/watchman/'+datadate+'_watchman_spe/d2/d2_raw/')
     for i in range(len(files)):
         print(i)
         filename = 'G:/data/watchman/'+datadate+'_watchman_spe/d1/d1_final_spes/' + files[i]   #determining source file path

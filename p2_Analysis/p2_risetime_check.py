@@ -10,6 +10,8 @@ from writewaveform import write_waveform
 
 #checking tau vs. rise time
 def risetime_check(datadate,x_values,fsps):
+    if not os.path.exists('G:/data/watchman/'+datadate+'_watchman_spe/d2/d2_images/'):
+        os.makedirs('G:/data/watchman/'+datadate+'_watchman_spe/d2/d2_images/')
     (t,v,_) = rw('G:/data/watchman/'+datadate+'_watchman_spe/d2/d2_average_quadrupled.txt',1)      #reading in average waveform
     #determining rise time of average waveform
     v_norm_notau = v/max(v)
