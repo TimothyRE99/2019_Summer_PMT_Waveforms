@@ -7,58 +7,51 @@ import shutil
 #moving files
 def p2_prelim(datadate,noise):
     if noise == 0:
-        files1 = sorted(os.listdir('g:/data/watchman/'+datadate+'_watchman_spe/d2/d2_raw/'))
-        files2 = sorted(os.listdir('g:/data/watchman/'+datadate+'_watchman_spe/d2/d2_rise_doubled/'))
-        files4 = sorted(os.listdir('g:/data/watchman/'+datadate+'_watchman_spe/d2/d2_rise_quadrupled/'))
-        files8 = sorted(os.listdir('g:/data/watchman/'+datadate+'_watchman_spe/d2/d2_rise_octupled/'))
+        filedir1 = 'g:/data/watchman/'+datadate+'_watchman_spe/d2/d2_raw/'
+        filedir2 = 'g:/data/watchman/'+datadate+'_watchman_spe/d2/d2_rise_doubled/'
+        filedir4 = 'g:/data/watchman/'+datadate+'_watchman_spe/d2/d2_rise_quadrupled/'
+        filedir8 = 'g:/data/watchman/'+datadate+'_watchman_spe/d2/d2_rise_octupled/'
+        writedir1 = 'g:/data/watchman/'+datadate+'_watchman_spe/d3/d3_raw/'
+        writedir2 = 'g:/data/watchman/'+datadate+'_watchman_spe/d3/d3_rise_doubled/'
+        writedir4 = 'g:/data/watchman/'+datadate+'_watchman_spe/d3/d3_rise_quadrupled/'
+        writedir8 = 'g:/data/watchman/'+datadate+'_watchman_spe/d3/d3_rise_octupled/'
     else:
-        files1 = sorted(os.listdir('g:/data/watchman/'+datadate+'_watchman_spe/d2/d2_raw_noise=' + str(noise) + 'V/'))
-        files2 = sorted(os.listdir('g:/data/watchman/'+datadate+'_watchman_spe/d2/d2_rise_doubled_noise=' + str(noise) + 'V/'))
-        files4 = sorted(os.listdir('g:/data/watchman/'+datadate+'_watchman_spe/d2/d2_rise_quadrupled_noise=' + str(noise) + 'V/'))
-        files8 = sorted(os.listdir('g:/data/watchman/'+datadate+'_watchman_spe/d2/d2_rise_octupled_noise=' + str(noise) + 'V/'))
+        filedir1 = 'g:/data/watchman/'+datadate+'_watchman_spe/d2/d2_raw_noise=' + str(noise) + 'V/'
+        filedir2 = 'g:/data/watchman/'+datadate+'_watchman_spe/d2/d2_rise_doubled_noise=' + str(noise) + 'V/'
+        filedir4 = 'g:/data/watchman/'+datadate+'_watchman_spe/d2/d2_rise_quadrupled_noise=' + str(noise) + 'V/'
+        filedir8 = 'g:/data/watchman/'+datadate+'_watchman_spe/d2/d2_rise_octupled_noise=' + str(noise) + 'V/'
+        writedir1 = 'g:/data/watchman/'+datadate+'_watchman_spe/d3/d3_raw_noise=' + str(noise) + 'V/'
+        writedir2 = 'g:/data/watchman/'+datadate+'_watchman_spe/d3/d3_rise_doubled_noise=' + str(noise) + 'V/'
+        writedir4 = 'g:/data/watchman/'+datadate+'_watchman_spe/d3/d3_rise_quadrupled_noise=' + str(noise) + 'V/'
+        writedir8 = 'g:/data/watchman/'+datadate+'_watchman_spe/d3/d3_rise_octupled_noise=' + str(noise) + 'V/'
+    files1 = sorted(os.listdir(filedir1))
+    if not os.path.exists(writedir1):
+        os.makedirs(writedir1)
+    if not os.path.exists(writedir2):
+        os.makedirs(writedir2)
+    if not os.path.exists(writedir2):
+        os.makedirs(writedir2)
+    if not os.path.exists(writedir2):
+        os.makedirs(writedir2)
     for i in range(len(files1)):
         print('Unfiltered File: %05d' % i)
-        if noise != 0:
-            filename = 'G:/data/watchman/'+datadate+'_watchman_spe/d2/d2_raw_noise=' + str(noise) + 'V/' + files1[i]
-            if filename == 'G:/data/watchman/'+datadate+'_watchman_spe/d2/d2_raw_noise=' + str(noise) + 'V/d1_info.txt':
-                writename = 'G:/data/watchman/'+datadate+'_watchman_spe/d3/d3_raw_noise=' + str(noise) + 'V/d2_info.txt'
-            else:
-                writename = 'G:/data/watchman/'+datadate+'_watchman_spe/d3/d3_raw_noise=' + str(noise) + 'V/D3--waveforms--%05d.txt' % i
+        filename1 = filedir1 + files1[i]
+        if files1[i] == 'd1_info.txt':
+            writename1 = writedir1 + 'd2_info.txt'
         else:
-            filename = 'G:/data/watchman/'+datadate+'_watchman_spe/d2/d2_raw/' + files1[i]
-            if filename == 'G:/data/watchman/'+datadate+'_watchman_spe/d2/d2_raw/d1_info.txt':
-                writename = 'G:/data/watchman/'+datadate+'_watchman_spe/d3/d3_raw/d2_info.txt'
-            else:
-                writename = 'G:/data/watchman/'+datadate+'_watchman_spe/d3/d3_raw/D3--waveforms--%05d.txt' % i
-        if not os.path.exists(writename):
-            os.makedirs(writename.replace('D3--waveforms--%05d' % i, ''))
-        shutil.copy2(filename,writename)
-    for i in range(len(files2)):
+            writename1 = writedir1 + 'D3--waveforms--%05d.txt' % i
+        shutil.copy2(filename1,writename1)
+    for i in range(len(files1) - 1):
         print('Filtered File: %05d' % i)
-        if noise == 0:
-            filename2 = 'g:/data/watchman/'+datadate+'_watchman_spe/d2/d2_rise_doubled/' + files2[i]
-            filename4 = 'g:/data/watchman/'+datadate+'_watchman_spe/d2/d2_rise_quadrupled/' + files4[i]
-            filename8 = 'g:/data/watchman/'+datadate+'_watchman_spe/d2/d2_rise_octupled/' + files8[i]
-            writename2 = 'g:/data/watchman/'+datadate+'_watchman_spe/d3/d3_rise_doubled/D3--waveforms--%05d.txt' % i
-            writename4 = 'g:/data/watchman/'+datadate+'_watchman_spe/d3/d3_rise_quadrupled/D3--waveforms--%05d.txt' % i
-            writename8 = 'g:/data/watchman/'+datadate+'_watchman_spe/d3/d3_rise_octupled/D3--waveforms--%05d.txt' % i
-        else:
-            filename2 = 'g:/data/watchman/'+datadate+'_watchman_spe/d2/d2_rise_doubled_noise=' + str(noise) + 'V/' + files2[i]
-            filename4 = 'g:/data/watchman/'+datadate+'_watchman_spe/d2/d2_rise_quadrupled_noise=' + str(noise) + 'V/' + files4[i]
-            filename8 = 'g:/data/watchman/'+datadate+'_watchman_spe/d2/d2_rise_octupled_noise=' + str(noise) + 'V/' + files8[i]
-            writename2 = 'g:/data/watchman/'+datadate+'_watchman_spe/d2/d2_rise_doubled_noise=' + str(noise) + 'V/D3--waveforms--%05d.txt' % i
-            writename4 = 'g:/data/watchman/'+datadate+'_watchman_spe/d2/d2_rise_quadrupled_noise=' + str(noise) + 'V/D3--waveforms--%05d.txt' % i
-            writename8 = 'g:/data/watchman/'+datadate+'_watchman_spe/d2/d2_rise_octupled_noise=' + str(noise) + 'V/D3--waveforms--%05d.txt' % i
-        if not os.path.exists(writename2):
-            os.makedirs(writename2.replace('D3--waveforms--%05d' % i, ''))
-        if not os.path.exists(writename4):
-            os.makedirs(writename4.replace('D3--waveforms--%05d' % i, ''))
-        if not os.path.exists(writename8):
-            os.makedirs(writename8.replace('D3--waveforms--%05d' % i, ''))
+        filename2 = filedir2 + 'D2--waveforms--%05d.txt' % i
+        filename4 = filedir4 + 'D2--waveforms--%05d.txt' % i
+        filename8 = filedir8 + 'D2--waveforms--%05d.txt' % i
+        writename2 = writedir2 + 'D3--waveforms--%05d.txt' % i
+        writename4 = writedir4 + 'D3--waveforms--%05d.txt' % i
+        writename8 = writedir8 + 'D3--waveforms--%05d.txt' % i
         shutil.copy2(filename2,writename2)
         shutil.copy2(filename4,writename4)
         shutil.copy2(filename8,writename8)
-
 if __name__ == '__main__':
     import argparse
     parser = argparse.ArgumentParser(prog='p3 prelim', description='moving files from d2 to d3')
