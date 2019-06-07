@@ -77,6 +77,17 @@
 * determine10_90risetime: same as p1, ported over to allow use by p2 files
 
 ## p3
+### Preliminary Steps
+* No preliminary steps for P3. All functions create their own directories as needed
+
+### Processing Steps
+1. p3_prelim (Moves files from d2 to d3, including info file, and renames appropriately)
+1. p3 (Downsamples and digitizes waveforms)
+
+### Additional Programs
+* p3_downdigit_plotting.py: plots the four versions of d3 for each file, cycling through to compare, option to include scatter points
+* writewaveform: same as p1, ported over to allow use by p3 files
+* readhistogram: same as p1, ported over to allow use by p3 files
 
 ## Extraneous
 ### Additional Programs
