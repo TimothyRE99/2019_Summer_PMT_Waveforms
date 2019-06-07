@@ -28,8 +28,8 @@ def downsampling(t,v,fsps,new_fsps):
     return t_new,v_new
 
 #reading and writing waveforms and calling other functions
-def p3(noise,datadate,numhead,fsps,new_fsps):
-    if noise == 0:
+def p3(noise_filter,noise,datadate,numhead,fsps,new_fsps):
+    if noise_filter == 0:
         filedir1 = 'g:/data/watchman/'+datadate+'_watchman_spe/d3/d3_raw/'
         filedir2 = 'g:/data/watchman/'+datadate+'_watchman_spe/d3/d3_rise_doubled/'
         filedir4 = 'g:/data/watchman/'+datadate+'_watchman_spe/d3/d3_rise_quadrupled/'
@@ -87,6 +87,7 @@ def p3(noise,datadate,numhead,fsps,new_fsps):
 if __name__ == '__main__':
     import argparse
     parser = argparse.ArgumentParser(prog="p3",description="Downsamples and digitizes waveform.")
+    parser.add_argument("--noise_filter",type=float,help='bits of noise from filterr',default=0)
     parser.add_argument("--noise",type=float,help='bits of noise from digitizer',default=3.3)
     parser.add_argument('--datadate',type = str,help = 'date when data was gathered, YYYYMMDD', default = '20190516')
     parser.add_argument('--numhead',type=int,help='number of lines to ignore for header',default = 5)
@@ -94,4 +95,4 @@ if __name__ == '__main__':
     parser.add_argument("--new_fsps",type=float,help="hz, samples/s of new digitizer",default=500000000.0)
     args = parser.parse_args()
 
-    p3(args.noise,args.datadate,args.numhead,args.fsps,args.new_fsps)
+    p3(args.noise_filter,args.noise,args.datadate,args.numhead,args.fsps,args.new_fsps)
