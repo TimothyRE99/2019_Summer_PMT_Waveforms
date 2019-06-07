@@ -10,7 +10,9 @@ from writewaveform import write_waveform
 
 #digitizing
 def digitize(v,noise):
-    v_new = (v * (2**14 - 1)*2 + 0.5)       #multiplying by digitizer formula to convert to bits
+    v_new = np.array([])
+    for i in range(len(v)):
+        v_new = np.append(v_new,(v[i] * (2**14 - 1)*2 + 0.5))           #multiplying by digitizer formula to convert to bits
     noise_array = np.random.normal(loc=0.0, scale = noise, size = len(v_new))       #generating noise array
     v_final = np.add(v_new, noise_array)    #adding noise to digitized values
     v_final = v_final.astype(int)           #converting values to ints
@@ -18,7 +20,7 @@ def digitize(v,noise):
 
 #downsampling
 def downsampling(t,v,fsps,new_fsps):
-    steps = fsps/new_fsps                                           #determining how many 'steps' from original waveform can be taken
+    steps = int(fsps/new_fsps)                                      #determining how many 'steps' from original waveform can be taken
     start_index = random.randint(0,steps - 1)                       #randomly determining start index within range [0,steps)
     multiplier = math.floor((len(v) - start_index - 1) / steps)     #determining max amount you can multiply the steps value by and add onto the start value without overshooting end of array
     #initializing arrays
@@ -26,8 +28,8 @@ def downsampling(t,v,fsps,new_fsps):
     v_new = np.array([])
     #grabbing only values of array that the digitizer would grab
     for i in range(multiplier + 1):
-        t_new = np.append(t_new,start_index + i * steps)
-        v_new = np.append(v_new,start_index + i * steps)
+        t_new = np.append(t_new,t[start_index + i * steps])
+        v_new = np.append(v_new,v[start_index + i * steps])
     return t_new,v_new
 
 #reading and writing waveforms and calling other functions

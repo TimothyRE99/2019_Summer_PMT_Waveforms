@@ -15,5 +15,6 @@ for i in range(Nloops):
     plt.plot(t_single,-1*v_single)
     plt.plot(t_double,-1*v_double,color='red')
     plt.plot(t_quadruple,-1*v_quadruple,color='green')
+    plt.plot(t_octuple,-1*v_octuple,color='purple')
     plt.get_current_fig_manager().window.showMaximized()
     plt.show()
