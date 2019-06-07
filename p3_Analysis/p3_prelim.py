@@ -18,8 +18,8 @@ def p2_prelim(datadate,noise):
         files8 = sorted(os.listdir('g:/data/watchman/'+datadate+'_watchman_spe/d2/d2_rise_octupled_noise=' + str(noise) + 'V/'))
     for i in range(len(files1)):
         print('Unfiltered File: %05d' % i)
-        if noise == 0:
-            filename = 'G:/data/watchman/'+datadate+'_watchman_spe/d2/d2_rawn_oise=' + str(noise) + 'V/' + files1[i]
+        if noise != 0:
+            filename = 'G:/data/watchman/'+datadate+'_watchman_spe/d2/d2_raw_noise=' + str(noise) + 'V/' + files1[i]
             if filename == 'G:/data/watchman/'+datadate+'_watchman_spe/d2/d2_raw_noise=' + str(noise) + 'V/d1_info.txt':
                 writename = 'G:/data/watchman/'+datadate+'_watchman_spe/d3/d3_raw_noise=' + str(noise) + 'V/d2_info.txt'
             else:
