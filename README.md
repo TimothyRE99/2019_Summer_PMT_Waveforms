@@ -2,20 +2,6 @@
 
 ## p1
 ### Preliminary Steps
-1. Set up directories (This ensures programs work properly when saving files)
-    * Base directory: G:/data/watchman/YYYYMMDD_watchman_spe/ in which "YYYYMMDD" is the date of data collection in that format
-        * d1
-            * d1_50centered
-            * d1_baseline_shifted
-            * d1_final_doubles
-            * d1_final_spes
-            * d1_histograms
-                * histogram_images
-            * d1_normalized
-            * d1_raw
-            * d1_renamed
-            * not_spe
-            * unsure_if_spe
 1. Collect data from pulse generator/oscilloscope/PMT setup, save to base directory
 1. Create d0_info.txt file including information from physical setup, save to base directory (format below)
     * Data acquisition,<VALUE>
