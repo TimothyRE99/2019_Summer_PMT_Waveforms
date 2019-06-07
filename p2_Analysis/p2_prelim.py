@@ -19,7 +19,7 @@ def p2_prelim(datadate):
 
 if __name__ == '__main__':
     import argparse
-    parser = argparse.ArgumentParser(prog='deletedfilerename', description='deleting file and renaming all files after it')
+    parser = argparse.ArgumentParser(prog='p2 prelim', description='moving files from d1 to d2')
     parser.add_argument('--datadate',type = str,help = 'date when data was gathered, YYYYMMDD', default = '20190516')
     args = parser.parse_args()
 
