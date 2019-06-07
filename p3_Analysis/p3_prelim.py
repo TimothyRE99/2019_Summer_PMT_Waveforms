@@ -30,6 +30,8 @@ def p2_prelim(datadate,noise):
                 writename = 'G:/data/watchman/'+datadate+'_watchman_spe/d3/d3_raw/d2_info.txt'
             else:
                 writename = 'G:/data/watchman/'+datadate+'_watchman_spe/d3/d3_raw/D3--waveforms--%05d.txt' % i
+        if not os.path.exists(writename):
+            os.makedirs(writename.replace('D3--waveforms--%05d' % i, ''))
         shutil.copy2(filename,writename)
     for i in range(len(files2)):
         print('Filtered File: %05d' % i)
@@ -47,6 +49,12 @@ def p2_prelim(datadate,noise):
             writename2 = 'g:/data/watchman/'+datadate+'_watchman_spe/d2/d2_rise_doubled_noise=' + str(noise) + 'V/D3--waveforms--%05d.txt' % i
             writename4 = 'g:/data/watchman/'+datadate+'_watchman_spe/d2/d2_rise_quadrupled_noise=' + str(noise) + 'V/D3--waveforms--%05d.txt' % i
             writename8 = 'g:/data/watchman/'+datadate+'_watchman_spe/d2/d2_rise_octupled_noise=' + str(noise) + 'V/D3--waveforms--%05d.txt' % i
+        if not os.path.exists(writename2):
+            os.makedirs(writename2.replace('D3--waveforms--%05d' % i, ''))
+        if not os.path.exists(writename4):
+            os.makedirs(writename4.replace('D3--waveforms--%05d' % i, ''))
+        if not os.path.exists(writename8):
+            os.makedirs(writename8.replace('D3--waveforms--%05d' % i, ''))
         shutil.copy2(filename2,writename2)
         shutil.copy2(filename4,writename4)
         shutil.copy2(filename8,writename8)
