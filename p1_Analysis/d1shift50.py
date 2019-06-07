@@ -31,6 +31,8 @@ def d1shift50(datadate,numhead):
     print(min_index)
     print(center_index)
     print(max_index)
+    if not os.path.exists('G:/data/watchman/'+datadate+'_watchman_spe/d1/d1_50centered/'):
+        os.makedirs('G:/data/watchman/'+datadate+'_watchman_spe/d1/d1_50centered/')
     for i in range(Nloops):
         filename = 'G:/data/watchman/'+datadate+'_watchman_spe/d1/d1_baseline_shifted/D1--waveforms--%05d.txt' % i
         writename = 'G:/data/watchman/'+datadate+'_watchman_spe/d1/d1_50centered/D1--waveforms--%05d.txt' % i

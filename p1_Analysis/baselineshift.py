@@ -9,6 +9,8 @@ import os
 #shift baseline
 def baselineshift(datadate,numhead):
     Nloops = len(os.listdir('G:/data/watchman/'+datadate+'_watchman_spe/d1/d1_renamed'))
+    if not os.path.exists('G:/data/watchman/'+datadate+'_watchman_spe/d1/d1_baseline_shifted/'):
+        os.makedirs('G:/data/watchman/'+datadate+'_watchman_spe/d1/d1_baseline_shifted/')
     for i in range(Nloops):
         filename = 'G:/data/watchman/'+datadate+'_watchman_spe/d1/d1_renamed/D1--waveforms--%05d.txt' % i
         writename = 'G:/data/watchman/'+datadate+'_watchman_spe/d1/d1_baseline_shifted/D1--waveforms--%05d.txt' % i

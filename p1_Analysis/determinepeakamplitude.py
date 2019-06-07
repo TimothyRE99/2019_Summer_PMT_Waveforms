@@ -11,6 +11,8 @@ from gausshistogram import gauss_histogram as gh
 def determine(datadate,numhead):
     Nloops = len(os.listdir('G:/data/watchman/'+datadate+'_watchman_spe/d1/d1_50centered'))
     writename = 'G:/data/watchman/'+datadate+'_watchman_spe/d1/d1_histograms/peak_amplitude.txt'
+    if not os.path.exists('G:/data/watchman/'+datadate+'_watchman_spe/d1/d1_histograms/histogram_images'):
+        os.makedirs('G:/data/watchman/'+datadate+'_watchman_spe/d1/d1_histograms/histogram_images')
     #peak amplitude acquisition
     for i in range(Nloops):
         print(i)

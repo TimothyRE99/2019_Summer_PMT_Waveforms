@@ -9,6 +9,8 @@ from writewaveform import write_waveform
 #normalization of data
 def d1normalization(datadate,numhead):
     Nloops = len(os.listdir('G:/data/watchman/'+datadate+'_watchman_spe/d1/d1_50centered'))
+    if not os.path.exists('G:/data/watchman/'+datadate+'_watchman_spe/d1/d1_normalized/'):
+        os.makedirs('G:/data/watchman/'+datadate+'_watchman_spe/d1/d1_normalized/')
     for i in range(Nloops):
         filename = 'G:/data/watchman/'+datadate+'_watchman_spe/d1/d1_50centered/D1--waveforms--%05d.txt' % i
         writename = 'G:/data/watchman/'+datadate+'_watchman_spe/d1/d1_normalized/D1--waveforms--%05d.txt' % i

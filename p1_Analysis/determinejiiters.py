@@ -14,6 +14,8 @@ def determine(datadate,numhead):
     writename20 = 'G:/data/watchman/'+datadate+'_watchman_spe/d1/d1_histograms/20_jitter.txt'
     writename80 = 'G:/data/watchman/'+datadate+'_watchman_spe/d1/d1_histograms/80_jitter.txt'
     writename90 = 'G:/data/watchman/'+datadate+'_watchman_spe/d1/d1_histograms/90_jitter.txt'
+    if not os.path.exists('G:/data/watchman/'+datadate+'_watchman_spe/d1/d1_histograms/histogram_images'):
+        os.makedirs('G:/data/watchman/'+datadate+'_watchman_spe/d1/d1_histograms/histogram_images')
     #peak amplitude acquisition
     for i in range(Nloops):
         print(i)

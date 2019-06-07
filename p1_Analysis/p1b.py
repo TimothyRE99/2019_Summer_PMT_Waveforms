@@ -6,6 +6,7 @@ from info_file import info_file
 from readwaveform import read_waveform as rw
 from writewaveform import write_waveform
 import matplotlib.pyplot as plt
+import os
 
 #sorting out double SPEs
 def p1b_sort(datadate,charge_mean,peak_mean,FWHM_mean,numhead):
@@ -60,6 +61,10 @@ def p1b_sort(datadate,charge_mean,peak_mean,FWHM_mean,numhead):
         #setting up locations to write each file to
         writename_double = 'G:/data/watchman/'+datadate+'_watchman_spe/d1/d1_final_doubles/D1--waveforms--%05d.txt' % i
         writename_single = 'G:/data/watchman/'+datadate+'_watchman_spe/d1/d1_final_spes/D1--waveforms--%05d.txt' % i
+        if not os.path.exists('G:/data/watchman/'+datadate+'_watchman_spe/d1/d1_final_doubles/'):
+            os.makedirs('G:/data/watchman/'+datadate+'_watchman_spe/d1/d1_final_doubles/')
+        if not os.path.exists('G:/data/watchman/'+datadate+'_watchman_spe/d1/d1_final_spes/'):
+            os.makedirs('G:/data/watchman/'+datadate+'_watchman_spe/d1/d1_final_spes/')
         t,v,header = rw(filename,numhead)                                   #reading data from waveform file
         #checking if both charge and peak or charge and FWHM are greater than twice the mean
         if (np.any(charge_doubles == i) and np.any(peak_doubles == i)) or (np.any(FWHM_doubles == i) and np.any(charge_doubles == i)):

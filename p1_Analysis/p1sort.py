@@ -15,6 +15,12 @@ def p1_sort(filenum,datadate,lowpass,numhead,numtaps,threshold,baseline):
     spe_wasname = 'g:/data/watchman/'+datadate+'_watchman_spe/d1/d1_raw/D1--waveforms--%05d.txt' % filenum
     spe_not_there = 'g:/data/watchman/'+datadate+'_watchman_spe/d1/not_spe/D1--waveforms--%05d.txt' % filenum
     spe_unsure = 'g:/data/watchman/'+datadate+'_watchman_spe/d1/unsure_if_spe/D1--waveforms--%05d.txt' % filenum
+    if not os.path.exists('g:/data/watchman/'+datadate+'_watchman_spe/d1/d1_raw/'):
+        os.makedirs('g:/data/watchman/'+datadate+'_watchman_spe/d1/d1_raw/')
+    if not os.path.exists('g:/data/watchman/'+datadate+'_watchman_spe/d1/not_spe/'):
+        os.makedirs('g:/data/watchman/'+datadate+'_watchman_spe/d1/not_spe/')
+    if not os.path.exists('g:/data/watchman/'+datadate+'_watchman_spe/d1/d1_raw/'):
+        os.makedirs('g:/data/watchman/'+datadate+'_watchman_spe/d1/unsure_if_spe/')
     if os.path.isfile(spe_wasname):
         pass
     elif os.path.isfile(spe_not_there):
