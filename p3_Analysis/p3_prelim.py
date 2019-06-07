@@ -29,10 +29,10 @@ def p2_prelim(datadate,noise):
         os.makedirs(writedir1)
     if not os.path.exists(writedir2):
         os.makedirs(writedir2)
-    if not os.path.exists(writedir2):
-        os.makedirs(writedir2)
-    if not os.path.exists(writedir2):
-        os.makedirs(writedir2)
+    if not os.path.exists(writedir4):
+        os.makedirs(writedir4)
+    if not os.path.exists(writedir8):
+        os.makedirs(writedir8)
     for i in range(len(files1)):
         print('Unfiltered File: %05d' % i)
         filename1 = filedir1 + files1[i]
