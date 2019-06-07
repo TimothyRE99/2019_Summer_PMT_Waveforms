@@ -5,7 +5,7 @@ import os
 import shutil
 
 #move and rename code
-def p23_prelim(datadate):
+def p2_prelim(datadate):
     files = sorted(os.listdir('G:/data/watchman/'+datadate+'_watchman_spe/d1/d1_final_spes'))          #creating list of files in d1_final_spes directory
     for i in range(len(files)):
         print(i)
@@ -23,4 +23,4 @@ if __name__ == '__main__':
     parser.add_argument('--datadate',type = str,help = 'date when data was gathered, YYYYMMDD', default = '20190516')
     args = parser.parse_args()
 
-    p23_prelim(args.datadate)
+    p2_prelim(args.datadate)
