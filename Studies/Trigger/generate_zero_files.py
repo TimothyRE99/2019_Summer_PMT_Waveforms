@@ -7,7 +7,7 @@ import numpy as np
 import os
 
 #adding noise
-def noise(v,noise):
+def addnoise(v,noise):
     noise_array = np.random.normal(loc=0.0, scale = noise, size = len(v))   #generating noise array
     v_final = np.add(v, noise_array)    #adding noise to digitized values
     v_final = v_final.astype(int)       #converting values to ints
@@ -19,12 +19,13 @@ def zeroes(datadate,numhead,noise):
     if not os.path.exists('G:/data/watchman/'+datadate+'_watchman_spe/studies/trigger/zero_files'):
         os.makedirs('G:/data/watchman/'+datadate+'_watchman_spe/studies/trigger/zero_files')
     for i in range(Nloops):
+        print(i)
         reference_file = 'g:/data/watchman/20190516_watchman_spe/d3/d3_raw_analyzed/D3--waveforms--%05d.txt' % i
         writename = 'G:/data/watchman/'+datadate+'_watchman_spe/studies/trigger/zero_files/Studies--waveforms--%05d.txt' % i
         (t,_,header) = rw(reference_file,numhead)
         length = len(t)
         v = np.zeros(length)
-        v_final = noise(v,noise)
+        v_final = addnoise(v,noise)
         write_waveform(t,v_final,writename,header)
 
 #main function
