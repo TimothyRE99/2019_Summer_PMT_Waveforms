@@ -32,7 +32,11 @@ def bar_chart(datadate,subfolder,dark_rate):
     rects1 = ax.bar(ind, bars_true_pos, bar_width, color = 'blue')
     rects2 = ax.bar(ind + bar_width, bars_false_neg, bar_width, color = 'red')
 
-    ax.set_title('Risetime Type: ' + subfolder + '\nNoise Detection Rate: ' + dark_rate)
+    dark_rate_third = dark_rate[0]
+    dark_rate_fourth = dark_rate[1]
+    dark_rate_sixth = dark_rate[2]
+
+    ax.set_title('Risetime Type: ' + subfolder + '\nNoise Detection Rate, One Third Mean Peak: ' + dark_rate_third + '\nNoise Detection Rate, One Fourth Mean Peak: ' + dark_rate_fourth + '\nNoise Detection Rate, One Sixth Mean Peak: ' + dark_rate_sixth)
     ax.set_ylabel('Number of Files')
     ax.set_xlabel('Threshold',fontweight='bold')
     ax.set_xticks(ind + 1.5*bar_width)
@@ -59,7 +63,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(prog="bar chart",description="Generates bar chart comparing detection vs miss.")
     parser.add_argument('--datadate',type = str,help = 'date when data was gathered, YYYYMMDD', default = '20190516')
     parser.add_argument('--subfolder',type = str,help = 'how much the rise time was altered', default = 'raw')
-    parser.add_argument('--dark_rate',type = str,help = 'occurence rate of noise being detected as spe', default = '5 Herz')
+    parser.add_argument('--dark_rate',type = list,help = 'occurence rate of noise being detected as spe, format = [1/3, 1/4, 1/6]', default = ['5 Hertz','10 Hertz','20 Hertz'])
     args = parser.parse_args()
 
     bar_chart(args.datadate,args.subfolder,args.dark_rate)
