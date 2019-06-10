@@ -7,6 +7,7 @@ import os
 import shutil
 import scipy.integrate as integrate
 from math import erfc
+from bar_chart import bar_chart as bc
 
 #checking how many times noise will register as SPE
 def noise_check(std,threshold,t_average):
@@ -122,4 +123,4 @@ if __name__ == '__main__':
 
     dark_rate = ['%05g Hertz' % third_noise_rate, '%05g Hertz' % fourth_noise_rate, '%05g Hertz' % sixth_noise_rate]
 
-    print(dark_rate)
+    bc(args.datadate,args.subfolder,dark_rate)
