@@ -9,10 +9,10 @@ from readhistogram import read_histogram as rh
 from gausshistogram import gauss_histogram as gh
 
 def determine(datadate,numhead,directory):
-    Nloops = len(os.listdir('G:/data/watchman/'+datadate+'_watchman_spe/d3/'+directory))
-    writename = 'G:/data/watchman/'+datadate+'_watchman_spe/studies/timing/timing_histograms/peak_amplitude_'+directory+'.txt'
-    if not os.path.exists('G:/data/watchman/'+datadate+'_watchman_spe/studies/timing/timing_histograms/histogram_images'):
-        os.makedirs('G:/data/watchman/'+datadate+'_watchman_spe/studies/timing/timing_histograms/histogram_images')
+    Nloops = len(os.listdir('G:/data/watchman/'+datadate+'_watchman_spe/d3/d3_'+directory+'_analyzed'))
+    writename = 'G:/data/watchman/'+datadate+'_watchman_spe/studies/trigger/trigger_histograms/peak_amplitude_'+directory+'.txt'
+    if not os.path.exists('G:/data/watchman/'+datadate+'_watchman_spe/studies/trigger/trigger_histograms/histogram_images'):
+        os.makedirs('G:/data/watchman/'+datadate+'_watchman_spe/studies/trigger/trigger_histograms/histogram_images')
     #peak amplitude acquisition
     for i in range(Nloops):
         print(i)
