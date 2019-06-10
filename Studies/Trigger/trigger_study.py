@@ -108,9 +108,9 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(prog="generate zero files",description="Generates files filled with zeroes and then noised.")
     parser.add_argument('--datadate',type = str,help = 'date when data was gathered, YYYYMMDD', default = '20190516')
     parser.add_argument('--numhead',type=int,help='number of lines to ignore for header',default = 5)
-    parser.add_argument('--mean',type=float,help='mean peak bits of waveform',default = 29.533)
+    parser.add_argument('--mean',type=float,help='mean peak bits of waveform',default = 201.75)
     parser.add_argument('--std',type=float,help = 'standard deviation for noise in bits',default = 3.3)
-    parser.add_argument('--subfolder',type = str,help = 'how much the rise time was altered', default = 'rise_octupled')
+    parser.add_argument('--subfolder',type = str,help = 'how much the rise time was altered', default = 'raw')
     args = parser.parse_args()
 
     (third_true_positives, third_Nloops, third_noise_rate) = third_checker(args.datadate,args.numhead,args.mean,args.std,args.subfolder)
