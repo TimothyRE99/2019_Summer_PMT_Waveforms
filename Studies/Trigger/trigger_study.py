@@ -12,7 +12,7 @@ from math import erfc
 def noise_check(std,threshold,t_average):
     num_of_stds = threshold / std
     erfc_val = erfc(num_of_stds / np.sqrt(2))
-    prob_happening = 1 / (2 * (erfc_val))
+    prob_happening = (2 * (erfc_val))
     num_times = int(1 / t_average + 0.5)
     noise_rate = prob_happening * num_times
     return noise_rate
