@@ -19,7 +19,7 @@ true_negatives_third = len(os.listdir('G:/data/watchman/'+datadate+'_watchman_sp
 false_positives_third = len(os.listdir('G:/data/watchman/'+datadate+'_watchman_spe/studies/trigger/third/'+subfolder+'/false_positives'))
 false_negatives_third = len(os.listdir('G:/data/watchman/'+datadate+'_watchman_spe/studies/trigger/third/'+subfolder+'/false_negatives'))
 
-true_positives_fourth = len(os.listdir('G:/data/watchman/'+datadate+'_watchman_spe/studies/trigger/third/'+subfolder+'/true_positives'))
+true_positives_fourth = len(os.listdir('G:/data/watchman/'+datadate+'_watchman_spe/studies/trigger/fourth/'+subfolder+'/true_positives'))
 true_negatives_fourth = len(os.listdir('G:/data/watchman/'+datadate+'_watchman_spe/studies/trigger/fourth/'+subfolder+'/true_negatives'))
 false_positives_fourth = len(os.listdir('G:/data/watchman/'+datadate+'_watchman_spe/studies/trigger/fourth/'+subfolder+'/false_positives'))
 false_negatives_fourth = len(os.listdir('G:/data/watchman/'+datadate+'_watchman_spe/studies/trigger/fourth/'+subfolder+'/false_negatives'))
