@@ -12,7 +12,7 @@ def delete_rename(directory,datadate,deleted_number):
     for i in range(deleted_number+1,Nloops):            #loop through directory starting at the file after deleted number
         print(i)
         #rename all files looped through to one lower than their current number
-        os.rename('G:/data/watchman/'+datadate+'_watchman_spe/d1/'+directory+'/D1--waveforms--%.05d.txt' % i, 'G:/data/watchman/'+data_date+'_watchman_spe/d1/'+directory+'/D1--waveforms--%.05d.txt' % (i-1))
+        os.rename('G:/data/watchman/'+datadate+'_watchman_spe/d1/'+directory+'/D1--waveforms--%.05d.txt' % i, 'G:/data/watchman/'+datadate+'_watchman_spe/d1/'+directory+'/D1--waveforms--%.05d.txt' % (i-1))
 
 if __name__ == '__main__':
     import argparse
