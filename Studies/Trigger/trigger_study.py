@@ -6,22 +6,14 @@ import numpy as np
 import os
 import shutil
 import scipy.integrate as integrate
-
-#function for integration
-def integrand(t):
-    return np.exp(-(t**2))
-
-#error function
-def erf(std):
-    erf_val = 2/np.sqrt(np.pi) * integrate.quad(integrand,0,std)
-    return erf_val
+from math import erfc
 
 #checking how many times noise will register as SPE
 def noise_check(std,threshold,t_average):
     num_of_stds = threshold / std
-    erf_val = erf(num_of_stds)
-    prob_happening = 1 / (2 * (1 - erf_val))
-    num_times = 1 / t_average
+    erf_val = erfc(num_of_stds / np.sqrt(2))
+    prob_happening = 1 / (2 * (erf_val))
+    num_times = int(1 / t_average + 0.5)
     noise_rate = prob_happening * num_times
     return noise_rate
 
@@ -115,9 +107,9 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(prog="generate zero files",description="Generates files filled with zeroes and then noised.")
     parser.add_argument('--datadate',type = str,help = 'date when data was gathered, YYYYMMDD', default = '20190516')
     parser.add_argument('--numhead',type=int,help='number of lines to ignore for header',default = 5)
-    parser.add_argument('--mean',type=float,help='mean peak bits of waveform',default = 201.75)
+    parser.add_argument('--mean',type=float,help='mean peak bits of waveform',default = 29.533)
     parser.add_argument('--std',type=float,help = 'standard deviation for noise in bits',default = 3.3)
-    parser.add_argument('--subfolder',type = str,help = 'how much the rise time was altered', default = 'raw')
+    parser.add_argument('--subfolder',type = str,help = 'how much the rise time was altered', default = 'rise_octupled')
     args = parser.parse_args()
 
     (third_true_positives, third_Nloops, third_noise_rate) = third_checker(args.datadate,args.numhead,args.mean,args.std,args.subfolder)
@@ -127,3 +119,7 @@ if __name__ == '__main__':
     print('One Third Mean Peak Gives:\n\t' + str(third_true_positives) + '/' + str(third_Nloops) + ' True Positives')
     print('One Fourth Mean Peak Gives:\n\t' + str(fourth_true_positives) + '/' + str(fourth_Nloops) + ' True Positives')
     print('One Sixth Mean Peak Gives:\n\t' + str(sixth_true_positives) + '/' + str(sixth_Nloops) + ' True Positives')
+
+    dark_rate = ['%05g Hertz' % third_noise_rate, '%05g Hertz' % fourth_noise_rate, '%05g Hertz' % sixth_noise_rate]
+
+    print(dark_rate)

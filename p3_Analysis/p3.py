@@ -20,7 +20,7 @@ def digitize(v,noise):
 
 #downsampling
 def downsampling(t,v,fsps,new_fsps):
-    steps = int(fsps/new_fsps)                                      #determining how many 'steps' from original waveform can be taken
+    steps = int(fsps/new_fsps + 0.5)                                #determining how many 'steps' from original waveform can be taken
     start_index = random.randint(0,steps - 1)                       #randomly determining start index within range [0,steps)
     multiplier = math.floor((len(v) - start_index - 1) / steps)     #determining max amount you can multiply the steps value by and add onto the start value without overshooting end of array
     #initializing arrays

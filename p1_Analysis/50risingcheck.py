@@ -10,6 +10,6 @@ for i in range(Nloops):
     y_norm = y/min(y[370:1370])                             #normalizing to make calculations easier
     check = y_norm >= 0.5                                   #50% crossing criteria
     index = [k for k, x in enumerate(check) if x]           #code to enumerate index values
-    index50 = int(index[0])
+    index50 = int(index[0] + 0.5)
     if index50 < 370:
         print(str(index50)+', '+str(filename))

@@ -23,9 +23,9 @@ def determine(datadate,numhead):
         check90 = y_norm >= .9
         index10 = np.asarray([k for k, x in enumerate(check10) if x])
         index90 = np.asarray([k for k, x in enumerate(check90) if x])
-        index_90 = int(index90[len(index90)-1])
+        index_90 = int(index90[len(index90)-1] + 0.5)
         index10_removed = index10[np.where(index10 > index_90)]         #removing all values before 90% fall index
-        index_10 = int(index10_removed[0])                              #turning first 10% fall index into int
+        index_10 = int(index10_removed[0] + 0.5)                        #turning first 10% fall index into int
         fall_time = str(t[index_10] - t[index_90])                      #fall time is time at 10% - time at 90%
         wh(fall_time,writename)                                         #writing value to histogram txt file
     #create histogram from saved file

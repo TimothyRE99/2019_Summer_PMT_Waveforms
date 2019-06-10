@@ -37,7 +37,7 @@ def d1shift50(datadate,numhead):
         filename = 'G:/data/watchman/'+datadate+'_watchman_spe/d1/d1_baseline_shifted/D1--waveforms--%05d.txt' % i
         writename = 'G:/data/watchman/'+datadate+'_watchman_spe/d1/d1_50centered/D1--waveforms--%05d.txt' % i
         (t,y,header) = rw(filename,numhead)
-        index_50 = int(center_list[i])                              #converting to int
+        index_50 = int(center_list[i] + 0.5)                              #converting to int
         t_50 = t[index_50]
         t_new = (t - t_50)                                          #shifting t_50 to t=0s
         #rolling so 50 rising point is at center index

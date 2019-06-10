@@ -21,9 +21,9 @@ def risetime_check(datadate,x_values,fsps):
     #converting to array of indices
     index10_notau = np.asarray([k for k, x in enumerate(check10_notau) if x])
     index90_notau = np.asarray([k for k, x in enumerate(check90_notau) if x])
-    index_90_notau = int(index90_notau[0])
+    index_90_notau = int(index90_notau[0] + 0.5)
     index10_removed_notau = index10_notau[np.where(index10_notau < index_90_notau)]         #removing all values after 90% rise index
-    index_10_notau = int(index10_removed_notau[len(index10_removed_notau)-1])               #turning last 10% rise index into int
+    index_10_notau = int(index10_removed_notau[len(index10_removed_notau)-1] + 0.5)         #turning last 10% rise index into int
     rise_time_notau = float(t[index_90_notau] - t[index_10_notau])                          #rise time is time at 90% - time at 10%
     #determining tau vs. risetime graph
     tau_check = np.linspace(1e-10,1e-5,x_values)                 #setting up tau values
@@ -38,9 +38,9 @@ def risetime_check(datadate,x_values,fsps):
         #converting to array of indices
         index10 = np.asarray([k for k, x in enumerate(check10) if x])
         index90 = np.asarray([k for k, x in enumerate(check90) if x])
-        index_90 = int(index90[0])
+        index_90 = int(index90[0] + 0.5)
         index10_removed = index10[np.where(index10 < index_90)]     #removing all values after 90% rise index
-        index_10 = int(index10_removed[len(index10_removed)-1])     #turning last 10% rise index into int
+        index_10 = int(index10_removed[len(index10_removed)-1] + 0.5)   #turning last 10% rise index into int
         rise_time = float(t[index_90] - t[index_10])                #rise time is time at 90% - time at 10%
         risetime = np.append(risetime,rise_time)                    #appending risetime to risetime array
     print(rise_time_notau)                                  #printing risetime for comparison to average
@@ -49,7 +49,7 @@ def risetime_check(datadate,x_values,fsps):
     #plotting horizontal line at 2x risetime
     plt.axhline(y=(rise_time_notau*2),color='red')
     #calculating intersection point of lines and tau vs. risetime
-    idx_doub = int(np.argwhere(np.diff(np.sign(risetime - (rise_time_notau*2)))).flatten()[0])
+    idx_doub = int(np.argwhere(np.diff(np.sign(risetime - (rise_time_notau*2)))).flatten()[0] + 0.5)
     #setting up title (tau for double rise time) and labels
     plt.title('Double Risetime Tau = '+str(tau_check[idx_doub]))
     plt.xlabel("Tau")

@@ -26,16 +26,16 @@ def determine(datadate,numhead):
         check90 = y_norm >= .9
         index10 = np.asarray([k for k, x in enumerate(check10) if x])
         index90 = np.asarray([k for k, x in enumerate(check90) if x])
-        index_90 = int(index90[0])                                  #turning 90% rising point into int
+        index_90 = int(index90[0] + 0.5)                            #turning 90% rising point into int
         index10_removed = index10[np.where(index10 < index_90)]     #removing all 10% points after 90% index
-        index_10 = int(index10_removed[len(index10_removed)-1])     #turning last 10% index before 90% index into int
+        index_10 = int(index10_removed[len(index10_removed)-1] + 0.5)   #turning last 10% index before 90% index into int
         check20 = y_norm <= .2                                      #determining where 20% and 80% rising are located
         check80 = y_norm >= .8
         index20 = np.asarray([k for k, x in enumerate(check20) if x])
         index80 = np.asarray([k for k, x in enumerate(check80) if x])
-        index_80 = int(index80[0])                                  #turning 80% rising point into int
+        index_80 = int(index80[0] + 0.5)                            #turning 80% rising point into int
         index20_removed = index20[np.where(index20 < index_80)]     #removing all 20% points after 80% index
-        index_20 = int(index20_removed[len(index20_removed)-1])     #turning last 20% index before 90% index into int
+        index_20 = int(index20_removed[len(index20_removed)-1] + 0.5)   #turning last 20% index before 90% index into int
         #gathering times at rising 10,20,80,90% points
         t10 = str(t[index_10])
         t20 = str(t[index_20])

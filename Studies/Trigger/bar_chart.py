@@ -48,7 +48,7 @@ def bar_chart(datadate,subfolder,dark_rate):
     def autolabel(rects):
         for rect in rects:
             height = rect.get_height()
-            ax.text(rect.get_x() + rect.get_width()/2, 1.005*height,'%d' % int(height),ha='center',va='bottom')
+            ax.text(rect.get_x() + rect.get_width()/2, 1.005*height,'%d' % int(height + 0.5),ha='center',va='bottom')
 
     autolabel(rects1)
     autolabel(rects2)
