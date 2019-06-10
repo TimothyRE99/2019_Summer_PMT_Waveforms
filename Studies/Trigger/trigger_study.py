@@ -35,9 +35,9 @@ def third_checker(datadate,numhead,mean,subfolder):
         if v_peak >= threshold:
             shutil.copy2(filename,true_pos_dir)
         else:
-            shutil.copy2(filename,false_pos_dir)
+            shutil.copy2(filename,false_neg_dir)
         if v_zeroes_peak >= threshold:
-            shutil.copy2(filename_zeroes,false_neg_dir)
+            shutil.copy2(filename_zeroes,false_pos_dir)
         else:
             shutil.copy2(filename_zeroes,true_neg_dir)
     true_positives = len(os.listdir(true_pos_dir))
@@ -73,9 +73,9 @@ def fourth_checker(datadate,numhead,mean,subfolder):
         if v_peak >= threshold:
             shutil.copy2(filename,true_pos_dir)
         else:
-            shutil.copy2(filename,false_pos_dir)
+            shutil.copy2(filename,false_neg_dir)
         if v_zeroes_peak >= threshold:
-            shutil.copy2(filename_zeroes,false_neg_dir)
+            shutil.copy2(filename_zeroes,false_pos_dir)
         else:
             shutil.copy2(filename_zeroes,true_neg_dir)
     true_positives = len(os.listdir(true_pos_dir))
@@ -111,9 +111,9 @@ def sixth_checker(datadate,numhead,mean,subfolder):
         if v_peak >= threshold:
             shutil.copy2(filename,true_pos_dir)
         else:
-            shutil.copy2(filename,false_pos_dir)
+            shutil.copy2(filename,false_neg_dir)
         if v_zeroes_peak >= threshold:
-            shutil.copy2(filename_zeroes,false_neg_dir)
+            shutil.copy2(filename_zeroes,false_pos_dir)
         else:
             shutil.copy2(filename_zeroes,true_neg_dir)
     true_positives = len(os.listdir(true_pos_dir))
