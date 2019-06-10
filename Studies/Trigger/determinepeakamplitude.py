@@ -23,7 +23,7 @@ def determine(datadate,numhead,directory):
         wh(value,writename)                             #writing value to histogram txt file
     #create histogram from saved file
     (histo_mean,histo_std) = gh(writename)
-    rh(writename,"Bits","Histogram of Peak Amplitudes","Peak_Amplitude",datadate,histo_mean,histo_std)
+    rh(writename,"Bits","Histogram of Peak Amplitudes","Peak_Amplitude"+directory,datadate,histo_mean,histo_std)
 
 if __name__ == '__main__':
     import argparse
