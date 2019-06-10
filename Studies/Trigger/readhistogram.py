@@ -47,7 +47,7 @@ def read_histogram(filename, x_label, title, savename, datadate, histo_mean, his
     plt.get_current_fig_manager().window.showMaximized()        #maximizes plot
     plt.show()      #showing plot for confirmation
     #finalizing plot saving
-    fig.savefig('G:/data/watchman/'+datadate+'_watchman_spe/studies/trigger/trigger_histograms/histogram_images'+savename+'_hist.png',dpi = 500)
+    fig.savefig('G:/data/watchman/'+datadate+'_watchman_spe/studies/trigger/trigger_histograms/histogram_images/'+savename+'_hist.png',dpi = 500)
 
 #For testing purposes
 if __name__ == '__main__':
