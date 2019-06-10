@@ -22,7 +22,7 @@ def bar_chart(datadate,subfolder,dark_rate):
     true_positives_sixth = len(os.listdir('G:/data/watchman/'+datadate+'_watchman_spe/studies/trigger/sixth/'+subfolder+'/true_positives'))
     false_negatives_sixth = len(os.listdir('G:/data/watchman/'+datadate+'_watchman_spe/studies/trigger/sixth/'+subfolder+'/false_negatives'))
 
-    bar_width = 0.15
+    bar_width = 0.4
     bars_true_pos = [true_positives_third,true_positives_fourth,true_positives_sixth]
     bars_false_neg = [false_negatives_third,false_negatives_fourth,false_negatives_sixth]
 
@@ -39,7 +39,7 @@ def bar_chart(datadate,subfolder,dark_rate):
     ax.set_title('Risetime Type: ' + subfolder + '\nNoise Detection Rate, One Third Mean Peak: ' + dark_rate_third + '\nNoise Detection Rate, One Fourth Mean Peak: ' + dark_rate_fourth + '\nNoise Detection Rate, One Sixth Mean Peak: ' + dark_rate_sixth)
     ax.set_ylabel('Number of Files')
     ax.set_xlabel('Threshold',fontweight='bold')
-    ax.set_xticks(ind + 1.5*bar_width)
+    ax.set_xticks(ind + 0.5*bar_width)
     ax.set_xticklabels(('One Third Mean Peak','One Fourth Mean Peak','One Sixth Mean Peak'))
 
     ax.legend((rects1[0],rects2[0]),('\nTrue\nPositives\n','\nFalse\nNegatives\n'),loc='center left',bbox_to_anchor=(1,0.5))
