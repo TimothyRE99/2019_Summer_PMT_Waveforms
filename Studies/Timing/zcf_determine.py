@@ -65,7 +65,7 @@ if __name__ == '__main__':
     parser.add_argument('--datadate',type = str,help = 'date when data was gathered, YYYYMMDD', default = '20190516')
     parser.add_argument('--numhead',type=int,help='number of lines to ignore for header',default = 5)
     parser.add_argument('--subfolder',type = str,help = 'how much the rise time was altered', default = 'raw')
-    parser.add_argument('--n_box',type=int,help='n value for boxcar averager',default = 2)
+    parser.add_argument('--n_box',type=int,help='n value for boxcar averager',default = 4)
     parser.add_argument('--n_shift',type=int,help='number of indices to shift inverted waveform',default = 1)
     parser.add_argument('--n_mult',type=int,help='amount to multiply base waveform by, must be power of 2',default = 1)
     args = parser.parse_args()
