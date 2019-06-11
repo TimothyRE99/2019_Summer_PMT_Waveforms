@@ -30,6 +30,8 @@ def zc_locator(t,v):
     indexCross_removed = indexCross[np.where(indexCross < index_Peak)]
     if len(indexCross_removed) == 0:
         t_cross = 'ALERT'
+        print('Bad File!')
+        input()
     else:
         index_Cross = indexCross_removed[len(indexCross_removed) - 1]
         t_bef = t[index_Cross]
