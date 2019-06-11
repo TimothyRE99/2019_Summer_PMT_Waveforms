@@ -16,14 +16,17 @@ def plot_waveform(datadate,numhead,subfolder,n_box,n_shift,n_mult):
         print(filename)
         (t,v,_) = rw(filename,numhead)
         zcl = locator(t,v)
-        plt.plot(t,v)
-        plt.axhline(y=0,color='black')
-        plt.axvline(x=zcl,color='red')
-        plt.title('D3--waveforms--%05d\nnbox= ' % i + str(n_box) + ' nshift= ' + str(n_shift) + ' nmult= ' + str(n_mult) + '\nsubfolder = ' + subfolder + '\nCrossing Time = %05gs' % zcl)
-        plt.xlabel('Time')
-        plt.ylabel('Bits')
-        plt.get_current_fig_manager().window.showMaximized()
-        plt.show()
+        if zcl == 'ALERT':
+            pass
+        else:
+            plt.plot(t,v)
+            plt.axhline(y=0,color='black')
+            plt.axvline(x=zcl,color='red')
+            plt.title('D3--waveforms--%05d\nnbox= ' % i + str(n_box) + ' nshift= ' + str(n_shift) + ' nmult= ' + str(n_mult) + '\nsubfolder = ' + subfolder + '\nCrossing Time = %05gs' % zcl)
+            plt.xlabel('Time')
+            plt.ylabel('Bits')
+            plt.get_current_fig_manager().window.showMaximized()
+            plt.show()
 
 #main function
 if __name__ == '__main__':

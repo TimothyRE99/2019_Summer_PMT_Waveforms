@@ -12,8 +12,11 @@ def write_waveform(x,y,filename,header):
         fileout.write(entry)
     #writing line data to file
     for ix,iy in zip(x,y):
-        line = '%05d,%05g\n' % (ix,iy)
-        fileout.write(line)
+        if iy == 'ALERT':
+            line = '%05d,ALERT' % ix
+        else:
+            line = '%05d,%05g\n' % (ix,iy)
+            fileout.write(line)
     fileout.close()
 
 #determining ZCL from t and v
@@ -25,14 +28,17 @@ def zc_locator(t,v):
     indexCross = np.asarray([k for k, x in enumerate(checkCross) if x])
     index_Peak = indexPeak[0]
     indexCross_removed = indexCross[np.where(indexCross < index_Peak)]
-    index_Cross = indexCross_removed[len(indexCross_removed) - 1]
-    t_bef = t[index_Cross]
-    t_aft = t[index_Cross + 1]
-    v_bef = v[index_Cross]
-    v_aft = v[index_Cross + 1]
-    slope = (v_aft - v_bef) / (t_aft - t_bef)
-    t_pass = (-1 * v_bef) / slope
-    t_cross = t_bef + t_pass
+    if len(indexCross_removed) == 0:
+        t_cross = 'ALERT'
+    else:
+        index_Cross = indexCross_removed[len(indexCross_removed) - 1]
+        t_bef = t[index_Cross]
+        t_aft = t[index_Cross + 1]
+        v_bef = v[index_Cross]
+        v_aft = v[index_Cross + 1]
+        slope = (v_aft - v_bef) / (t_aft - t_bef)
+        t_pass = (-1 * v_bef) / slope
+        t_cross = t_bef + t_pass
     return t_cross
 
 #running through CFD files to generate txt file to save ZCLs
@@ -60,7 +66,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(prog="timing CFD",description="Applies CFD algorithm to prepare for ZCF.")
     parser.add_argument('--datadate',type = str,help = 'date when data was gathered, YYYYMMDD', default = '20190516')
     parser.add_argument('--numhead',type=int,help='number of lines to ignore for header',default = 5)
-    parser.add_argument('--subfolder',type = str,help = 'how much the rise time was altered', default = 'raw')
+    parser.add_argument('--subfolder',type = str,help = 'how much the rise time was altered', default = 'rise_quadrupled')
     parser.add_argument('--n_box',type=int,help='n value for boxcar averager',default = 0)
     parser.add_argument('--n_shift',type=int,help='number of indices to shift inverted waveform',default = 1)
     parser.add_argument('--n_mult',type=int,help='amount to multiply base waveform by, must be power of 2',default = 1)
