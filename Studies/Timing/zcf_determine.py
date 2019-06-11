@@ -12,7 +12,7 @@ def write_waveform(x,y,filename,header):
         fileout.write(entry)
     #writing line data to file
     for ix,iy in zip(x,y):
-        line = '%05d,%f\n' % (ix,iy)
+        line = '%05d,%05g\n' % (ix,iy)
         fileout.write(line)
     fileout.close()
 
