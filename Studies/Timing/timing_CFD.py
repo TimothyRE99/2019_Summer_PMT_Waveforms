@@ -43,7 +43,7 @@ def sum_wf(v_mult,v_shift):
 
 #calls other functions
 def timing_CFD(datadate,numhead,subfolder,n_box,n_shift,n_mult):
-    writedir = 'G:/data/watchman/'+datadate+'_watchman_spe/studies/timing/nbox='+str(n_box)+'_nshift='+str(n_shift)+'_nmult='+str(n_mult)+'/'+subfolder+'/'
+    writedir = 'G:/data/watchman/'+datadate+'_watchman_spe/studies/timing/nbox='+str(n_box)+'/nshift='+str(n_shift)+'/nmult='+str(n_mult)+'/'+subfolder+'/'
     if not os.path.exists(writedir):
         os.makedirs(writedir)
     filedir = 'G:/data/watchman/'+datadate+'_watchman_spe/d3/d3_'+subfolder+'_analyzed/'

@@ -9,7 +9,7 @@ import os
 
 #plotting loop function
 def plot_waveform(datadate,numhead,subfolder,n_box,n_shift,n_mult):
-    filedir = 'G:/data/watchman/'+datadate+'_watchman_spe/studies/timing/nbox='+str(n_box)+'_nshift='+str(n_shift)+'_nmult='+str(n_mult)+'/'+subfolder+'/'
+    filedir = 'G:/data/watchman/'+datadate+'_watchman_spe/studies/timing/nbox='+str(n_box)+'/nshift='+str(n_shift)+'/nmult='+str(n_mult)+'/'+subfolder+'/'
     Nloops = len(os.listdir(filedir))
     for i in range(Nloops):
         filename = filedir + 'D3--waveforms--%05d.txt' % i

@@ -12,10 +12,7 @@ def write_waveform(x,y,filename,header):
         fileout.write(entry)
     #writing line data to file
     for ix,iy in zip(x,y):
-        if iy == 'ALERT':
-            line = '%05d,ALERT' % ix
-        else:
-            line = '%05d,%05g\n' % (ix,iy)
+            line = '%05d,' % ix + str(iy) + '\n'
             fileout.write(line)
     fileout.close()
 
@@ -31,7 +28,6 @@ def zc_locator(t,v):
     if len(indexCross_removed) == 0:
         t_cross = 'ALERT'
         print('Bad File!')
-        input()
     else:
         index_Cross = indexCross_removed[len(indexCross_removed) - 1]
         t_bef = t[index_Cross]
@@ -45,7 +41,7 @@ def zc_locator(t,v):
 
 #running through CFD files to generate txt file to save ZCLs
 def ZCF(datadate,numhead,subfolder,n_box,n_shift,n_mult):
-    filedir = 'G:/data/watchman/'+datadate+'_watchman_spe/studies/timing/nbox='+str(n_box)+'_nshift='+str(n_shift)+'_nmult='+str(n_mult)+'/'+subfolder+'/'
+    filedir = 'G:/data/watchman/'+datadate+'_watchman_spe/studies/timing/nbox='+str(n_box)+'/nshift='+str(n_shift)+'/nmult='+str(n_mult)+'/'+subfolder+'/'
     if not os.path.exists(filedir + 'ZCF_data/'):
         os.makedirs(filedir + 'ZCF_data/')
     Nloops = len(os.listdir(filedir)) - 1
@@ -68,7 +64,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(prog="timing CFD",description="Applies CFD algorithm to prepare for ZCF.")
     parser.add_argument('--datadate',type = str,help = 'date when data was gathered, YYYYMMDD', default = '20190516')
     parser.add_argument('--numhead',type=int,help='number of lines to ignore for header',default = 5)
-    parser.add_argument('--subfolder',type = str,help = 'how much the rise time was altered', default = 'rise_quadrupled')
+    parser.add_argument('--subfolder',type = str,help = 'how much the rise time was altered', default = 'raw')
     parser.add_argument('--n_box',type=int,help='n value for boxcar averager',default = 0)
     parser.add_argument('--n_shift',type=int,help='number of indices to shift inverted waveform',default = 1)
     parser.add_argument('--n_mult',type=int,help='amount to multiply base waveform by, must be power of 2',default = 1)
