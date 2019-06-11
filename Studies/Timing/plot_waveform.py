@@ -16,17 +16,17 @@ def plot_waveform(datadate,numhead,subfolder,n_box,n_shift,n_mult):
         print(filename)
         (t,v,_) = rw(filename,numhead)
         zcl = locator(t,v)
-        if zcl == 'ALERT':
-            pass
-        else:
-            plt.plot(t,v)
-            plt.axhline(y=0,color='black')
+        plt.plot(t,v)
+        plt.axhline(y=0,color='black')
+        if zcl != 'ALERT':
             plt.axvline(x=zcl,color='red')
             plt.title('D3--waveforms--%05d\nnbox= ' % i + str(n_box) + ' nshift= ' + str(n_shift) + ' nmult= ' + str(n_mult) + '\nsubfolder = ' + subfolder + '\nCrossing Time = %05gs' % zcl)
-            plt.xlabel('Time')
-            plt.ylabel('Bits')
-            plt.get_current_fig_manager().window.showMaximized()
-            plt.show()
+        else:
+            plt.title('D3--waveforms--%05d\nnbox= ' % i + str(n_box) + ' nshift= ' + str(n_shift) + ' nmult= ' + str(n_mult) + '\nsubfolder = ' + subfolder + '\nCrossing Time = ALERT')
+        plt.xlabel('Time')
+        plt.ylabel('Bits')
+        plt.get_current_fig_manager().window.showMaximized()
+        plt.show()
 
 #main function
 if __name__ == '__main__':
@@ -36,7 +36,7 @@ if __name__ == '__main__':
     parser.add_argument('--numhead',type=int,help='number of lines to ignore for header',default = 5)
     parser.add_argument('--subfolder',type = str,help = 'how much the rise time was altered', default = 'raw')
     parser.add_argument('--n_box',type=int,help='n value for boxcar averager',default = 0)
-    parser.add_argument('--n_shift',type=int,help='number of indices to shift inverted waveform',default = 1)
+    parser.add_argument('--n_shift',type=int,help='number of indices to shift inverted waveform',default = 4)
     parser.add_argument('--n_mult',type=int,help='amount to multiply base waveform by, must be power of 2',default = 1)
     args = parser.parse_args()
 
