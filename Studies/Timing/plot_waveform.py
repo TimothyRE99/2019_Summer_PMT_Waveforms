@@ -7,7 +7,7 @@ from readwaveform import read_waveform as rw
 import os
 
 #plotting loop function
-def plot_waveform(datadate,numhead,subfolder,n_box,n_shift,n_mult,ZCL):
+def plot_waveform(datadate,numhead,subfolder,n_box,n_shift,n_mult):
     filedir = 'G:/data/watchman/'+datadate+'_watchman_spe/studies/timing/nbox='+str(n_box)+'_nshift='+str(n_shift)+'_nmult='+str(n_mult)+'/'+subfolder+'/'
     Nloops = len(os.listdir(filedir))
     for i in range(Nloops):
