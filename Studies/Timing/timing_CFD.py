@@ -49,9 +49,9 @@ def timing_CFD(datadate,numhead,subfolder,n_box,n_shift,n_mult):
     filedir = 'G:/data/watchman/'+datadate+'_watchman_spe/d3/d3_'+subfolder+'_analyzed/'
     Nloops = len(os.listdir(filedir))
     for i in range(Nloops):
-        print(i)
-        filename = filedir + 'D3-waveforms-%05d.txt' % i
-        writename = writedir + 'D3-waveforms-%05d.txt' % i
+        print("File: %05d" % i)
+        filename = filedir + 'D3--waveforms--%05d.txt' % i
+        writename = writedir + 'D3--waveforms--%05d.txt' % i
         (t,v,header) = rw(filename,numhead)
         t_avg,v_avg = boxcar_wf(t,v,n_box)
         v_shift = shift_wf(v_avg,n_shift)
