@@ -34,10 +34,11 @@ def ZCF(datadate,numhead,subfolder,n_box,n_shift,n_mult):
     file_list = np.array([])
     zcl_list = np.array([])
     for i in range(Nloops):
+        print("File: %05d" % i)
         filename = filedir + 'D3--waveforms--%05d.txt' % i
         (t,v,_) = rw(filename,numhead)
         t_cross = zc_locator(t,v)
-        file_list = np.append(file_list, '%05d' % i)
+        file_list = np.append(file_list, float('%05d' % i))
         zcl_list = np.append(zcl_list, t_cross)
     header = 'File Number, Zero Crossing Location'
     writename = filedir + 'ZCF_data/ZCLs.txt'
