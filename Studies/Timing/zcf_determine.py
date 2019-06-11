@@ -4,7 +4,17 @@
 import os
 import numpy as np
 from readwaveform import read_waveform as rw
-from writewaveform import write_waveform
+
+def write_waveform(x,y,filename,header):
+    fileout = open(filename,'w')
+    #writing header data to file
+    for entry in header:
+        fileout.write(entry)
+    #writing line data to file
+    for ix,iy in zip(x,y):
+        line = '%f,%f\n' % (ix,iy)
+        fileout.write(line)
+    fileout.close()
 
 #determining ZCL from t and v
 def zc_locator(t,v):
