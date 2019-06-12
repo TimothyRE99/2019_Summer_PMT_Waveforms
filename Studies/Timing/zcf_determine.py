@@ -24,20 +24,20 @@ def zc_locator(t,v):
     indexPeak = np.asarray([k for k, x in enumerate(checkPeak) if x])
     indexCross = np.asarray([k for k, x in enumerate(checkCross) if x])
     index_Peak = indexPeak[0]
-    indexCross_removed = indexCross[np.where(indexCross < index_Peak)]
+    indexCross_removed = indexCross[np.where(indexCross > index_Peak)]
     if len(indexCross_removed) == 0:
         t_cross = 'ALERT'
         print('Bad File!')
     else:
-        index_Cross = indexCross_removed[len(indexCross_removed) - 1]
-        t_bef = t[index_Cross]
-        t_aft = t[index_Cross + 1]
-        v_bef = v[index_Cross]
-        v_aft = v[index_Cross + 1]
+        index_Cross = indexCross_removed[0]
+        t_bef = t[index_Cross - 1]
+        t_aft = t[index_Cross]
+        v_bef = v[index_Cross - 1]
+        v_aft = v[index_Cross]
         slope = (v_aft - v_bef) / (t_aft - t_bef)
         t_pass = (-1 * v_bef) / slope
         t_cross = t_bef + t_pass
-    return t_cross
+    return (t_cross,index_Cross,index_Peak)
 
 #running through CFD files to generate txt file to save ZCLs
 def ZCF(datadate,numhead,subfolder,n_box,n_shift,n_mult):

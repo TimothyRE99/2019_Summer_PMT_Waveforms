@@ -15,11 +15,14 @@ def plot_waveform(datadate,numhead,subfolder,n_box,n_shift,n_mult):
         filename = filedir + 'D3--waveforms--%05d.txt' % i
         print(filename)
         (t,v,_) = rw(filename,numhead)
-        zcl = locator(t,v)
+        (zcl,index_Cross,index_Peak) = locator(t,v)
         plt.plot(t,v)
+        plt.scatter(t,v)
         plt.axhline(y=0,color='black')
         if zcl != 'ALERT':
             plt.axvline(x=zcl,color='red')
+            plt.plot(t[index_Cross],v[index_Cross],'x',color = 'orange')
+            plt.plot(t[index_Peak],v[index_Peak],'x',color = 'yellow')
             plt.title('D3--waveforms--%05d\nnbox= ' % i + str(n_box) + ' nshift= ' + str(n_shift) + ' nmult= ' + str(n_mult) + '\nsubfolder = ' + subfolder + '\nCrossing Time = %05gs' % zcl)
         else:
             plt.title('D3--waveforms--%05d\nnbox= ' % i + str(n_box) + ' nshift= ' + str(n_shift) + ' nmult= ' + str(n_mult) + '\nsubfolder = ' + subfolder + '\nCrossing Time = ALERT')
