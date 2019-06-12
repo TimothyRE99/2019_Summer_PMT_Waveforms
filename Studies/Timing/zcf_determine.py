@@ -5,6 +5,8 @@ import os
 import numpy as np
 from readwaveform import read_waveform as rw
 from writehistogram import write_histogram as wh
+from gausshistogram import gauss_histogram as gh
+from readhistogram import read_histogram as rh
 
 #determining ZCL from t and v
 def zc_locator(t,v):
@@ -35,17 +37,16 @@ def ZCF(datadate,numhead,subfolder,n_box,n_shift,n_mult):
     if not os.path.exists(filedir + 'ZCF_data/'):
         os.makedirs(filedir + 'ZCF_data/')
     Nloops = len(os.listdir(filedir)) - 1
-    file_list = np.array([])
-    zcl_list = np.array([])
+    writename = filedir + 'ZCF_data/ZCLs.txt'
     for i in range(Nloops):
         print("File: %05d, NBOX: " % i + str(n_box) + ", NSHIFT:" + str(n_shift) + " , NMULT: " + str(n_mult))
         filename = filedir + 'D3--waveforms--%05d.txt' % i
         (t,v,_) = rw(filename,numhead)
         t_cross = zc_locator(t,v)
-        file_list = np.append(file_list, float('%05d' % i))
-        zcl_list = np.append(zcl_list, t_cross)
-    writename = filedir + 'ZCF_data/ZCLs.txt'
-    wh(zcl_list,writename)
+        wh(t_cross,writename)
+    (histo_mean,histo_std) = gh(writename)
+    savename = "zero_crossing_time_nbox:" + str(n_box) + "_nshift:" + str(n_shift) + "_nmult:" + str(n_mult)
+    rh(writename,"Seconds","Histogram of 10-90 Fall Times",savename,datadate,histo_mean,histo_std)
 
 #main function
 if __name__ == '__main__':
