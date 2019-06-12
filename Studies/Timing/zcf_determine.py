@@ -48,7 +48,7 @@ def ZCF(datadate,numhead,subfolder,n_box,n_shift,n_mult):
     file_list = np.array([])
     zcl_list = np.array([])
     for i in range(Nloops):
-        print("File: %05d" % i)
+        print("File: %05d, NBOX: " % i + str(n_box) + ", NSHIFT:" + str(n_shift) + " , NMULT: " + str(n_mult))
         filename = filedir + 'D3--waveforms--%05d.txt' % i
         (t,v,_) = rw(filename,numhead)
         t_cross = zc_locator(t,v)
