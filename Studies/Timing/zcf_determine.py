@@ -4,17 +4,7 @@
 import os
 import numpy as np
 from readwaveform import read_waveform as rw
-
-def write_waveform(x,y,filename,header):
-    fileout = open(filename,'w')
-    #writing header data to file
-    for entry in header:
-        fileout.write(entry)
-    #writing line data to file
-    for ix,iy in zip(x,y):
-            line = '%05d,' % ix + str(iy) + '\n'
-            fileout.write(line)
-    fileout.close()
+from writehistogram import write_histogram as wh
 
 #determining ZCL from t and v
 def zc_locator(t,v):
@@ -54,9 +44,8 @@ def ZCF(datadate,numhead,subfolder,n_box,n_shift,n_mult):
         t_cross = zc_locator(t,v)
         file_list = np.append(file_list, float('%05d' % i))
         zcl_list = np.append(zcl_list, t_cross)
-    header = 'File Number, Zero Crossing Location'
     writename = filedir + 'ZCF_data/ZCLs.txt'
-    write_waveform(file_list,zcl_list,writename,header)
+    wh(zcl_list,writename)
 
 #main function
 if __name__ == '__main__':
