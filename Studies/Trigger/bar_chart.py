@@ -42,7 +42,7 @@ def bar_chart(datadate,subfolder,dark_rate):
     ax.set_xticks(ind + 0.5*bar_width)
     ax.set_xticklabels(('One Third Mean Peak','One Fourth Mean Peak','One Sixth Mean Peak'))
 
-    ax.legend((rects1[0],rects2[0]),('\nTrue\nPositives\n','\nFalse\nNegatives\n'),loc='center left',bbox_to_anchor=(1,0.5))
+    ax.legend((rects1[0],rects2[0]),('\nDetected\nSPEs\n','\nMissed\nSPEs\n'),loc='center left',bbox_to_anchor=(1,0.5))
 
     #labelling bars
     def autolabel(rects):
