@@ -23,17 +23,7 @@ def read_histogram(filename, x_label, title, savename, datadate, histo_mean, his
     #determining bin centers
     binscenters = np.array([0.5 * (bins_data[i] + bins_data[i+1]) for i in range(len(bins_data)-1)])
     b_guess = (len(histo) * binwidth)   #using area approximation to guess at B value
-    histo_sorted = np.sort(histo)       #establishing sorted version of histo array
-    #establishing histo array only including "central" data (within 2 guessed std of guessed mean)
-    histo_center = histo_sorted[np.where(((histo_mean - 2*histo_std) <= histo_sorted) & (histo_sorted <= (histo_mean + 2*histo_std)))]
-    #determning new number of bins by dividing value span of histo_center array by the binwidth to ensure same bin width is kept
-    new_bins = int((histo_center[len(histo_center)-1] - histo_center[0]) / binwidth)
-    #establishing histogram data for central information
-    histo_data_center, bins_data_center = np.histogram(histo_center, bins = new_bins)
-    #establishing centers of bins for central information
-    binscenters_center = np.array([0.5 * (bins_data_center[i] + bins_data_center[i+1]) for i in range(len(bins_data_center)-1)])
-    #range limited curve fit using central information
-    popt, _ = cf(fit_function,xdata = binscenters_center,ydata = histo_data_center, p0 = [b_guess,histo_mean,histo_std], maxfev = 10000)
+    popt, _ = cf(fit_function,xdata = binscenters,ydata = histo_data, p0 = [b_guess,histo_mean,histo_std], maxfev = 10000)
     #establishing 5 significant figure versions of the mean and std from curve fit
     gauss_mean = '%s' % float('%.5g' % popt[1])
     gauss_std = '%s' % float('%.5g' % popt[2])
