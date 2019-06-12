@@ -109,7 +109,7 @@ if __name__ == '__main__':
     parser.add_argument('--numhead',type=int,help='number of lines to ignore for header',default = 5)
     parser.add_argument('--mean',type=float,help='mean peak bits of waveform',default = 201.75)
     parser.add_argument('--std',type=float,help = 'standard deviation for noise in bits',default = 3.3)
-    parser.add_argument('--subfolder',type = str,help = 'how much the rise time was altered', default = 'rise_doubled')
+    parser.add_argument('--subfolder',type = str,help = 'how much the rise time was altered', default = 'raw')
     parser.add_argument('--new_fsps',type=float,help = 'sample rate of digitizer',default = 500000000.0)
     args = parser.parse_args()
 
