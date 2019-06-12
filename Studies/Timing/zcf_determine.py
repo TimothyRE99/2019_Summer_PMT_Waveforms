@@ -45,7 +45,7 @@ def ZCF(datadate,numhead,subfolder,n_box,n_shift,n_mult):
         t_cross,_,_ = zc_locator(t,v)
         wh(str(t_cross),writename)
     (histo_mean,histo_std) = gh(writename)
-    savename = "zero_crossing_time_nbox:" + str(n_box) + "_nshift:" + str(n_shift) + "_nmult:" + str(n_mult)
+    savename = subfolder + "/zero_crossing_time_nbox=" + str(n_box) + "_nshift=" + str(n_shift) + "_nmult=" + str(n_mult)
     rh(writename,"Seconds","Histogram of Zero Crossing Times",savename,datadate,histo_mean,histo_std)
 
 #main function
@@ -54,7 +54,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(prog="timing CFD",description="Applies CFD algorithm to prepare for ZCF.")
     parser.add_argument('--datadate',type = str,help = 'date when data was gathered, YYYYMMDD', default = '20190516')
     parser.add_argument('--numhead',type=int,help='number of lines to ignore for header',default = 5)
-    parser.add_argument('--subfolder',type = str,help = 'how much the rise time was altered', default = 'raw')
+    parser.add_argument('--subfolder',type = str,help = 'how much the rise time was altered', default = 'rise_doubled')
     args = parser.parse_args()
 
     for n_box in range(5):
