@@ -17,18 +17,14 @@ def zc_locator(t,v):
     indexCross = np.asarray([k for k, x in enumerate(checkCross) if x])
     index_Peak = indexPeak[0]
     indexCross_removed = indexCross[np.where(indexCross > index_Peak)]
-    if len(indexCross_removed) == 0:
-        t_cross = 'ALERT'
-        print('Bad File!')
-    else:
-        index_Cross = indexCross_removed[0]
-        t_bef = t[index_Cross - 1]
-        t_aft = t[index_Cross]
-        v_bef = v[index_Cross - 1]
-        v_aft = v[index_Cross]
-        slope = (v_aft - v_bef) / (t_aft - t_bef)
-        t_pass = (-1 * v_bef) / slope
-        t_cross = t_bef + t_pass
+    index_Cross = indexCross_removed[0]
+    t_bef = t[index_Cross - 1]
+    t_aft = t[index_Cross]
+    v_bef = v[index_Cross - 1]
+    v_aft = v[index_Cross]
+    slope = (v_aft - v_bef) / (t_aft - t_bef)
+    t_pass = (-1 * v_bef) / slope
+    t_cross = t_bef + t_pass
     return (t_cross,index_Cross,index_Peak)
 
 #running through CFD files to generate txt file to save ZCLs
@@ -54,10 +50,10 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(prog="timing CFD",description="Applies CFD algorithm to prepare for ZCF.")
     parser.add_argument('--datadate',type = str,help = 'date when data was gathered, YYYYMMDD', default = '20190516')
     parser.add_argument('--numhead',type=int,help='number of lines to ignore for header',default = 5)
-    parser.add_argument('--subfolder',type = str,help = 'how much the rise time was altered', default = 'rise_doubled')
+    parser.add_argument('--subfolder',type = str,help = 'how much the rise time was altered', default = 'raw')
     args = parser.parse_args()
 
-    for n_box in range(5):
+    for n_box in range(2,5):
         if n_box == 3:
             pass
         else:
@@ -65,8 +61,5 @@ if __name__ == '__main__':
                 if n_shift == 3:
                     pass
                 else:
-                    for n_mult in range(1,5):
-                        if n_mult == 3:
-                            pass
-                        else:
-                            ZCF(args.datadate,args.numhead,args.subfolder,n_box,n_shift,n_mult)
+                    for n_mult in range(1,3):
+                        ZCF(args.datadate,args.numhead,args.subfolder,n_box,n_shift,n_mult)
