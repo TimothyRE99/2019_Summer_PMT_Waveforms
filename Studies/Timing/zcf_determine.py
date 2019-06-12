@@ -53,7 +53,7 @@ if __name__ == '__main__':
     parser.add_argument('--subfolder',type = str,help = 'how much the rise time was altered', default = 'rise_doubled')
     args = parser.parse_args()
 
-    for n_box in range(2,5):
+    for n_box in range(4,5):
         if n_box == 3:
             pass
         else:
