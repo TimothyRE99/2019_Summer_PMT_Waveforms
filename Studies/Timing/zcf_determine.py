@@ -43,7 +43,7 @@ def ZCF(datadate,numhead,subfolder,n_box,n_shift,n_mult):
         filename = filedir + 'D3--waveforms--%05d.txt' % i
         (t,v,_) = rw(filename,numhead)
         t_cross,_,_ = zc_locator(t,v)
-        wh(t_cross,writename)
+        wh(str(t_cross),writename)
     (histo_mean,histo_std) = gh(writename)
     savename = "zero_crossing_time_nbox:" + str(n_box) + "_nshift:" + str(n_shift) + "_nmult:" + str(n_mult)
     rh(writename,"Seconds","Histogram of Zero Crossing Times",savename,datadate,histo_mean,histo_std)
