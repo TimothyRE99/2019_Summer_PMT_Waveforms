@@ -61,5 +61,5 @@ if __name__ == '__main__':
                 if n_shift == 3:
                     pass
                 else:
-                    for n_mult in range(1,3):
-                        ZCF(args.datadate,args.numhead,args.subfolder,n_box,n_shift,n_mult)
+                    n_mult = 1
+                    ZCF(args.datadate,args.numhead,args.subfolder,n_box,n_shift,n_mult)

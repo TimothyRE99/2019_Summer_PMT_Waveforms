@@ -79,5 +79,5 @@ if __name__ == '__main__':
                     for n_mult in range(1,5):
                         if n_mult == 3:
                             pass
-                        else:
-                            timing_CFD(args.datadate,args.numhead,args.subfolder,n_box,n_shift,n_mult)
+                        n_mult = 1
+                        timing_CFD(args.datadate,args.numhead,args.subfolder,n_box,n_shift,n_mult)
