@@ -4,6 +4,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.optimize import curve_fit as cf
+import os
 
 #Read and display the data
 def fit_function(x,B,mu,sigma):
@@ -47,7 +48,10 @@ def read_histogram(filename, x_label, title, savename, datadate, histo_mean, his
     plt.get_current_fig_manager().window.showMaximized()        #maximizes plot
     plt.show()      #showing plot for confirmation
     #finalizing plot saving
-    fig.savefig('G:/data/watchman/'+datadate+'_watchman_spe/studies/timing/histogram_images/'+savename+'_hist.png',dpi = 500)
+    savedir = 'G:/data/watchman/'+datadate+'_watchman_spe/studies/timing/histogram_images/'
+    if not os.path.exists(savedir):
+        os.makedirs(savedir)
+    fig.savefig(savedir+savename+'_hist.png',dpi = 500)
 
 #For testing purposes
 if __name__ == '__main__':
