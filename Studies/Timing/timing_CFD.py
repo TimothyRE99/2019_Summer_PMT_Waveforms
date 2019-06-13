@@ -32,8 +32,8 @@ def delay_wf(v,n):
 def attenuate_wf(v,n):
     v1 = -1 * v
     if n == 1:
-        return v
-    v1 = v / n
+        return v1
+    v1 = v1 / n
     return v1
 
 #sums waveforms together
