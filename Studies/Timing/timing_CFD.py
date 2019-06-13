@@ -21,42 +21,42 @@ def boxcar_wf(t,v,n):
     return t1,v1
 
 #runs inversion and shift of waveform
-def shift_wf(v,n):
-    v1 = -1 * v
+def delay_wf(v,n):
     if n == 0:
-        return v1
-    v1_insert = np.zeros(n)
-    v1 = np.insert(v1,0,v1_insert)[:-n]
+        return v
+    v_insert = np.zeros(n)
+    v1 = np.insert(v,0,v_insert)[:-n]
     return v1
 
 #runs multiplication of other waveform
-def multiply_wf(v,n):
+def attenuate_wf(v,n):
+    v1 = -1 * v
     if n == 1:
         return v
-    v1 = v * n
+    v1 = v / n
     return v1
 
 #sums waveforms together
-def sum_wf(v_mult,v_shift):
-    v_sum = np.add(v_mult,v_shift)
+def sum_wf(v_att,v_delay):
+    v_sum = np.add(v_att,v_delay)
     return v_sum
 
 #calls other functions
-def timing_CFD(datadate,numhead,subfolder,n_box,n_shift,n_mult):
-    writedir = 'G:/data/watchman/'+datadate+'_watchman_spe/studies/timing/nbox='+str(n_box)+'/nshift='+str(n_shift)+'/nmult='+str(n_mult)+'/'+subfolder+'/'
+def timing_CFD(datadate,numhead,subfolder,n_box,n_delay,n_att):
+    writedir = 'G:/data/watchman/'+datadate+'_watchman_spe/studies/timing/nbox='+str(n_box)+'/ndelay='+str(n_delay)+'/natt='+str(n_att)+'/'+subfolder+'/'
     if not os.path.exists(writedir):
         os.makedirs(writedir)
     filedir = 'G:/data/watchman/'+datadate+'_watchman_spe/d3/d3_'+subfolder+'_analyzed/'
     Nloops = len(os.listdir(filedir))
     for i in range(Nloops):
-        print("File: %05d, NBOX: " % i + str(n_box) + ", NSHIFT:" + str(n_shift) + " , NMULT: " + str(n_mult))
+        print("File: %05d, NBOX: " % i + str(n_box) + ", NDELAY:" + str(n_delay) + " , NATT: " + str(n_att))
         filename = filedir + 'D3--waveforms--%05d.txt' % i
         writename = writedir + 'D3--waveforms--%05d.txt' % i
         (t,v,header) = rw(filename,numhead)
         t_avg,v_avg = boxcar_wf(t,v,n_box)
-        v_shift = shift_wf(v_avg,n_shift)
-        v_mult = multiply_wf(v_avg,n_mult)
-        v_sum = sum_wf(v_mult,v_shift)
+        v_delay = delay_wf(v_avg,n_delay)
+        v_att = attenuate_wf(v_avg,n_att)
+        v_sum = sum_wf(v_att,v_delay)
         write_waveform(t_avg,v_sum,writename,header)
 
 #main function
@@ -72,12 +72,12 @@ if __name__ == '__main__':
         if n_box == 3:
             pass
         else:
-            for n_shift in range(1,5):
-                if n_shift == 3:
+            for n_delay in range(1,5):
+                if n_delay == 3:
                     pass
                 else:
-                    for n_mult in range(1,5):
-                        if n_mult == 3:
+                    for n_att in range(1,5):
+                        if n_att == 3:
                             pass
-                        n_mult = 1
-                        timing_CFD(args.datadate,args.numhead,args.subfolder,n_box,n_shift,n_mult)
+                        n_att = 1
+                        timing_CFD(args.datadate,args.numhead,args.subfolder,n_box,n_delay,n_att)

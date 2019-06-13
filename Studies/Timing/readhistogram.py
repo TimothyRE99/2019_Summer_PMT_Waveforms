@@ -39,8 +39,6 @@ def read_histogram(filename, x_label, title, savename, datadate, histo_mean, his
     plt.show()      #showing plot for confirmation
     #finalizing plot saving
     savedir = 'G:/data/watchman/'+datadate+'_watchman_spe/studies/timing/histogram_images/'
-    if not os.path.exists(savedir):
-        os.makedirs(savedir)
     fig.savefig(savedir+savename+'_hist.png',dpi = 500)
 
 #For testing purposes
