@@ -5,6 +5,9 @@ import numpy as np
 import matplotlib.pyplot as plt
 from readwaveform import read_waveform as rw
 from zcf_determine import zc_locator as locator
+from timing_CFD import boxcar_wf as bcw
+from timing_CFD import shift_wf as sw
+from timing_CFD import multiply_wf as mpw
 import os
 
 #plotting loop function
@@ -13,11 +16,20 @@ def plot_waveform(datadate,numhead,subfolder,n_box,n_shift,n_mult):
     Nloops = len(os.listdir(filedir))
     for i in range(Nloops):
         filename = filedir + 'D3--waveforms--%05d.txt' % i
+        filename2 = 'G:/data/watchman/'+datadate+'_watchman_spe/d3/d3_'+subfolder+'_analyzed/D3--waveforms--%05d.txt' % i
         print(filename)
         (t,v,_) = rw(filename,numhead)
+        (t2,v2,_) = rw(filename2,numhead)
+        t_box,v_box = bcw(t2,v2,n_box)
+        v_bott = mpw(v_box,n_mult)
+        v_top = sw(v_box,n_shift)
         (zcl,index_Cross,index_Peak) = locator(t,v)
         plt.plot(t,v)
+        plt.plot(t_box,v_bott,color = 'green')
+        plt.plot(t_box,v_top,color='purple')
         plt.scatter(t,v)
+        plt.scatter(t_box,v_bott,color = 'green')
+        plt.scatter(t_box,v_top,color='purple')
         plt.axhline(y=0,color='black')
         plt.axvline(x=zcl,color='red')
         plt.plot(t[index_Cross],v[index_Cross],'x',color = 'orange')
