@@ -79,5 +79,5 @@ if __name__ == '__main__':
                     for n_att in range(1,5):
                         if n_att == 3:
                             pass
-                        n_att = 1
-                        timing_CFD(args.datadate,args.numhead,args.subfolder,n_box,n_delay,n_att)
+                        else:
+                            timing_CFD(args.datadate,args.numhead,args.subfolder,n_box,n_delay,n_att)

@@ -63,5 +63,8 @@ if __name__ == '__main__':
                 if n_delay == 3:
                     pass
                 else:
-                    n_att = 1
-                    ZCF(args.datadate,args.numhead,args.subfolder,n_box,n_delay,n_att)
+                    for n_att in range(1,5):
+                        if n_att == 3:
+                            pass
+                        else:
+                            ZCF(args.datadate,args.numhead,args.subfolder,n_box,n_delay,n_att)
