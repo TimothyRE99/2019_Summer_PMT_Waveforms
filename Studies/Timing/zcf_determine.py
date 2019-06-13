@@ -10,7 +10,7 @@ from readhistogram import read_histogram as rh
 
 #determining ZCL from t and v
 def zc_locator(t,v):
-    v_norm = v/min(v[5:50])
+    v_norm = v/max(v[5:50])
     checkPeak = v_norm == 1
     checkCross = v_norm <= 0
     indexPeak = np.asarray([k for k, x in enumerate(checkPeak) if x])
