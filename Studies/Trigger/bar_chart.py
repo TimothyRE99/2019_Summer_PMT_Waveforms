@@ -8,11 +8,13 @@ import os
 
 #plotting data
 def bar_chart(datadate,subfolder,dark_rate):
-    savedir = 'G:/data/watchman/'+datadate+'_watchman_spe/studies/trigger/images/'
+    savedir = 'G:/data/watchman/'+datadate+'_watchman_spe/studies/trigger/images/'      #sets up name for directory to save images to
+    #creates directory if it doesn't exist
     if not os.path.exists(savedir):
         os.makedirs(savedir)
-    savename = savedir + 'bars_' + str(subfolder) + '.png'
+    savename = savedir + 'bars_' + str(subfolder) + '.png'       #creates name for plot
 
+    #establishes values for each bar
     true_positives_third = len(os.listdir('G:/data/watchman/'+datadate+'_watchman_spe/studies/trigger/third/'+subfolder+'/true_positives'))
     false_negatives_third = len(os.listdir('G:/data/watchman/'+datadate+'_watchman_spe/studies/trigger/third/'+subfolder+'/false_negatives'))
 
@@ -22,26 +24,32 @@ def bar_chart(datadate,subfolder,dark_rate):
     true_positives_sixth = len(os.listdir('G:/data/watchman/'+datadate+'_watchman_spe/studies/trigger/sixth/'+subfolder+'/true_positives'))
     false_negatives_sixth = len(os.listdir('G:/data/watchman/'+datadate+'_watchman_spe/studies/trigger/sixth/'+subfolder+'/false_negatives'))
 
+    #sets bar width and creates bar value arrays
     bar_width = 0.4
     bars_true_pos = [true_positives_third,true_positives_fourth,true_positives_sixth]
     bars_false_neg = [false_negatives_third,false_negatives_fourth,false_negatives_sixth]
 
+    #creates x-axis locations
     ind = np.arange(len(bars_true_pos))
 
+    #creates actual bars using values from above
     fig, ax = plt.subplots()
     rects1 = ax.bar(ind, bars_true_pos, bar_width, color = 'blue')
     rects2 = ax.bar(ind + bar_width, bars_false_neg, bar_width, color = 'red')
 
+    #saves proper dark rate from array
     dark_rate_third = dark_rate[0]
     dark_rate_fourth = dark_rate[1]
     dark_rate_sixth = dark_rate[2]
 
+    #establishes title and labels
     ax.set_title('Risetime Type: ' + subfolder + '\nNoise Detection Rate, One Third Mean Peak: ' + dark_rate_third + '\nNoise Detection Rate, One Fourth Mean Peak: ' + dark_rate_fourth + '\nNoise Detection Rate, One Sixth Mean Peak: ' + dark_rate_sixth)
     ax.set_ylabel('Number of Files')
     ax.set_xlabel('Threshold',fontweight='bold')
     ax.set_xticks(ind + 0.5*bar_width)
     ax.set_xticklabels(('One Third Mean Peak','One Fourth Mean Peak','One Sixth Mean Peak'))
 
+    #creates legend
     ax.legend((rects1[0],rects2[0]),('\nDetected\nSPEs\n','\nMissed\nSPEs\n'),loc='center left',bbox_to_anchor=(1,0.5))
 
     #labelling bars
@@ -50,9 +58,11 @@ def bar_chart(datadate,subfolder,dark_rate):
             height = rect.get_height()
             ax.text(rect.get_x() + rect.get_width()/2, 1.005*height,'%d' % int(height + 0.5),ha='center',va='bottom')
 
+    #runs bar labelling method
     autolabel(rects1)
     autolabel(rects2)
 
+    #shows and saves file
     plt.get_current_fig_manager().window.showMaximized()
     plt.show()
     fig.savefig(savename,dpi=500)
