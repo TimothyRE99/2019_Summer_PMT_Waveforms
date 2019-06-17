@@ -29,9 +29,9 @@ if not os.path.exists('G:/data/watchman/'+datadate+'_watchman_spe/d2/d2_images/'
 for i in range(Nloops):
     print('File: %05d' % i)
     (t_single,v_single,_) = rw('g:/data/watchman/'+datadate+'_watchman_spe/d2/d2_raw/D2--waveforms--%05d.txt' % i,5)
-    (t_double,v_double,_) = rw('g:/data/watchman/'+datadate+'_watchman_spe/d2/d2_rise_doubled/D2--waveforms--%05d.txt' % i,5)
-    (t_quadruple,v_quadruple,_) = rw('g:/data/watchman/'+datadate+'_watchman_spe/d2/d2_rise_quadrupled/D2--waveforms--%05d.txt' % i,5)
-    (t_octuple,v_octuple,_) = rw('g:/data/watchman/'+datadate+'_watchman_spe/d2/d2_rise_octupled/D2--waveforms--%05d.txt' % i,5)
+    (t_double,v_double,_) = rw('g:/data/watchman/'+datadate+'_watchman_spe/d2/d2_rise_doubled_gained/D2--waveforms--%05d.txt' % i,5)
+    (t_quadruple,v_quadruple,_) = rw('g:/data/watchman/'+datadate+'_watchman_spe/d2/d2_rise_quadrupled_gained/D2--waveforms--%05d.txt' % i,5)
+    (t_octuple,v_octuple,_) = rw('g:/data/watchman/'+datadate+'_watchman_spe/d2/d2_rise_octupled_gained/D2--waveforms--%05d.txt' % i,5)
     #running risetime calculation
     risetime_single = risetimes(t_single,v_single)
     risetime_double = risetimes(t_double,v_double)
@@ -46,4 +46,4 @@ for i in range(Nloops):
     plt.title('Single Risetime = %05g' % risetime_single + 's\nDouble Risetime = %05g' % risetime_double + 's\nQuadruple Risetime = %05g' % risetime_quadruple + 's\nOctuple Risetime = %05g' % risetime_octuple + 's')
     plt.get_current_fig_manager().window.showMaximized()
     plt.show()
-    #fig.savefig('G:/data/watchman/20190516_watchman_spe/d2/d2_images/average_lpfing_multiple.png',dpi = 2500)
+    #fig.savefig('G:/data/watchman/20190516_watchman_spe/d2/d2_images/average_lpfing_multiple.png',dpi = 500)
