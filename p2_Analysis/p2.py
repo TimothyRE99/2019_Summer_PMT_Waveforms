@@ -17,10 +17,13 @@ def noise_add(v,noise):
 def gain(v,gain_noise,gain_target):
     if gain_target > 0:
         gain_target = -1 * gain_target
-    v_inter = v * (gain_target / min(v))
-    if gain_noise != 0:
-        v_final = noise_add(v_inter,gain_noise)
-    return v_final
+    if min(v) < gain_target:
+        return v
+    else:
+        v_inter = v * (gain_target / min(v))
+        if gain_noise != 0:
+            v_final = noise_add(v_inter,gain_noise)
+        return v_final
 
 #applying lowpass filter and writing
 def p2(datadate,numhead,fsps,x_values,noise,gain_noise,gain_target):
@@ -106,7 +109,7 @@ if __name__ == '__main__':
     parser.add_argument("--x_values",type=int,help="number of taus to generate",default=5000)
     parser.add_argument("--noise",type=float,help="standard deviation of noise gaussian",default=0)
     parser.add_argument("--gain_noise",type=float,help="standard deviation of noise gaussian for noise step",default=0)
-    parser.add_argument("--gain_target",type=float,help="target height/peak value for adding gain",default=0)
+    parser.add_argument("--gain_target",type=float,help="target height/peak value for adding gain",default=0.0063284)
     args = parser.parse_args()
 
     p2(args.datadate,args.numhead,args.fsps,args.x_values,args.noise,args.gain_noise,args.gain_target)
