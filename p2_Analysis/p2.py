@@ -14,21 +14,14 @@ def noise_add(v,noise):
     return(v_final)
 
 #applying gain and gain noise
-def gain(v,gain_noise,gain_target):
-    if gain_target > 0:
-        gain_target = -1 * gain_target
-    if min(v) < gain_target:
-        return v
-    else:
-        v_inter = v * (gain_target / min(v))
-        if gain_noise != 0:
-            v_final = noise_add(v_inter,gain_noise)
-        else:
-            v_final = v_inter
-        return v_final
+def gain(v,gain_noise,gain_factor):
+    v_intermed = v * gain_factor
+    if gain_noise != 0:
+        v_final = noise_add(v_intermed,gain_noise)
+    return v_final
 
 #applying lowpass filter and writing
-def p2(datadate,numhead,fsps,x_values,noise,gain_noise,gain_target):
+def p2(datadate,numhead,fsps,x_values,noise,gain_noise,gain_factor_2,gain_factor_4,gain_factor_8):
     #establish tau values from average waveform
     tau_double = 2.18e-8
     tau_quadruple = 1.13e-8
@@ -51,7 +44,7 @@ def p2(datadate,numhead,fsps,x_values,noise,gain_noise,gain_target):
         writedir_2 = 'g:/data/watchman/'+datadate+'_watchman_spe/d2/d2_rise_doubled_gain_noise=' + str(gain_noise) + 'V_noise=' + str(noise) + 'V'
         writedir_4 = 'g:/data/watchman/'+datadate+'_watchman_spe/d2/d2_rise_quadrupled_gain_noise=' + str(gain_noise) + 'V_noise=' + str(noise) + 'V'
         writedir_8 = 'g:/data/watchman/'+datadate+'_watchman_spe/d2/d2_rise_octupled_gain_noise=' + str(gain_noise) + 'V_noise=' + str(noise) + 'V'
-    if gain_target != 0:
+    if gain_factor_2 != 1 or gain_factor_4 != 1 or gain_factor_8:
         writedir_2 = writedir_2 + '_gained/'
         writedir_4 = writedir_4 + '_gained/'
         writedir_8 = writedir_8 + '_gained/'
@@ -77,30 +70,29 @@ def p2(datadate,numhead,fsps,x_values,noise,gain_noise,gain_target):
         writename_4 = writedir_4 + 'D2--waveforms--%05d.txt' % i
         writename_8 = writedir_8 + 'D2--waveforms--%05d.txt' % i
         #calculating and writing double files
-        (t_2,v_2,header_2) = rw(filename,numhead)
-        gain_target = min(v_2)
+        (t,v_2,header) = rw(filename,numhead)
         v_taued_2 = lpf(v_2,tau_double,fsps)
         if noise != 0:
             v_taued_2 = noise_add(v_taued_2,noise)
-        if gain_target != 0:
-            v_taued_2 = gain(v_taued_2,gain_noise,gain_target)
-        write_waveform(t_2,v_taued_2,writename_2,header_2)
         #calculating and writing quadruple files
-        (t_4,v_4,header_4) = rw(writename_2,numhead)
-        v_taued_4 = lpf(v_4,tau_quadruple,fsps)
+        v_taued_4 = lpf(v_taued_2,tau_quadruple,fsps)
         if noise != 0:
             v_taued_4 = noise_add(v_taued_4,noise)
-        if gain_target != 0:
-            v_taued_4 = gain(v_taued_4,gain_noise,gain_target)
-        write_waveform(t_4,v_taued_4,writename_4,header_4)
         #calculating and writing octuple files
-        (t_8,v_8,header_8) = rw(writename_4,numhead)
-        v_taued_8 = lpf(v_8,tau_octuple,fsps)
+        v_taued_8 = lpf(v_taued_8,tau_octuple,fsps)
         if noise != 0:
             v_taued_8 = noise_add(v_taued_8,noise)
-        if gain_target != 0:
-            v_taued_8 = gain(v_taued_8,gain_noise,gain_target)
-        write_waveform(t_8,v_taued_8,writename_8,header_8)
+        #adding gain to waveforms
+        if gain_factor_2 != 1:
+            v_taued_2 = gain(v_taued_2,gain_noise,gain_factor_2)
+        if gain_factor_4 != 1:
+            v_taued_4 = gain(v_taued_4,gain_noise,gain_factor_4)
+        if gain_factor_8 != 1:
+            v_taued_8 = gain(v_taued_8,gain_noise,gain_factor_8)
+        #writing waveforms
+        write_waveform(t,v_taued_2,writename_2,header)
+        write_waveform(t,v_taued_4,writename_4,header)
+        write_waveform(t,v_taued_8,writename_8,header)
 
 #main function
 if __name__ == '__main__':
@@ -111,8 +103,10 @@ if __name__ == '__main__':
     parser.add_argument("--fsps",type=float,help="hz, samples/s",default=20000000000.0)
     parser.add_argument("--x_values",type=int,help="number of taus to generate",default=5000)
     parser.add_argument("--noise",type=float,help="standard deviation of noise gaussian",default=0)
-    parser.add_argument("--gain_noise",type=float,help="standard deviation of noise gaussian for noise step",default=0)
-    parser.add_argument("--gain_target",type=float,help="target height/peak value for adding gain",default=0.0063284)
+    parser.add_argument("--gain_noise",type=float,help="standard deviation of noise gaussian for gain step",default=0)
+    parser.add_argument("--gain_factor_2",type=float,help="Factor to multiply doubled by",default=3.5867418798)
+    parser.add_argument("--gain_factor_4",type=float,help="Factor to multiply quadrupled by",default=4.52070370286)
+    parser.add_argument("--gain_factor_8",type=float,help="Factor to multiply octupled by",default=8.09019004097)
     args = parser.parse_args()
 
-    p2(args.datadate,args.numhead,args.fsps,args.x_values,args.noise,args.gain_noise,args.gain_target)
+    p2(args.datadate,args.numhead,args.fsps,args.x_values,args.noise,args.gain_noise,args.gain_factor_2,args.gain_factor_4,args.gain_factor_8)
