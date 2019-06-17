@@ -33,26 +33,40 @@ def downsampling(t,v,fsps,new_fsps):
     return t_new,v_new
 
 #reading and writing waveforms and calling other functions
-def p3(noise_filter,noise,datadate,numhead,fsps,new_fsps):
+def p3(noise_filter,noise,datadate,numhead,fsps,new_fsps,gain_noise,gain_factor_2,gain_factor_4,gain_factor_8):
     #establishing directory names
-    if noise_filter == 0:
-        filedir1 = 'g:/data/watchman/'+datadate+'_watchman_spe/d3/d3_raw/'
-        filedir2 = 'g:/data/watchman/'+datadate+'_watchman_spe/d3/d3_rise_doubled/'
-        filedir4 = 'g:/data/watchman/'+datadate+'_watchman_spe/d3/d3_rise_quadrupled/'
-        filedir8 = 'g:/data/watchman/'+datadate+'_watchman_spe/d3/d3_rise_octupled/'
-        writedir1 = 'g:/data/watchman/'+datadate+'_watchman_spe/d3/d3_raw_analyzed/'
-        writedir2 = 'g:/data/watchman/'+datadate+'_watchman_spe/d3/d3_rise_doubled_analyzed/'
-        writedir4 = 'g:/data/watchman/'+datadate+'_watchman_spe/d3/d3_rise_quadrupled_analyzed/'
-        writedir8 = 'g:/data/watchman/'+datadate+'_watchman_spe/d3/d3_rise_octupled_analyzed/'
+    filedir1 = 'g:/data/watchman/'+datadate+'_watchman_spe/d3/d3_raw/'
+    writedir1 = 'g:/data/watchman/'+datadate+'_watchman_spe/d3/d3_raw_analyzed/'
+    if noise == 0 and gain_noise == 0:
+        writedir2 = 'g:/data/watchman/'+datadate+'_watchman_spe/d3/d3_rise_doubled'
+        writedir4 = 'g:/data/watchman/'+datadate+'_watchman_spe/d3/d3_rise_quadrupled'
+        writedir8 = 'g:/data/watchman/'+datadate+'_watchman_spe/d3/d3_rise_octupled'
+    elif gain_noise == 0:
+        writedir2 = 'g:/data/watchman/'+datadate+'_watchman_spe/d3/d3_rise_doubled_noise=' + str(noise) + 'V'
+        writedir4 = 'g:/data/watchman/'+datadate+'_watchman_spe/d3/d3_rise_quadrupled_noise=' + str(noise) + 'V'
+        writedir8 = 'g:/data/watchman/'+datadate+'_watchman_spe/d3/d3_rise_octupled_noise=' + str(noise) + 'V'
+    elif noise == 0:
+        writedir2 = 'g:/data/watchman/'+datadate+'_watchman_spe/d3/d3_rise_doubled_gain_noise=' + str(gain_noise) + 'V'
+        writedir4 = 'g:/data/watchman/'+datadate+'_watchman_spe/d3/d3_rise_quadrupled_gain_noise=' + str(gain_noise) + 'V'
+        writedir8 = 'g:/data/watchman/'+datadate+'_watchman_spe/d3/d3_rise_octupled_gain_noise=' + str(gain_noise) + 'V'
     else:
-        filedir1 = 'g:/data/watchman/'+datadate+'_watchman_spe/d3/d3_raw_noise=' + str(noise) + 'V/'
-        filedir2 = 'g:/data/watchman/'+datadate+'_watchman_spe/d3/d3_rise_doubled_noise=' + str(noise) + 'V/'
-        filedir4 = 'g:/data/watchman/'+datadate+'_watchman_spe/d3/d3_rise_quadrupled_noise=' + str(noise) + 'V/'
-        filedir8 = 'g:/data/watchman/'+datadate+'_watchman_spe/d3/d3_rise_octupled_noise=' + str(noise) + 'V/'
-        writedir1 = 'g:/data/watchman/'+datadate+'_watchman_spe/d3/d3_raw_analyzed_noise=' + str(noise) + 'V/'
-        writedir2 = 'g:/data/watchman/'+datadate+'_watchman_spe/d3/d3_rise_doubled_analyzed_noise=' + str(noise) + 'V/'
-        writedir4 = 'g:/data/watchman/'+datadate+'_watchman_spe/d3/d3_rise_quadrupled_analyzed_noise=' + str(noise) + 'V/'
-        writedir8 = 'g:/data/watchman/'+datadate+'_watchman_spe/d3/d3_rise_octupled_analyzed_noise=' + str(noise) + 'V/'
+        writedir2 = 'g:/data/watchman/'+datadate+'_watchman_spe/d3/d3_rise_doubled_gain_noise=' + str(gain_noise) + 'V_noise=' + str(noise) + 'V'
+        writedir4 = 'g:/data/watchman/'+datadate+'_watchman_spe/d3/d3_rise_quadrupled_gain_noise=' + str(gain_noise) + 'V_noise=' + str(noise) + 'V'
+        writedir8 = 'g:/data/watchman/'+datadate+'_watchman_spe/d3/d3_rise_octupled_gain_noise=' + str(gain_noise) + 'V_noise=' + str(noise) + 'V'
+    if gain_factor_2 != 1 or gain_factor_4 != 1 or gain_factor_8:
+        filedir2 = writedir2 + '_gained/'
+        filedir4 = writedir4 + '_gained/'
+        filedir8 = writedir8 + '_gained/'
+        writedir2 = writedir2 + '_gained_analyzed/'
+        writedir4 = writedir4 + '_gained_analyzed/'
+        writedir8 = writedir8 + '_gained_analyzed/'
+    else:
+        filedir2 = writedir2 + '/'
+        filedir4 = writedir4 + '/'
+        filedir8 = writedir8 + '/'
+        writedir2 = writedir2 + '_analyzed/'
+        writedir4 = writedir4 + '_analyzed/'
+        writedir8 = writedir8 + '_analyzed/'
     #creating directories if they don't exist
     if not os.path.exists(writedir1):
         os.makedirs(writedir1)
@@ -105,6 +119,10 @@ if __name__ == '__main__':
     parser.add_argument('--numhead',type=int,help='number of lines to ignore for header',default = 5)
     parser.add_argument("--fsps",type=float,help="hz, samples/s",default=20000000000.0)
     parser.add_argument("--new_fsps",type=float,help="hz, samples/s of new digitizer",default=500000000.0)
+    parser.add_argument("--gain_noise",type=float,help="standard deviation of noise gaussian for gain step",default=0)
+    parser.add_argument("--gain_factor_2",type=float,help="Factor to multiply doubled by",default=3.5867418798)
+    parser.add_argument("--gain_factor_4",type=float,help="Factor to multiply quadrupled by",default=4.52070370286)
+    parser.add_argument("--gain_factor_8",type=float,help="Factor to multiply octupled by",default=8.09019004097)
     args = parser.parse_args()
 
-    p3(args.noise_filter,args.noise,args.datadate,args.numhead,args.fsps,args.new_fsps)
+    p3(args.noise_filter,args.noise,args.datadate,args.numhead,args.fsps,args.new_fsps,args.gain_noise,args.gain_factor_2,args.gain_factor_4,args.gain_factor_8)
