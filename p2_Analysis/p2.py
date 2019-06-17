@@ -31,21 +31,29 @@ def p2(datadate,numhead,fsps,x_values,noise,gain_noise,gain_target):
     #establish directories for reading and writing waveforms
     filedir = 'g:/data/watchman/'+datadate+'_watchman_spe/d2/d2_raw/'
     if noise == 0 and gain_noise == 0:
-        writedir_2 = 'g:/data/watchman/'+datadate+'_watchman_spe/d2/d2_rise_doubled/'
-        writedir_4 = 'g:/data/watchman/'+datadate+'_watchman_spe/d2/d2_rise_quadrupled/'
-        writedir_8 = 'g:/data/watchman/'+datadate+'_watchman_spe/d2/d2_rise_octupled/'
+        writedir_2 = 'g:/data/watchman/'+datadate+'_watchman_spe/d2/d2_rise_doubled'
+        writedir_4 = 'g:/data/watchman/'+datadate+'_watchman_spe/d2/d2_rise_quadrupled'
+        writedir_8 = 'g:/data/watchman/'+datadate+'_watchman_spe/d2/d2_rise_octupled'
     elif gain_noise == 0:
-        writedir_2 = 'g:/data/watchman/'+datadate+'_watchman_spe/d2/d2_rise_doubled_noise=' + str(noise) + 'V/'
-        writedir_4 = 'g:/data/watchman/'+datadate+'_watchman_spe/d2/d2_rise_quadrupled_noise=' + str(noise) + 'V/'
-        writedir_8 = 'g:/data/watchman/'+datadate+'_watchman_spe/d2/d2_rise_octupled_noise=' + str(noise) + 'V/'
+        writedir_2 = 'g:/data/watchman/'+datadate+'_watchman_spe/d2/d2_rise_doubled_noise=' + str(noise) + 'V'
+        writedir_4 = 'g:/data/watchman/'+datadate+'_watchman_spe/d2/d2_rise_quadrupled_noise=' + str(noise) + 'V'
+        writedir_8 = 'g:/data/watchman/'+datadate+'_watchman_spe/d2/d2_rise_octupled_noise=' + str(noise) + 'V'
     elif noise == 0:
-        writedir_2 = 'g:/data/watchman/'+datadate+'_watchman_spe/d2/d2_rise_doubled_gain_noise=' + str(gain_noise) + 'V/'
-        writedir_4 = 'g:/data/watchman/'+datadate+'_watchman_spe/d2/d2_rise_quadrupled_gain_noise=' + str(gain_noise) + 'V/'
-        writedir_8 = 'g:/data/watchman/'+datadate+'_watchman_spe/d2/d2_rise_octupled_gain_noise=' + str(gain_noise) + 'V/'
+        writedir_2 = 'g:/data/watchman/'+datadate+'_watchman_spe/d2/d2_rise_doubled_gain_noise=' + str(gain_noise) + 'V'
+        writedir_4 = 'g:/data/watchman/'+datadate+'_watchman_spe/d2/d2_rise_quadrupled_gain_noise=' + str(gain_noise) + 'V'
+        writedir_8 = 'g:/data/watchman/'+datadate+'_watchman_spe/d2/d2_rise_octupled_gain_noise=' + str(gain_noise) + 'V'
     else:
-        writedir_2 = 'g:/data/watchman/'+datadate+'_watchman_spe/d2/d2_rise_doubled_gain_noise=' + str(gain_noise) + 'V_noise=' + str(noise) + 'V/'
-        writedir_4 = 'g:/data/watchman/'+datadate+'_watchman_spe/d2/d2_rise_quadrupled_gain_noise=' + str(gain_noise) + 'V_noise=' + str(noise) + 'V/'
-        writedir_8 = 'g:/data/watchman/'+datadate+'_watchman_spe/d2/d2_rise_octupled_gain_noise=' + str(gain_noise) + 'V_noise=' + str(noise) + 'V/'
+        writedir_2 = 'g:/data/watchman/'+datadate+'_watchman_spe/d2/d2_rise_doubled_gain_noise=' + str(gain_noise) + 'V_noise=' + str(noise) + 'V'
+        writedir_4 = 'g:/data/watchman/'+datadate+'_watchman_spe/d2/d2_rise_quadrupled_gain_noise=' + str(gain_noise) + 'V_noise=' + str(noise) + 'V'
+        writedir_8 = 'g:/data/watchman/'+datadate+'_watchman_spe/d2/d2_rise_octupled_gain_noise=' + str(gain_noise) + 'V_noise=' + str(noise) + 'V'
+    if gain_target != 0:
+        writedir_2 = writedir_2 + '_gained/'
+        writedir_4 = writedir_4 + '_gained/'
+        writedir_8 = writedir_8 + '_gained/'
+    else:
+        writedir_2 = writedir_2 + '/'
+        writedir_4 = writedir_4 + '/'
+        writedir_8 = writedir_8 + '/'
     #creating write directories if they're not there
     if not os.path.exists(writedir_2):
         os.makedirs(writedir_2)
