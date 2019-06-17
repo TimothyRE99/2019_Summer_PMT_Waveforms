@@ -35,26 +35,26 @@ def downsampling(t,v,fsps,new_fsps):
 #reading and writing waveforms and calling other functions
 def p3(noise_filter,noise,datadate,numhead,fsps,new_fsps,gain_noise,gain_factor_2,gain_factor_4,gain_factor_8):
     #establishing directory names
-    if noise == 0 and gain_noise == 0:
+    if noise_filter == 0 and gain_noise == 0:
         writedir1 = 'g:/data/watchman/'+datadate+'_watchman_spe/d3/d3_raw'
         writedir2 = 'g:/data/watchman/'+datadate+'_watchman_spe/d3/d3_rise_doubled'
         writedir4 = 'g:/data/watchman/'+datadate+'_watchman_spe/d3/d3_rise_quadrupled'
         writedir8 = 'g:/data/watchman/'+datadate+'_watchman_spe/d3/d3_rise_octupled'
     elif gain_noise == 0:
-        writedir1 = 'g:/data/watchman/'+datadate+'_watchman_spe/d3/d3_raw_noise=' + str(noise) + 'V'
-        writedir2 = 'g:/data/watchman/'+datadate+'_watchman_spe/d3/d3_rise_doubled_noise=' + str(noise) + 'V'
-        writedir4 = 'g:/data/watchman/'+datadate+'_watchman_spe/d3/d3_rise_quadrupled_noise=' + str(noise) + 'V'
-        writedir8 = 'g:/data/watchman/'+datadate+'_watchman_spe/d3/d3_rise_octupled_noise=' + str(noise) + 'V'
-    elif noise == 0:
+        writedir1 = 'g:/data/watchman/'+datadate+'_watchman_spe/d3/d3_raw_noise=' + str(noise_filter) + 'V'
+        writedir2 = 'g:/data/watchman/'+datadate+'_watchman_spe/d3/d3_rise_doubled_noise=' + str(noise_filter) + 'V'
+        writedir4 = 'g:/data/watchman/'+datadate+'_watchman_spe/d3/d3_rise_quadrupled_noise=' + str(noise_filter) + 'V'
+        writedir8 = 'g:/data/watchman/'+datadate+'_watchman_spe/d3/d3_rise_octupled_noise=' + str(noise_filter) + 'V'
+    elif noise_filter == 0:
         writedir1 = 'g:/data/watchman/'+datadate+'_watchman_spe/d3/d3_raw_gain_noise=' + str(gain_noise) + 'V'
         writedir2 = 'g:/data/watchman/'+datadate+'_watchman_spe/d3/d3_rise_doubled_gain_noise=' + str(gain_noise) + 'V'
         writedir4 = 'g:/data/watchman/'+datadate+'_watchman_spe/d3/d3_rise_quadrupled_gain_noise=' + str(gain_noise) + 'V'
         writedir8 = 'g:/data/watchman/'+datadate+'_watchman_spe/d3/d3_rise_octupled_gain_noise=' + str(gain_noise) + 'V'
     else:
-        writedir1 = 'g:/data/watchman/'+datadate+'_watchman_spe/d3/d3_raw_gain_noise=' + str(gain_noise) + 'V_noise=' + str(noise) + 'V'
-        writedir2 = 'g:/data/watchman/'+datadate+'_watchman_spe/d3/d3_rise_doubled_gain_noise=' + str(gain_noise) + 'V_noise=' + str(noise) + 'V'
-        writedir4 = 'g:/data/watchman/'+datadate+'_watchman_spe/d3/d3_rise_quadrupled_gain_noise=' + str(gain_noise) + 'V_noise=' + str(noise) + 'V'
-        writedir8 = 'g:/data/watchman/'+datadate+'_watchman_spe/d3/d3_rise_octupled_gain_noise=' + str(gain_noise) + 'V_noise=' + str(noise) + 'V'
+        writedir1 = 'g:/data/watchman/'+datadate+'_watchman_spe/d3/d3_raw_gain_noise=' + str(gain_noise) + 'V_noise=' + str(noise_filter) + 'V'
+        writedir2 = 'g:/data/watchman/'+datadate+'_watchman_spe/d3/d3_rise_doubled_gain_noise=' + str(gain_noise) + 'V_noise=' + str(noise_filter) + 'V'
+        writedir4 = 'g:/data/watchman/'+datadate+'_watchman_spe/d3/d3_rise_quadrupled_gain_noise=' + str(gain_noise) + 'V_noise=' + str(noise_filter) + 'V'
+        writedir8 = 'g:/data/watchman/'+datadate+'_watchman_spe/d3/d3_rise_octupled_gain_noise=' + str(gain_noise) + 'V_noise=' + str(noise_filter) + 'V'
     if gain_factor_2 != 1 or gain_factor_4 != 1 or gain_factor_8:
         filedir1 = writedir1 + '_gained/'
         filedir2 = writedir2 + '_gained/'
@@ -119,7 +119,7 @@ def p3(noise_filter,noise,datadate,numhead,fsps,new_fsps,gain_noise,gain_factor_
 if __name__ == '__main__':
     import argparse
     parser = argparse.ArgumentParser(prog="p3",description="Downsamples and digitizes waveform.")
-    parser.add_argument("--noise_filter",type=float,help='bits of noise from filterr',default=0)
+    parser.add_argument("--noise_filter",type=float,help='bits of noise from filter',default=0)
     parser.add_argument("--noise",type=float,help='bits of noise from digitizer',default=3.3)
     parser.add_argument('--datadate',type = str,help = 'date when data was gathered, YYYYMMDD', default = '20190516')
     parser.add_argument('--numhead',type=int,help='number of lines to ignore for header',default = 5)
