@@ -78,6 +78,7 @@ def p2(datadate,numhead,fsps,x_values,noise,gain_noise,gain_target):
         writename_8 = writedir_8 + 'D2--waveforms--%05d.txt' % i
         #calculating and writing double files
         (t_2,v_2,header_2) = rw(filename,numhead)
+        gain_target = min(v_2)
         v_taued_2 = lpf(v_2,tau_double,fsps)
         if noise != 0:
             v_taued_2 = noise_add(v_taued_2,noise)
