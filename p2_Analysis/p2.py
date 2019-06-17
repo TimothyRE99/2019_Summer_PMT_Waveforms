@@ -79,7 +79,7 @@ def p2(datadate,numhead,fsps,x_values,noise,gain_noise,gain_factor_2,gain_factor
         if noise != 0:
             v_taued_4 = noise_add(v_taued_4,noise)
         #calculating and writing octuple files
-        v_taued_8 = lpf(v_taued_8,tau_octuple,fsps)
+        v_taued_8 = lpf(v_taued_4,tau_octuple,fsps)
         if noise != 0:
             v_taued_8 = noise_add(v_taued_8,noise)
         #adding gain to waveforms
