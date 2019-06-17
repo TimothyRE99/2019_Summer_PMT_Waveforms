@@ -7,8 +7,8 @@ import shutil
 #moving files
 def p2_prelim(datadate,noise,gain_noise,gain_factor_2,gain_factor_4,gain_factor_8):
     #setting up directories to read from and write to
-    filedir1 = 'g:/data/watchman/'+datadate+'_watchman_spe/d2/d2_raw/'
     if noise == 0 and gain_noise == 0:
+        filedir1 = 'g:/data/watchman/'+datadate+'_watchman_spe/d2/d2_raw'
         filedir2 = 'g:/data/watchman/'+datadate+'_watchman_spe/d2/d2_rise_doubled'
         filedir4 = 'g:/data/watchman/'+datadate+'_watchman_spe/d2/d2_rise_quadrupled'
         filedir8 = 'g:/data/watchman/'+datadate+'_watchman_spe/d2/d2_rise_octupled'
@@ -17,6 +17,7 @@ def p2_prelim(datadate,noise,gain_noise,gain_factor_2,gain_factor_4,gain_factor_
         writedir4 = 'g:/data/watchman/'+datadate+'_watchman_spe/d3/d3_rise_quadrupled'
         writedir8 = 'g:/data/watchman/'+datadate+'_watchman_spe/d3/d3_rise_octupled'
     elif gain_noise == 0:
+        filedir1 = 'g:/data/watchman/'+datadate+'_watchman_spe/d2/d2_raw_noise=' + str(noise) + 'V'
         filedir2 = 'g:/data/watchman/'+datadate+'_watchman_spe/d2/d2_rise_doubled_noise=' + str(noise) + 'V'
         filedir4 = 'g:/data/watchman/'+datadate+'_watchman_spe/d2/d2_rise_quadrupled_noise=' + str(noise) + 'V'
         filedir8 = 'g:/data/watchman/'+datadate+'_watchman_spe/d2/d2_rise_octupled_noise=' + str(noise) + 'V'
@@ -25,6 +26,7 @@ def p2_prelim(datadate,noise,gain_noise,gain_factor_2,gain_factor_4,gain_factor_
         writedir4 = 'g:/data/watchman/'+datadate+'_watchman_spe/d3/d3_rise_quadrupled_noise=' + str(noise) + 'V'
         writedir8 = 'g:/data/watchman/'+datadate+'_watchman_spe/d3/d3_rise_octupled_noise=' + str(noise) + 'V'
     elif noise == 0:
+        filedir1 = 'g:/data/watchman/'+datadate+'_watchman_spe/d2/d2_raw_gain_noise=' + str(gain_noise) + 'V'
         filedir2 = 'g:/data/watchman/'+datadate+'_watchman_spe/d2/d2_rise_doubled_gain_noise=' + str(gain_noise) + 'V'
         filedir4 = 'g:/data/watchman/'+datadate+'_watchman_spe/d2/d2_rise_quadrupled_gain_noise=' + str(gain_noise) + 'V'
         filedir8 = 'g:/data/watchman/'+datadate+'_watchman_spe/d2/d2_rise_octupled_gain_noise=' + str(gain_noise) + 'V'
@@ -33,6 +35,7 @@ def p2_prelim(datadate,noise,gain_noise,gain_factor_2,gain_factor_4,gain_factor_
         writedir4 = 'g:/data/watchman/'+datadate+'_watchman_spe/d3/d3_rise_quadrupled_gain_noise=' + str(gain_noise) + 'V'
         writedir8 = 'g:/data/watchman/'+datadate+'_watchman_spe/d3/d3_rise_octupled_gain_noise=' + str(gain_noise) + 'V'
     else:
+        filedir1 = 'g:/data/watchman/'+datadate+'_watchman_spe/d2/d2_raw_gain_noise=' + str(gain_noise) + 'V_noise=' + str(noise) + 'V'
         filedir2 = 'g:/data/watchman/'+datadate+'_watchman_spe/d2/d2_rise_doubled_gain_noise=' + str(gain_noise) + 'V_noise=' + str(noise) + 'V'
         filedir4 = 'g:/data/watchman/'+datadate+'_watchman_spe/d2/d2_rise_quadrupled_gain_noise=' + str(gain_noise) + 'V_noise=' + str(noise) + 'V'
         filedir8 = 'g:/data/watchman/'+datadate+'_watchman_spe/d2/d2_rise_octupled_gain_noise=' + str(gain_noise) + 'V_noise=' + str(noise) + 'V'
@@ -41,6 +44,7 @@ def p2_prelim(datadate,noise,gain_noise,gain_factor_2,gain_factor_4,gain_factor_
         writedir4 = 'g:/data/watchman/'+datadate+'_watchman_spe/d3/d3_rise_quadrupled_gain_noise=' + str(gain_noise) + 'V_noise=' + str(noise) + 'V'
         writedir8 = 'g:/data/watchman/'+datadate+'_watchman_spe/d3/d3_rise_octupled_gain_noise=' + str(gain_noise) + 'V_noise=' + str(noise) + 'V'
     if gain_factor_2 != 1 or gain_factor_4 != 1 or gain_factor_8:
+        filedir1 = filedir1 + '_gained/'
         filedir2 = filedir2 + '_gained/'
         filedir4 = filedir4 + '_gained/'
         filedir8 = filedir8 + '_gained/'
@@ -49,6 +53,7 @@ def p2_prelim(datadate,noise,gain_noise,gain_factor_2,gain_factor_4,gain_factor_
         writedir4 = writedir4 + '_gained/'
         writedir8 = writedir8 + '_gained/'
     else:
+        filedir1 = filedir1 + '/'
         filedir2 = filedir2 + '/'
         filedir4 = filedir4 + '/'
         filedir8 = filedir8 + '/'
