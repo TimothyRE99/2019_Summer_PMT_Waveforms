@@ -18,6 +18,8 @@ def gain(v,gain_noise,gain_factor):
     v_intermed = v * gain_factor
     if gain_noise != 0:
         v_final = noise_add(v_intermed,gain_noise)
+    else:
+        v_final = v_intermed
     return v_final
 
 #applying lowpass filter and writing
