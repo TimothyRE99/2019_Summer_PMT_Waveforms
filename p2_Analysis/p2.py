@@ -6,6 +6,7 @@ import os
 from p2_lowpass import lpfFirstOrder as lpf
 from readwaveform import read_waveform as rw
 from writewaveform import write_waveform
+import shutil
 
 #applying noise to waveform
 def noise_add(v,noise):
@@ -31,30 +32,38 @@ def p2(datadate,numhead,fsps,x_values,noise,gain_noise,gain_factor_2,gain_factor
     #establish directories for reading and writing waveforms
     filedir = 'g:/data/watchman/'+datadate+'_watchman_spe/d2/d2_raw/'
     if noise == 0 and gain_noise == 0:
+        writedir_1 = 'g:/data/watchman/'+datadate+'_watchman_spe/d2/d2_raw'
         writedir_2 = 'g:/data/watchman/'+datadate+'_watchman_spe/d2/d2_rise_doubled'
         writedir_4 = 'g:/data/watchman/'+datadate+'_watchman_spe/d2/d2_rise_quadrupled'
         writedir_8 = 'g:/data/watchman/'+datadate+'_watchman_spe/d2/d2_rise_octupled'
     elif gain_noise == 0:
+        writedir_1 = 'g:/data/watchman/'+datadate+'_watchman_spe/d2/d2_raw_doubled_noise=' + str(noise) + 'V'
         writedir_2 = 'g:/data/watchman/'+datadate+'_watchman_spe/d2/d2_rise_doubled_noise=' + str(noise) + 'V'
         writedir_4 = 'g:/data/watchman/'+datadate+'_watchman_spe/d2/d2_rise_quadrupled_noise=' + str(noise) + 'V'
         writedir_8 = 'g:/data/watchman/'+datadate+'_watchman_spe/d2/d2_rise_octupled_noise=' + str(noise) + 'V'
     elif noise == 0:
+        writedir_1 = 'g:/data/watchman/'+datadate+'_watchman_spe/d2/d2_raw_gain_noise=' + str(gain_noise) + 'V'
         writedir_2 = 'g:/data/watchman/'+datadate+'_watchman_spe/d2/d2_rise_doubled_gain_noise=' + str(gain_noise) + 'V'
         writedir_4 = 'g:/data/watchman/'+datadate+'_watchman_spe/d2/d2_rise_quadrupled_gain_noise=' + str(gain_noise) + 'V'
         writedir_8 = 'g:/data/watchman/'+datadate+'_watchman_spe/d2/d2_rise_octupled_gain_noise=' + str(gain_noise) + 'V'
     else:
+        writedir_1 = 'g:/data/watchman/'+datadate+'_watchman_spe/d2/d2_raw_gain_noise=' + str(gain_noise) + 'V_noise=' + str(noise) + 'V'
         writedir_2 = 'g:/data/watchman/'+datadate+'_watchman_spe/d2/d2_rise_doubled_gain_noise=' + str(gain_noise) + 'V_noise=' + str(noise) + 'V'
         writedir_4 = 'g:/data/watchman/'+datadate+'_watchman_spe/d2/d2_rise_quadrupled_gain_noise=' + str(gain_noise) + 'V_noise=' + str(noise) + 'V'
         writedir_8 = 'g:/data/watchman/'+datadate+'_watchman_spe/d2/d2_rise_octupled_gain_noise=' + str(gain_noise) + 'V_noise=' + str(noise) + 'V'
     if gain_factor_2 != 1 or gain_factor_4 != 1 or gain_factor_8:
+        writedir_1 = writedir_1 + '_gained/'
         writedir_2 = writedir_2 + '_gained/'
         writedir_4 = writedir_4 + '_gained/'
         writedir_8 = writedir_8 + '_gained/'
     else:
+        writedir_1 = writedir_1 + '/'
         writedir_2 = writedir_2 + '/'
         writedir_4 = writedir_4 + '/'
         writedir_8 = writedir_8 + '/'
     #creating write directories if they're not there
+    if not os.path.exists(writedir_1):
+        os.makedirs(writedir_1)
     if not os.path.exists(writedir_2):
         os.makedirs(writedir_2)
     if not os.path.exists(writedir_4):
@@ -68,6 +77,7 @@ def p2(datadate,numhead,fsps,x_values,noise,gain_noise,gain_factor_2,gain_factor
         print("File: %05d" % i)
         #establishing file names for reading and writing
         filename = filedir + 'D2--waveforms--%05d.txt' % i
+        writename_1 = writedir_1 + 'D2--waveforms--%05d.txt' % i
         writename_2 = writedir_2 + 'D2--waveforms--%05d.txt' % i
         writename_4 = writedir_4 + 'D2--waveforms--%05d.txt' % i
         writename_8 = writedir_8 + 'D2--waveforms--%05d.txt' % i
@@ -92,6 +102,7 @@ def p2(datadate,numhead,fsps,x_values,noise,gain_noise,gain_factor_2,gain_factor
         if gain_factor_8 != 1:
             v_taued_8 = gain(v_taued_8,gain_noise,gain_factor_8)
         #writing waveforms
+        shutil.copy2(filename,writename_1)
         write_waveform(t,v_taued_2,writename_2,header)
         write_waveform(t,v_taued_4,writename_4,header)
         write_waveform(t,v_taued_8,writename_8,header)

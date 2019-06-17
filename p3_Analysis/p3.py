@@ -35,35 +35,41 @@ def downsampling(t,v,fsps,new_fsps):
 #reading and writing waveforms and calling other functions
 def p3(noise_filter,noise,datadate,numhead,fsps,new_fsps,gain_noise,gain_factor_2,gain_factor_4,gain_factor_8):
     #establishing directory names
-    filedir1 = 'g:/data/watchman/'+datadate+'_watchman_spe/d3/d3_raw/'
-    writedir1 = 'g:/data/watchman/'+datadate+'_watchman_spe/d3/d3_raw_analyzed/'
     if noise == 0 and gain_noise == 0:
+        writedir1 = 'g:/data/watchman/'+datadate+'_watchman_spe/d3/d3_raw'
         writedir2 = 'g:/data/watchman/'+datadate+'_watchman_spe/d3/d3_rise_doubled'
         writedir4 = 'g:/data/watchman/'+datadate+'_watchman_spe/d3/d3_rise_quadrupled'
         writedir8 = 'g:/data/watchman/'+datadate+'_watchman_spe/d3/d3_rise_octupled'
     elif gain_noise == 0:
+        writedir1 = 'g:/data/watchman/'+datadate+'_watchman_spe/d3/d3_raw_noise=' + str(noise) + 'V'
         writedir2 = 'g:/data/watchman/'+datadate+'_watchman_spe/d3/d3_rise_doubled_noise=' + str(noise) + 'V'
         writedir4 = 'g:/data/watchman/'+datadate+'_watchman_spe/d3/d3_rise_quadrupled_noise=' + str(noise) + 'V'
         writedir8 = 'g:/data/watchman/'+datadate+'_watchman_spe/d3/d3_rise_octupled_noise=' + str(noise) + 'V'
     elif noise == 0:
+        writedir1 = 'g:/data/watchman/'+datadate+'_watchman_spe/d3/d3_raw_gain_noise=' + str(gain_noise) + 'V'
         writedir2 = 'g:/data/watchman/'+datadate+'_watchman_spe/d3/d3_rise_doubled_gain_noise=' + str(gain_noise) + 'V'
         writedir4 = 'g:/data/watchman/'+datadate+'_watchman_spe/d3/d3_rise_quadrupled_gain_noise=' + str(gain_noise) + 'V'
         writedir8 = 'g:/data/watchman/'+datadate+'_watchman_spe/d3/d3_rise_octupled_gain_noise=' + str(gain_noise) + 'V'
     else:
+        writedir1 = 'g:/data/watchman/'+datadate+'_watchman_spe/d3/d3_raw_gain_noise=' + str(gain_noise) + 'V_noise=' + str(noise) + 'V'
         writedir2 = 'g:/data/watchman/'+datadate+'_watchman_spe/d3/d3_rise_doubled_gain_noise=' + str(gain_noise) + 'V_noise=' + str(noise) + 'V'
         writedir4 = 'g:/data/watchman/'+datadate+'_watchman_spe/d3/d3_rise_quadrupled_gain_noise=' + str(gain_noise) + 'V_noise=' + str(noise) + 'V'
         writedir8 = 'g:/data/watchman/'+datadate+'_watchman_spe/d3/d3_rise_octupled_gain_noise=' + str(gain_noise) + 'V_noise=' + str(noise) + 'V'
     if gain_factor_2 != 1 or gain_factor_4 != 1 or gain_factor_8:
+        filedir1 = writedir1 + '_gained/'
         filedir2 = writedir2 + '_gained/'
         filedir4 = writedir4 + '_gained/'
         filedir8 = writedir8 + '_gained/'
+        writedir1 = writedir1 + '_gained_analyzed/'
         writedir2 = writedir2 + '_gained_analyzed/'
         writedir4 = writedir4 + '_gained_analyzed/'
         writedir8 = writedir8 + '_gained_analyzed/'
     else:
+        filedir1 = writedir1 + '/'
         filedir2 = writedir2 + '/'
         filedir4 = writedir4 + '/'
         filedir8 = writedir8 + '/'
+        writedir1 = writedir1 + '_analyzed/'
         writedir2 = writedir2 + '_analyzed/'
         writedir4 = writedir4 + '_analyzed/'
         writedir8 = writedir8 + '_analyzed/'
