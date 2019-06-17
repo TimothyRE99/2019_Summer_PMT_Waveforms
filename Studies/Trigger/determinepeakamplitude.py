@@ -30,7 +30,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(prog='determinepeakamplitude', description='determining and writing histogram for peak amplitudes')
     parser.add_argument('--datadate',type = str,help = 'date when data was gathered, YYYYMMDD', default = '20190516')
     parser.add_argument('--numhead',type=int,help='number of lines to ignore for header',default = 5)
-    parser.add_argument('--directory',type=str,help='name of directory files read from',default = 'raw')
+    parser.add_argument('--directory',type=str,help='name of directory files read from',default = 'raw_gained')
     args = parser.parse_args()
 
     determine(args.datadate,args.numhead,args.directory)
