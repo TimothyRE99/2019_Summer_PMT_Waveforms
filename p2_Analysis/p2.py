@@ -102,6 +102,7 @@ def p2(datadate,numhead,fsps,x_values,noise,gain_noise,gain_factor_2,gain_factor
         if gain_factor_8 != 1:
             v_taued_8 = gain(v_taued_8,gain_noise,gain_factor_8)
         #writing waveforms
+        shutil.copy2(filedir + 'd1_info.txt',writename_1)
         shutil.copy2(filename,writename_1)
         write_waveform(t,v_taued_2,writename_2,header)
         write_waveform(t,v_taued_4,writename_4,header)
