@@ -98,7 +98,7 @@ if __name__ == '__main__':
     parser.add_argument('--datadate',type = str,help = 'date when data was gathered, YYYYMMDD', default = '20190516')
     parser.add_argument('--numhead',type=int,help='number of lines to ignore for header',default = 1)
     parser.add_argument("--fsps",type=float,help="hz, samples/s",default=20000000000.0)
-    parser.add_argument("--new_fsps",type=float,help="hz, samples/s of new digitizer",default=500000000.0)
+    parser.add_argument("--new_fsps",type=float,help="hz, samples/s of new digitizer",default=250000000.0)
     parser.add_argument("--noise",type=float,help='bits of noise from digitizer',default=3.3)
     args = parser.parse_args()
 
