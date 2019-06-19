@@ -59,7 +59,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(prog="timing CFD",description="Applies CFD algorithm to prepare for ZCF.")
     parser.add_argument('--datadate',type = str,help = 'date when data was gathered, YYYYMMDD', default = '20190516')
     parser.add_argument('--numhead',type=int,help='number of lines to ignore for header',default = 5)
-    parser.add_argument('--subfolder',type = str,help = 'how much the rise time was altered', default = 'rise_quadrupled_gained')
+    parser.add_argument('--subfolder',type = str,help = 'how much the rise time was altered', default = 'averages/raw')
     args = parser.parse_args()
 
     #cycles through each combination of n values
@@ -76,4 +76,4 @@ if __name__ == '__main__':
     #                        pass
     #                    else:
     #                        ZCF(args.datadate,args.numhead,args.subfolder,n_box,n_delay,n_att)
-    ZCF(args.datadate,args.numhead,args.subfolder,2,8,2)
+    ZCF(args.datadate,args.numhead,args.subfolder,2,2,2)
