@@ -54,7 +54,7 @@ def timing_CFD(datadate,numhead,subfolder,n_box,n_delay,n_att):
     filedir = 'G:/data/watchman/'+datadate+'_watchman_spe/d3/d3_'+subfolder+'_analyzed/'        #says what directory to read from
     Nloops = len(os.listdir(filedir))       #establishes number of files to cylce through
     for i in range(Nloops):
-        print("File: %05d, NBOX: " % i + str(n_box) + ", NDELAY:" + str(n_delay) + " , NATT: " + str(n_att))
+        print("File: %05d, NBOX: " % i + str(n_box) + ", NDELAY: " + str(n_delay) + " , NATT: " + str(n_att))
         #establishes file to read from and write to
         filename = filedir + 'D3--waveforms--%05d.txt' % i
         writename = writedir + 'D3--waveforms--%05d.txt' % i
