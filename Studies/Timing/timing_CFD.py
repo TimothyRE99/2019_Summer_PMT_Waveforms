@@ -51,7 +51,7 @@ def timing_CFD(datadate,numhead,subfolder,n_box,n_delay,n_att):
     #creates write directory if needed
     if not os.path.exists(writedir):
         os.makedirs(writedir)
-    filedir = 'G:/data/watchman/'+datadate+'_watchman_spe/d3/d3_'+subfolder+'/'        #says what directory to read from
+    filedir = 'G:/data/watchman/'+datadate+'_watchman_spe/d3/d3_'+subfolder+'_analyzed/'        #says what directory to read from
     Nloops = len(os.listdir(filedir))       #establishes number of files to cylce through
     for i in range(Nloops):
         print("File: %05d, NBOX: " % i + str(n_box) + ", NDELAY: " + str(n_delay) + " , NATT: " + str(n_att))
@@ -72,7 +72,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(prog="timing CFD",description="Applies CFD algorithm to prepare for ZCF.")
     parser.add_argument('--datadate',type = str,help = 'date when data was gathered, YYYYMMDD', default = '20190516')
     parser.add_argument('--numhead',type=int,help='number of lines to ignore for header',default = 5)
-    parser.add_argument('--subfolder',type = str,help = 'how much the rise time was altered', default = 'averages/raw')
+    parser.add_argument('--subfolder',type = str,help = 'how much the rise time was altered', default = 'raw')
     args = parser.parse_args()
 
     #cycles through each combination of n values
