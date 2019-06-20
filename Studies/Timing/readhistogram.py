@@ -36,7 +36,8 @@ def read_histogram(filename, x_label, title, savename, datadate, histo_mean, his
     plt.ylabel('Count')
     plt.title(title+'\nGaussian Fit Values:\nMean = '+gauss_mean+' '+x_label+'\nStandard Deviation = '+gauss_std+' '+x_label)
     plt.get_current_fig_manager().window.showMaximized()        #maximizes plot
-    plt.show()      #showing plot for confirmation
+    plt.show(block=False)      #showing plot for confirmation
+    plt.pause(2)
     #finalizing plot saving
     savedir = 'G:/data/watchman/'+datadate+'_watchman_spe/studies/timing/histogram_images/'
     fig.savefig(savedir+savename+'_hist.png',dpi = 500)
