@@ -38,6 +38,7 @@ def read_histogram(filename, x_label, title, savename, datadate, histo_mean, his
     plt.get_current_fig_manager().window.showMaximized()        #maximizes plot
     plt.show(block=False)      #showing plot for confirmation
     plt.pause(2)
+    plt.close()
     #finalizing plot saving
     savedir = 'G:/data/watchman/'+datadate+'_watchman_spe/studies/timing/histogram_images/'
     fig.savefig(savedir+savename+'_hist.png',dpi = 500)
