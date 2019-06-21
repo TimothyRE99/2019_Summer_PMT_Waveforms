@@ -26,7 +26,7 @@ def plot_waveform(datadate,numhead,subfolder,n_box,n_delay,n_att):
         t_box,v_box = bcw(t2,v2,n_box)
         v_top = atw(v_box,n_att)
         v_bott = dlw(v_box,n_delay)
-        (zcl,index_Cross,index_Peak) = locator(t,v)     #determines time of zero crossing
+        (zcl,index_Cross,index_Peak) = locator(t,v,n_delay)     #determines time of zero crossing
         plt.plot(t,v)   #plots CFD'd waveforms
         plt.plot(t_box,v_bott,color = 'green')  #plots original/delayed waveform
         plt.plot(t_box,v_top,color='purple')    #plots inverted/attenuated waveform

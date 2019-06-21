@@ -9,8 +9,9 @@ from gausshistogram import gauss_histogram as gh
 from readhistogram import read_histogram as rh
 
 #determining ZCL from t and v
-def zc_locator(t,v):
-    v_norm = v/max(v[0:20])     #normalizes for easy checking
+def zc_locator(t,v,n_delay):
+    stop_ind = 7 + n_delay
+    v_norm = v/max(v[0:stop_ind])     #normalizes for easy checking
     #creates array of "True" and "False" entries for where condition is met
     checkPeak = v_norm == 1
     checkCross = v_norm <= 0
@@ -44,7 +45,7 @@ def ZCF(datadate,numhead,subfolder,n_box,n_delay,n_att):
         #establishes file to read and takes in data
         filename = filedir + 'D3--waveforms--%05d.txt' % i
         (t,v,_) = rw(filename,numhead)
-        t_cross,_,_ = zc_locator(t,v)   #locates zero crossing time
+        t_cross,_,_ = zc_locator(t,v,n_delay)   #locates zero crossing time
         wh(str(t_cross),writename)      #writes to zero crossing time histogram file
     #runs through process to read, create, and display histogram plot
     (histo_mean,histo_std) = gh(writename)
@@ -59,7 +60,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(prog="timing CFD",description="Applies CFD algorithm to prepare for ZCF.")
     parser.add_argument('--datadate',type = str,help = 'date when data was gathered, YYYYMMDD', default = '20190516')
     parser.add_argument('--numhead',type=int,help='number of lines to ignore for header',default = 5)
-    parser.add_argument('--subfolder',type = str,help = 'how much the rise time was altered', default = 'raw_gained')
+    parser.add_argument('--subfolder',type = str,help = 'how much the rise time was altered', default = 'rise_doubled_gained')
     args = parser.parse_args()
 
     #cycles through each combination of n values
