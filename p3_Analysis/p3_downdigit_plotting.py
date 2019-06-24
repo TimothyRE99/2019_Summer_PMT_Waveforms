@@ -5,7 +5,7 @@ import numpy as np
 import os
 
 #plotting the waveforms
-Nloops = len(os.listdir('G:/data/watchman/20190516_watchman_spe/d3/d3_raw_analyzed')) - 1
+Nloops = len(os.listdir('G:/data/watchman/20190516_watchman_spe/d3/d3_averages/raw/'))
 for i in range(Nloops):
     print('File: %05d' % i)
     (t_single,v_single,_) = rw('G:/Data/watchman/20190516_watchman_spe/d3/d3_averages/raw/D3--waveforms--%05d.txt' % i,5)
