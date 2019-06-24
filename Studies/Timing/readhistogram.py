@@ -27,21 +27,21 @@ def read_histogram(filename, x_label, title, savename, datadate, histo_mean, his
     #establishing 5 significant figure versions of the mean and std from curve fit
     gauss_mean = '%s' % float('%.5g' % popt[1])
     gauss_std = '%s' % float('%.5g' % popt[2])
-    #x_values = np.linspace(popt[1] - 1.5*popt[2], popt[1] + 1.5*popt[2], 100000)    #creating 100,000 x values to map curvefit gaussian to
-    #fig = plt.figure(figsize=(6,4))                         #intializing saving the figure
-    plt.bar(binscenters, histo_data, width=binwidth, log=True)        #plotting histogram
-    #plt.plot(x_values, fit_function(x_values, *popt), color='darkorange')   #plotting curve fit
+    x_values = np.linspace(popt[1] - 1.5*popt[2], popt[1] + 1.5*popt[2], 100000)    #creating 100,000 x values to map curvefit gaussian to
+    fig = plt.figure(figsize=(6,4))                         #intializing saving the figure
+    plt.bar(binscenters, histo_data, width=binwidth)        #plotting histogram
+    plt.plot(x_values, fit_function(x_values, *popt), color='darkorange')   #plotting curve fit
     #establishing plot labels
     plt.xlabel(x_label)
     plt.ylabel('Count')
     plt.title(title+'\nGaussian Fit Values:\nMean = '+gauss_mean+' '+x_label+'\nStandard Deviation = '+gauss_std+' '+x_label)
     plt.get_current_fig_manager().window.showMaximized()        #maximizes plot
-    plt.show()      #showing plot for confirmation
-    #plt.pause(2)
-    #plt.close()
+    plt.show(block=False)      #showing plot for confirmation
+    plt.pause(2)
+    plt.close()
     #finalizing plot saving
-    #savedir = 'G:/data/watchman/'+datadate+'_watchman_spe/studies/timing/histogram_images/'
-    #fig.savefig(savedir+savename+'_hist.png',dpi = 500)
+    savedir = 'G:/data/watchman/'+datadate+'_watchman_spe/studies/timing/histogram_images/'
+    fig.savefig(savedir+savename+'_hist.png',dpi = 500)
 
 #For testing purposes
 if __name__ == '__main__':
@@ -49,9 +49,9 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(prog="read histogram",description="read the histogram datafile.")
     parser.add_argument("--x_label",type=str,help='label of x axis',default='Seconds')
     parser.add_argument("--title",type=str,help="title of histogram",default='Histogram of 20-80 Rise Times')
-    parser.add_argument("--filename",type=str,help="filename",default='G:\\Data\\watchman\\20190516_watchman_spe\\studies\\timing\\nbox=2\\ndelay=1\\natt=2\\raw_gained\\ZCF_data\\ZCLs.txt')
+    parser.add_argument("--filename",type=str,help="filename",default='G:/data/watchman/20190516_watchman_spe/d1/d1_histograms/20_80_rise_time.txt')
     parser.add_argument('--datadate',type = str,help = 'date when data was gathered, YYYYMMDD', default = '20190516')
-    parser.add_argument('--histo_mean',type = float,help = 'mean of the histogram without outliers', default = -3.1953e-09)
-    parser.add_argument('--histo_std',type = float,help = 'standard deviation of the histogram without outliers', default = 2.1413e-10)
+    parser.add_argument('--histo_mean',type = float,help = 'mean of the histogram without outliers', default = 2.3890246551536875e-09)
+    parser.add_argument('--histo_std',type = float,help = 'standard deviation of the histogram without outliers', default = 8.978658875273273e-11)
     args = parser.parse_args()
     read_histogram(args.filename,args.x_label,args.title,"20_80_rise_time",args.datadate,args.histo_mean,args.histo_std)
