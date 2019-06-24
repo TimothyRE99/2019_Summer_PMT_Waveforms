@@ -59,22 +59,22 @@ if __name__ == '__main__':
     import argparse
     parser = argparse.ArgumentParser(prog="timing CFD",description="Applies CFD algorithm to prepare for ZCF.")
     parser.add_argument('--datadate',type = str,help = 'date when data was gathered, YYYYMMDD', default = '20190516')
-    parser.add_argument('--numhead',type=int,help='number of lines to ignore for header',default = 5)
-    parser.add_argument('--subfolder',type = str,help = 'how much the rise time was altered', default = 'raw_gained')
+    parser.add_argument('--numhead',type=int,help='number of lines to ignore for header',default = 1)
+    parser.add_argument('--subfolder',type = str,help = 'how much the rise time was altered', default = 'averages/raw')
     args = parser.parse_args()
 
     #cycles through each combination of n values
-    for n_box in range(5):
-        if n_box == 3:
-            pass
-        else:
-            for n_delay in range(1,17):
-                if n_delay != 1 and n_delay != 2 and n_delay != 4 and n_delay != 8 and n_delay !=  16:
-                    pass
-                else:
-                    for n_att in range(1,5):
-                        if n_att == 3:
-                            pass
-                        else:
-                            ZCF(args.datadate,args.numhead,args.subfolder,n_box,n_delay,n_att)
-    #ZCF(args.datadate,args.numhead,args.subfolder,2,2,2)
+    #for n_box in range(5):
+    #    if n_box == 3:
+    #        pass
+    #    else:
+    #        for n_delay in range(1,17):
+    #            if n_delay != 1 and n_delay != 2 and n_delay != 4 and n_delay != 8 and n_delay !=  16:
+    #                pass
+    #            else:
+    #                for n_att in range(1,5):
+    #                    if n_att == 3:
+    #                        pass
+    #                    else:
+    #                        ZCF(args.datadate,args.numhead,args.subfolder,n_box,n_delay,n_att)
+    ZCF(args.datadate,args.numhead,args.subfolder,2,1,2)
