@@ -1,4 +1,4 @@
-#Calculates charge for waveform and corresponding downsampled and digitized waveform and compares
+#Calculates charge for waveform and corresponding downsampled and digitized waveform
 
 #import necessary
 import os
@@ -23,7 +23,7 @@ def digitize(v):
     return(v_final)
 
 #calling functions
-def charge_compare(datadate,numhead,subfolder):
+def charge_calc(datadate,numhead,subfolder):
     writedir = 'G:/data/watchman/'+datadate+'_watchman_spe/studies/charge/'
     if not os.path.exists(writedir):
         os.makedirs(writedir)
@@ -47,10 +47,10 @@ def charge_compare(datadate,numhead,subfolder):
 #main function
 if __name__ == '__main__':
     import argparse
-    parser = argparse.ArgumentParser(prog="charge_compare",description="Compares charge for original waveform and digitized waveform.")
+    parser = argparse.ArgumentParser(prog="charge calc",description="Calculates charge for original waveform digitized and digitized waveform with noise in bit*s/ohm.")
     parser.add_argument('--datadate',type = str,help = 'date when data was gathered, YYYYMMDD', default = '20190516')
     parser.add_argument('--numhead',type=int,help='number of lines to ignore for header',default = 5)
     parser.add_argument('--subfolder',type = str,help = 'how much the rise time was altered', default = 'raw_gained')
     args = parser.parse_args()
 
-    charge_compare(args.datadate,args.numhead,args.subfolder)
+    charge_calc(args.datadate,args.numhead,args.subfolder)
