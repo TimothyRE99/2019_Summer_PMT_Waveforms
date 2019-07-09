@@ -33,15 +33,15 @@ def digitize(v):
 
 #calling functions
 def charge_calc(datadate,numhead,subfolder,sumtype):
-    writedir = 'G:/data/watchman/'+datadate+'_watchman_spe/studies/charge/500 Mhz/' + sumtype + '/' #establish name of directory to write data to
+    writedir = 'G:/data/watchman/'+datadate+'_watchman_spe/studies/charge/' + sumtype + '/' #establish name of directory to write data to
     #creating directory if it doesn't exist
     if not os.path.exists(writedir):
         os.makedirs(writedir)
     #establishing names of directory to read files from and txt file to write files to
     writename = writedir + subfolder + '_normal_charge.txt'
     writename_digitized = writedir + subfolder + '_digitized_charge.txt'
-    filedir = 'G:/data/watchman/'+datadate+'_watchman_spe/d3/500 Mhz/d3_'+subfolder+'/'
-    filedir_digitized = 'G:/data/watchman/'+datadate+'_watchman_spe/d3/500 Mhz/d3_'+subfolder+'_analyzed/'
+    filedir = 'G:/data/watchman/'+datadate+'_watchman_spe/d3/d3_'+subfolder+'/'
+    filedir_digitized = 'G:/data/watchman/'+datadate+'_watchman_spe/d3/d3_'+subfolder+'_analyzed/'
     Nloops = len(os.listdir(filedir_digitized))     #establish number of files to cycle through
     for i in range(Nloops):
         print('Filename: %05d' % i)

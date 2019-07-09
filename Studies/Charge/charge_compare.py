@@ -26,7 +26,7 @@ def read_charge(filename):
 #call functions
 def charge_compare(datadate,subfolder,sumtype):
     #establish directories to read from and write to
-    filedir = 'G:/data/watchman/'+datadate+'_watchman_spe/studies/charge/500 Mhz/' + sumtype + '/'
+    filedir = 'G:/data/watchman/'+datadate+'_watchman_spe/studies/charge/' + sumtype + '/'
     writedir = filedir + 'errors/'
     #creates writing directory if it doesn't exist
     if not os.path.exists(writedir):
@@ -52,7 +52,7 @@ if __name__ == '__main__':
     import argparse
     parser = argparse.ArgumentParser(prog="charge compare",description="Calculates percent error in charge for original waveform digitized and digitized waveform with noise")
     parser.add_argument('--datadate',type = str,help = 'date when data was gathered, YYYYMMDD', default = '20190516')
-    parser.add_argument('--subfolder',type = str,help = 'how much the rise time was altered', default = 'raw_gained')
+    parser.add_argument('--subfolder',type = str,help = 'how much the rise time was altered', default = 'raw')
     parser.add_argument('--sumtype',type = str,help = 'left or right rectangles or trapezoids (must be "left" or "right" or "trap")',default = 'left')
     args = parser.parse_args()
 
