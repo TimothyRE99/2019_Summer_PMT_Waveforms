@@ -40,7 +40,7 @@ def read_histogram(filename, x_label, title, savename, datadate, histo_mean, his
     plt.pause(2)
     plt.close()
     #finalizing plot saving
-    savedir = 'G:/data/watchman/'+datadate+'_watchman_spe/studies/charge/histogram_images/'
+    savedir = 'G:/data/watchman/'+datadate+'_watchman_spe/studies/charge/500 Mhz/histogram_images/'
     if not os.path.exists(savedir):
         os.makedirs(savedir)
     fig.savefig(savedir+savename+'_hist.png',dpi = 500)

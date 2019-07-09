@@ -26,7 +26,7 @@ def read_charge(filename):
 #call functions
 def charge_compare(datadate,subfolder,sumtype):
     #establish directories to read from and write to
-    filedir = 'G:/data/watchman/'+datadate+'_watchman_spe/studies/charge/' + sumtype + '/'
+    filedir = 'G:/data/watchman/'+datadate+'_watchman_spe/studies/charge/500 Mhz/' + sumtype + '/'
     writedir = filedir + 'errors/'
     #creates writing directory if it doesn't exist
     if not os.path.exists(writedir):
