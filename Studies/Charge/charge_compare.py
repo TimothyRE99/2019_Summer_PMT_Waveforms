@@ -4,6 +4,8 @@
 import os
 import numpy as np
 from writehistogram import write_histogram as wh
+from gausshistogram import gauss_histogram as gh
+from readhistogram import read_histogram as rh
 
 #calculates error
 def error_calc(charge_exact,charge_approx):
@@ -41,6 +43,9 @@ def charge_compare(datadate,subfolder,sumtype):
         print('Filename: %05d' % i)
         error = error_calc(charge[i],charge_digit[i])
         wh(error,writename)
+    (histo_mean,histo_std) = gh(writename)
+    savename = subfolder + '_errors_' + sumtype
+    rh(writename,"Percent","Histogram of Percent Erros",savename,datadate,histo_mean,histo_std)
 
 #main function
 if __name__ == '__main__':
