@@ -7,11 +7,16 @@ from readwaveform import read_waveform as rw
 from writehistogram import write_histogram as wh
 
 #calculates charge
-def charge_det(t,v):
+def charge_det(t,v,sumtype):
     area = 0        #initialize area
     #calculate charge
     for i in range(len(v)-1):
-        area += ((t[i+1]-t[i]) * v[i])
+        if sumtype == 'left':
+            area += ((t[i+1]-t[i]) * v[i])
+        elif sumtype == 'right':
+            area += ((t[i+1]-t[i]) * v[i+1])
+        else:
+            area += ((t[i+1]-t[i]) * (v[i]+v[i+1])/2)
     charge = str(-1*area/50)
     return(charge)
 
@@ -25,8 +30,8 @@ def digitize(v):
     return(v_final)
 
 #calling functions
-def charge_calc(datadate,numhead,subfolder):
-    writedir = 'G:/data/watchman/'+datadate+'_watchman_spe/studies/charge/'     #establish name of directory to write data to
+def charge_calc(datadate,numhead,subfolder,sumtype):
+    writedir = 'G:/data/watchman/'+datadate+'_watchman_spe/studies/charge/' + sumtype + '/' #establish name of directory to write data to
     #creating directory if it doesn't exist
     if not os.path.exists(writedir):
         os.makedirs(writedir)
@@ -46,8 +51,8 @@ def charge_calc(datadate,numhead,subfolder):
         (t_digit,v_digit,_) = rw(filename_digitized,numhead)
         v = digitize(v)         #digitize original, not-downsampled file
         #calculate charges
-        charge = charge_det(t,v)
-        charge_digit = charge_det(t_digit,v_digit)
+        charge = charge_det(t,v,sumtype)
+        charge_digit = charge_det(t_digit,v_digit,sumtype)
         #write charges to histogram files
         wh(charge,writename)
         wh(charge_digit,writename_digitized)
@@ -59,6 +64,14 @@ if __name__ == '__main__':
     parser.add_argument('--datadate',type = str,help = 'date when data was gathered, YYYYMMDD', default = '20190516')
     parser.add_argument('--numhead',type=int,help='number of lines to ignore for header',default = 5)
     parser.add_argument('--subfolder',type = str,help = 'how much the rise time was altered', default = 'raw_gained')
+    parser.add_argument('--sumtype',type = str,help = 'left or right rectangles or trapezoids (must be "left" or "right" or "trap")',default = 'left')
     args = parser.parse_args()
 
-    charge_calc(args.datadate,args.numhead,args.subfolder)
+    #defaulting sumtype to left if the input is improper
+    if args.sumtype == 'left' or args.sumtype == 'right' or args.sumtype == 'trap':
+        sumtype = args.sumtype
+    else:
+        print("Improper Sumtype, defaulting to Left Rectangles")
+        sumtype = 'left'
+
+    charge_calc(args.datadate,args.numhead,args.subfolder,sumtype)
