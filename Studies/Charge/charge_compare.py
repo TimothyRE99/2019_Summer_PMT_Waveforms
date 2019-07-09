@@ -9,7 +9,7 @@ from readhistogram import read_histogram as rh
 
 #calculates error
 def error_calc(charge_exact,charge_approx):
-    numerate = abs(charge_exact - charge_approx)        #calculate numerator for percent error calculation
+    numerate = charge_exact - charge_approx        #calculate numerator for percent error calculation
     error = str(numerate / charge_exact * 100)          #calculate percent error
     return(error)
 
