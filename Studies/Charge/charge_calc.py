@@ -58,12 +58,12 @@ def charge_calc(datadate,numhead,subfolder,sumtype):
         #write charges to histogram files
         wh(charge,writename)
         wh(charge_digit,writename_digitized)
-        (histo_mean,histo_std) = gh(writename)
-        (histo_mean_digitized,histo_std_digitized) = gh(writename_digitized)
-        savename = subfolder + '_' + sumtype
-        savename_digitized = subfolder + '_' + sumtype + '_digitized'
-        rh(writename,"Bits*s / Ohm","Histogram of Charge",savename,datadate,histo_mean,histo_std)
-        rh(writename_digitized,"Bits*s / Ohm","Histogram of Charge",savename_digitized,datadate,histo_mean_digitized,histo_std_digitized)
+    (histo_mean,histo_std) = gh(writename)
+    (histo_mean_digitized,histo_std_digitized) = gh(writename_digitized)
+    savename = subfolder + '_' + sumtype
+    savename_digitized = subfolder + '_' + sumtype + '_digitized'
+    rh(writename,"Bits*s / Ohm","Histogram of Charge",savename,datadate,histo_mean,histo_std)
+    rh(writename_digitized,"Bits*s / Ohm","Histogram of Charge",savename_digitized,datadate,histo_mean_digitized,histo_std_digitized)
 
 #main function
 if __name__ == '__main__':
