@@ -69,6 +69,53 @@
 * writewaveform: same as p1, ported over to allow use by p3 files
 * readhistogram: same as p1, ported over to allow use by p3 files
 
+## Trigger Studies
+### Preliminary Steps
+* No preliminary steps for trigger. All functions create their own directories as needed
+
+### Processing Steps
+1. determinepeakamplitude.py: calculates histogram of peak amplitudes of waveforms to be studied
+1. trigger_study.py: determines if a waveform would be a hit or miss from 1/3, 1/4, and 1/6 average peak height and then runs bar_chart.py to plot this as well as dark rate
+
+### Additional Programs
+* bar_chart.py: program to plot barchart of hits vs. misses for triggering as well as dark rate in title
+* readwaveform: same as p1, ported over to allow use by trigger files
+* writewaveform: same as p1, ported over to allow use by trigger files
+* readhistogram: same as p1, ported over to allow use by trigger files
+* writehistogram: same as p1, ported over to allow use by trigger files
+* gausshistogram: same as p1, ported over to allow use by trigger files
+
+## Timing Studies
+### Preliminary Steps
+* No preliminary steps for timing. All functions create their own directories as needed
+
+### Processing Steps
+1. timing_CFD.py: Applies CFD function to waveforms to prepare for calculating zero crossing location
+1. zcf_determine.py: Calculates proper zero crossing location and interpolates time, generates histogram of zero crossing times
+
+## Additional Programs
+* readwaveform: same as p1, ported over to allow use by timing files
+* writewaveform: same as p1, ported over to allow use by timing files
+* readhistogram: same as p1, ported over to allow use by timing files
+* readhistogram_log: same as readhistogram but with log scale for y-axis
+* writehistogram: same as p1, ported over to allow use by timing files
+* gausshistogram: same as p1, ported over to allow use by timing files
+* plot_waveform: opens waveforms and shows plot of them and CFD process
+
+## Charge Studies
+### Preliminary Steps
+* No preliminary steps for charge. All functions create their own directories as needed
+
+### Processing Steps
+1. charge_calc.py: Calculates charges through various summing methods of normal and downsampled waveforms and creates histograms
+1. charge_compare.py: Calculates percent error (without absolute value) between normal and downsample waveform charges and creates histogram
+
+### Additional Programs
+* readwaveform: same as p1, ported over to allow use by charge files
+* readhistogram: same as p1, ported over to allow use by charge files
+* writehistogram: same as p1, ported over to allow use by charge files
+* gausshistogram: same as p1, ported over to allow use by charge files
+
 ## Extraneous
 ### Additional Programs
 * datamanipulatetest: Original method of sorting out SPEs, ineffective
