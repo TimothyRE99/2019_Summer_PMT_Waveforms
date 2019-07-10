@@ -93,7 +93,7 @@
 1. timing_CFD.py: Applies CFD function to waveforms to prepare for calculating zero crossing location
 1. zcf_determine.py: Calculates proper zero crossing location and interpolates time, generates histogram of zero crossing times
 
-## Additional Programs
+### Additional Programs
 * readwaveform: same as p1, ported over to allow use by timing files
 * writewaveform: same as p1, ported over to allow use by timing files
 * readhistogram: same as p1, ported over to allow use by timing files
