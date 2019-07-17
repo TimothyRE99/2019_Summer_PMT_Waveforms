@@ -68,6 +68,7 @@
 * p3_downdigit_plotting.py: plots the four versions of d3 for each file, cycling through to compare, option to include scatter points
 * writewaveform: same as p1, ported over to allow use by p3 files
 * readhistogram: same as p1, ported over to allow use by p3 files
+* three_stage_compare: plots 3 versions of same waveform, one from after each processing step
 
 ## Trigger Studies
 ### Preliminary Steps
