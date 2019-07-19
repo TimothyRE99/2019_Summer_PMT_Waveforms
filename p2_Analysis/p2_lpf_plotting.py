@@ -26,6 +26,7 @@ datadate = '20190516'
 Nloops = len(os.listdir('G:/data/watchman/'+datadate+'_watchman_spe/d2/d2_raw')) - 1
 if not os.path.exists('G:/data/watchman/'+datadate+'_watchman_spe/d2/d2_images/'):
     os.makedirs('G:/data/watchman/'+datadate+'_watchman_spe/d2/d2_images/')
+plt.rcParams.update({'font.size': 16})
 for i in range(Nloops):
     print('File: %05d' % i)
     (t_single,v_single,_) = rw('g:/data/watchman/'+datadate+'_watchman_spe/d2/d2_raw/D2--waveforms--%05d.txt' % i,5)
@@ -38,12 +39,15 @@ for i in range(Nloops):
     risetime_quadruple = risetimes(t_quadruple,v_quadruple)
     risetime_octuple = risetimes(t_octuple,v_octuple)
     #fig = plt.figure(figsize=(6,4))
-    plt.plot(t_single,-1*v_single)
-    plt.plot(t_double,-1*v_double,color='red')
-    plt.plot(t_quadruple,-1*v_quadruple,color='green')
-    plt.plot(t_octuple,-1*v_octuple,color='purple')
+    unshaped, = plt.plot(t_single,-1*v_single,label='Unshaped Waveform')
+    doubled, = plt.plot(t_double,-1*v_double,color='red',label='Shaped to Double Risetime')
+    quadrupled, = plt.plot(t_quadruple,-1*v_quadruple,color='green',label='Shaped to Quadrupled Risetime')
+    octupled, = plt.plot(t_octuple,-1*v_octuple,color='purple',label='Shaped to Octupled Risetime')
     #printing risetimes as the title
-    plt.title('Single Risetime = %05g' % risetime_single + 's\nDouble Risetime = %05g' % risetime_double + 's\nQuadruple Risetime = %05g' % risetime_quadruple + 's\nOctuple Risetime = %05g' % risetime_octuple + 's')
+    plt.xlabel('Time (s)')
+    plt.ylabel('Volts')
+    plt.title('Sample SPE Waveform After P2:\nWaveform %05d' % i) 
+    plt.legend(handles=[unshaped,doubled,quadrupled,octupled])
     plt.get_current_fig_manager().window.showMaximized()
     plt.show()
     #fig.savefig('G:/data/watchman/20190516_watchman_spe/d2/d2_images/average_lpfing_multiple.png',dpi = 500)
