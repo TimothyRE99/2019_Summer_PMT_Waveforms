@@ -79,7 +79,7 @@ if __name__ == '__main__':
     parser.add_argument('--datadate',type = str,help = 'date when data was gathered, YYYYMMDD', default = '20190516')
     parser.add_argument('--numhead',type = int,help='number of lines to ignore for header',default = 5)
     parser.add_argument('--numtaps',type = int,help='length of filter',default=51)
-    parser.add_argument('--threshold',type = int,help='voltage threshold',default=-0.0015)
+    parser.add_argument('--threshold',type = int,help='voltage threshold',default=-0.001)
     parser.add_argument('--baseline',type = int,help='baseline voltage, must be <= 0',default=0)
     args = parser.parse_args()
 
