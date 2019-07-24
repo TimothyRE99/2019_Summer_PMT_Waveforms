@@ -55,7 +55,6 @@ def p1_sort(filenum,datadate,lowpass,numhead,numtaps,threshold,baseline):
                     print('Displaying file #%05d' % filenum)
                     plt.get_current_fig_manager().window.showMaximized()        #maximizes plot
                     plt.show()
-                    plt.close()
 
                     spe_check = 'pre-loop initialization'
                     while spe_check != 'y' and spe_check != 'u' and spe_check != 'n':
