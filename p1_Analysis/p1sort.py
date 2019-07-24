@@ -19,7 +19,7 @@ def p1_sort(filenum,datadate,lowpass,numhead,numtaps,threshold,baseline):
         os.makedirs('g:/data/watchman/'+datadate+'_watchman_spe/d1/d1_raw/')
     if not os.path.exists('g:/data/watchman/'+datadate+'_watchman_spe/d1/not_spe/'):
         os.makedirs('g:/data/watchman/'+datadate+'_watchman_spe/d1/not_spe/')
-    if not os.path.exists('g:/data/watchman/'+datadate+'_watchman_spe/d1/d1_raw/'):
+    if not os.path.exists('g:/data/watchman/'+datadate+'_watchman_spe/d1/unsure_if_spe/'):
         os.makedirs('g:/data/watchman/'+datadate+'_watchman_spe/d1/unsure_if_spe/')
     if os.path.isfile(spe_wasname):
         pass

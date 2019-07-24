@@ -20,7 +20,7 @@ if __name__ == '__main__':
     parser.add_argument('--numtaps',type=int,help='length of filter',default = 51)
     parser.add_argument('--j',type=int,help='starting file number',default=0)
     parser.add_argument('--threshold',type = int,help='voltage threshold',default=-0.0015)
-    parser.add_argument('--baseline',type = int,help='baseline voltage',default=0)
+    parser.add_argument('--baseline',type = int,help='baseline voltage',default=-0.0074)
     args = parser.parse_args()
 
     p1(args.NLoops, args.datadate, args.numhead, args.fsps, args.fc, args.numtaps, args.j, args.threshold, args.baseline)
