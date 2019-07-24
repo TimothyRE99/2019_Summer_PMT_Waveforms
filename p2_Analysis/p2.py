@@ -112,7 +112,7 @@ def p2(datadate,numhead,fsps,x_values,noise,gain_noise,gain_factor_2,gain_factor
 if __name__ == '__main__':
     import argparse
     parser = argparse.ArgumentParser(prog="p2",description="Runs lowpass program on waveforms to increase rise time by appropriate amount")
-    parser.add_argument('--datadate',type = str,help = 'date when data was gathered, YYYYMMDD', default = '20190516')
+    parser.add_argument('--datadate',type = str,help = 'date when data was gathered, YYYYMMDD', default = '20190724')
     parser.add_argument('--numhead',type=int,help='number of lines to ignore for header',default = 5)
     parser.add_argument("--fsps",type=float,help="hz, samples/s",default=20000000000.0)
     parser.add_argument("--x_values",type=int,help="number of taus to generate",default=5000)

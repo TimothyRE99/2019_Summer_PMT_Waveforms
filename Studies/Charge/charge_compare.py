@@ -51,7 +51,7 @@ def charge_compare(datadate,subfolder,sumtype):
 if __name__ == '__main__':
     import argparse
     parser = argparse.ArgumentParser(prog="charge compare",description="Calculates percent error in charge for original waveform digitized and digitized waveform with noise")
-    parser.add_argument('--datadate',type = str,help = 'date when data was gathered, YYYYMMDD', default = '20190516')
+    parser.add_argument('--datadate',type = str,help = 'date when data was gathered, YYYYMMDD', default = '20190724')
     parser.add_argument('--subfolder',type = str,help = 'how much the rise time was altered', default = 'raw_gained')
     parser.add_argument('--sumtype',type = str,help = 'left or right rectangles or trapezoids (must be "left" or "right" or "trap")',default = 'left')
     args = parser.parse_args()

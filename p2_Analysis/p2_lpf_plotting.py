@@ -22,11 +22,11 @@ def risetimes(t,v):
     return(risetime)
 
 #plotting the waveforms
-datadate = '20190516'
+datadate = '20190724'
 Nloops = len(os.listdir('G:/data/watchman/'+datadate+'_watchman_spe/d2/d2_raw')) - 1
 if not os.path.exists('G:/data/watchman/'+datadate+'_watchman_spe/d2/d2_images/'):
     os.makedirs('G:/data/watchman/'+datadate+'_watchman_spe/d2/d2_images/')
-plt.rcParams.update({'font.size': 16})
+plt.rcParams.update({'font.size': 14})
 for i in range(Nloops):
     print('File: %05d' % i)
     (t_single,v_single,_) = rw('g:/data/watchman/'+datadate+'_watchman_spe/d2/d2_raw/D2--waveforms--%05d.txt' % i,5)

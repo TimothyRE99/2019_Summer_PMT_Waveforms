@@ -13,7 +13,7 @@ if __name__ == '__main__':
     import argparse
     parser = argparse.ArgumentParser(prog='p1', description='Calculating lowpass filter and calling p1_sort')
     parser.add_argument('--NLoops',type = int,help = 'number of files to circle through',default = 100000)
-    parser.add_argument('--datadate',type = str,help = 'date when data was gathered, YYYYMMDD', default = '20190516')
+    parser.add_argument('--datadate',type = str,help = 'date when data was gathered, YYYYMMDD', default = '20190724')
     parser.add_argument('--numhead',type=int,help='number of lines to ignore for header',default = 5)
     parser.add_argument('--fsps',type=int,help='hz, samples/s',default = 20000000000)
     parser.add_argument('--fc',type=int,help='hz, cutoff frequency',default = 250000000)

@@ -22,7 +22,7 @@ def p2_prelim(datadate):
 if __name__ == '__main__':
     import argparse
     parser = argparse.ArgumentParser(prog='p2 prelim', description='moving files from d1 to d2')
-    parser.add_argument('--datadate',type = str,help = 'date when data was gathered, YYYYMMDD', default = '20190516')
+    parser.add_argument('--datadate',type = str,help = 'date when data was gathered, YYYYMMDD', default = '20190724')
     args = parser.parse_args()
 
     p2_prelim(args.datadate)

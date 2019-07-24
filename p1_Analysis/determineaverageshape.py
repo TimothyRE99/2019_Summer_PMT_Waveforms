@@ -45,7 +45,7 @@ def generate_average_shape_plot(datadate,numhead):
 if __name__ == '__main__':
     import argparse
     parser = argparse.ArgumentParser(prog='determineaverageshape', description='determining and writing plot of average waveform shape')
-    parser.add_argument('--datadate',type = str,help = 'date when data was gathered, YYYYMMDD', default = '20190516')
+    parser.add_argument('--datadate',type = str,help = 'date when data was gathered, YYYYMMDD', default = '20190724')
     parser.add_argument('--numhead',type=int,help='number of lines to ignore for header',default = 5)
     args = parser.parse_args()
 

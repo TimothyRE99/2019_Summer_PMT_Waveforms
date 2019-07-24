@@ -44,6 +44,7 @@ def risetime_check(datadate,x_values,fsps):
         rise_time = float(t[index_90] - t[index_10])                #rise time is time at 90% - time at 10%
         risetime = np.append(risetime,rise_time)                    #appending risetime to risetime array
     print(rise_time_notau)                                  #printing risetime for comparison to average
+    plt.rcParams.update({'font.size': 14})
     fig = plt.figure(figsize=(6,4))                         #initializing figure saving
     plt.plot(tau_check,risetime)                            #plotting tau vs. risetime
     #plotting horizontal line at 2x risetime
@@ -63,7 +64,7 @@ def risetime_check(datadate,x_values,fsps):
 if __name__ == '__main__':
     import argparse
     parser = argparse.ArgumentParser(prog="p2 risetime check",description="Runs lowpass program on average waveforms to compare rise times")
-    parser.add_argument('--datadate',type = str,help = 'date when data was gathered, YYYYMMDD', default = '20190516')
+    parser.add_argument('--datadate',type = str,help = 'date when data was gathered, YYYYMMDD', default = '20190724')
     parser.add_argument("--x_values",type=int,help="number of taus to generate",default=100000)
     parser.add_argument("--fsps",type=float,help="hz, samples/s",default=20000000000.0)
     args = parser.parse_args()

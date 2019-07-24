@@ -5,14 +5,15 @@ import numpy as np
 import os
 
 #plotting the waveforms
-Nloops = len(os.listdir('G:/data/watchman/20190516_watchman_spe/d3/500 Mhz/d3_averages/raw/'))
-plt.rcParams.update({'font.size': 16})
+Nloops = len(os.listdir('G:/data/watchman/20190724_watchman_spe/d3/500 Mhz/d3_averages/raw/'))
+plt.rcParams.update({'font.size': 14})
 for i in range(Nloops):
     print('File: %05d' % i)
-    (t_single,v_single,_) = rw('G:/Data/watchman/20190516_watchman_spe/d3/500 Mhz/d3_averages/raw/D3--waveforms--%05d.txt' % i,1)
-    (t_double,v_double,_) = rw('G:/Data/watchman/20190516_watchman_spe/d3/500 Mhz/d3_averages/rise_doubled/D3--waveforms--%05d.txt' % i,1)
-    (t_quadruple,v_quadruple,_) = rw('G:/Data/watchman/20190516_watchman_spe/d3/500 Mhz/d3_averages/rise_quadrupled/D3--waveforms--%05d.txt' % i,1)
-    (t_octuple,v_octuple,_) = rw('G:/Data/watchman/20190516_watchman_spe/d3/500 Mhz/d3_averages/rise_octupled/D3--waveforms--%05d.txt' % i,1)
+    (t_single,v_single,_) = rw('G:/Data/watchman/20190724_watchman_spe/d3/500 Mhz/d3_averages/raw/D3--waveforms--%05d.txt' % i,1)
+    (t_double,v_double,_) = rw('G:/Data/watchman/20190724_watchman_spe/d3/500 Mhz/d3_averages/rise_doubled/D3--waveforms--%05d.txt' % i,1)
+    (t_quadruple,v_quadruple,_) = rw('G:/Data/watchman/2019724_watchman_spe/d3/500 Mhz/d3_averages/rise_quadrupled/D3--waveforms--%05d.txt' % i,1)
+    (t_octuple,v_octuple,_) = rw('G:/Data/watchman/20190724_watchman_spe/d3/500 Mhz/d3_averages/rise_octupled/D3--waveforms--%05d.txt' % i,1)
+    plt.rcParams.update({'font.size': 14})
     unshaped, = plt.plot(t_single,-1*v_single,label='Unshaped Waveform')
     doubled, = plt.plot(t_double,-1*v_double,color='red',label='Shaped to Double Risetime')
     quadrupled, = plt.plot(t_quadruple,-1*v_quadruple,color='green',label='Shaped to Quadrupled Risetime')

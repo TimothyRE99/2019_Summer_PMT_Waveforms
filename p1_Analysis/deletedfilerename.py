@@ -18,7 +18,7 @@ if __name__ == '__main__':
     import argparse
     parser = argparse.ArgumentParser(prog='deletedfilerename', description='deleting file and renaming all files after it')
     parser.add_argument('--directory',type = str,help = 'directory to work in', default = 'AVOID DELETION')
-    parser.add_argument('--datadate',type = str,help = 'date when data was gathered, YYYYMMDD', default = '20190516')
+    parser.add_argument('--datadate',type = str,help = 'date when data was gathered, YYYYMMDD', default = '20190724')
     parser.add_argument('--deleted_number',type=int,help='file number to delete',default = 6147)
     args = parser.parse_args()
 

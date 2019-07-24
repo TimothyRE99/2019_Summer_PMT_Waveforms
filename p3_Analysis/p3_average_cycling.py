@@ -95,7 +95,7 @@ def p3_average_cycling(datadate,numhead,fsps,new_fsps,noise):
 if __name__ == '__main__':
     import argparse
     parser = argparse.ArgumentParser(prog="p3 average cycling",description="Downsamples and digitizes average waveforms.")
-    parser.add_argument('--datadate',type = str,help = 'date when data was gathered, YYYYMMDD', default = '20190516')
+    parser.add_argument('--datadate',type = str,help = 'date when data was gathered, YYYYMMDD', default = '20190724')
     parser.add_argument('--numhead',type=int,help='number of lines to ignore for header',default = 1)
     parser.add_argument("--fsps",type=float,help="hz, samples/s",default=20000000000.0)
     parser.add_argument("--new_fsps",type=float,help="hz, samples/s of new digitizer",default=250000000.0)

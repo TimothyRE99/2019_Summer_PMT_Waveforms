@@ -102,7 +102,7 @@ def p1b_sort(datadate,charge_mean,peak_mean,FWHM_mean,numhead):
 if __name__ == '__main__':
     import argparse
     parser = argparse.ArgumentParser(prog='p1b', description='Calculating doubles and running info_file.py')
-    parser.add_argument('--datadate',type = str,help = 'date when data was gathered, YYYYMMDD', default = '20190516')
+    parser.add_argument('--datadate',type = str,help = 'date when data was gathered, YYYYMMDD', default = '20190724')
     parser.add_argument('--charge_mean',type = float,help = 'mean calculated from charge histogram plot', default = 1.6799e-12)
     parser.add_argument('--peak_mean',type = float,help = 'mean calculated from peak histogram plot', default = 0.0063228)
     parser.add_argument('--FWHM_mean',type = float,help = 'mean calculated from peak histogram plot', default = 8.0225e-9)

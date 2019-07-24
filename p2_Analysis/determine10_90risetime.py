@@ -37,7 +37,7 @@ def determine(datadate,numhead,directory):
 if __name__ == '__main__':
     import argparse
     parser = argparse.ArgumentParser(prog='determine10_90risetime', description='determining and writing histogram for 10-90 rise times')
-    parser.add_argument('--datadate',type = str,help = 'date when data was gathered, YYYYMMDD', default = '20190516')
+    parser.add_argument('--datadate',type = str,help = 'date when data was gathered, YYYYMMDD', default = '20190724')
     parser.add_argument('--numhead',type=int,help='number of lines to ignore for header',default = 5)
     parser.add_argument('--directory',type=str,help='directory to look in',default = 'raw')
     args = parser.parse_args()

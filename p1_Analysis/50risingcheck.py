@@ -3,9 +3,9 @@ from readwaveform import read_waveform as rw
 from writewaveform import write_waveform
 import os
 
-Nloops = len(os.listdir('G:/data/watchman/20190516_watchman_spe/d1/d1_baseline_shifted'))
+Nloops = len(os.listdir('G:/data/watchman/20190724_watchman_spe/d1/d1_baseline_shifted'))
 for i in range(Nloops):
-    filename = 'G:/data/watchman/20190516_watchman_spe/d1/d1_baseline_shifted/D1--waveforms--%05d.txt' % i
+    filename = 'G:/data/watchman/20190724_watchman_spe/d1/d1_baseline_shifted/D1--waveforms--%05d.txt' % i
     (_,y,_) = rw(filename,5)
     y_norm = y/min(y[370:1370])                             #normalizing to make calculations easier
     check = y_norm >= 0.5                                   #50% crossing criteria

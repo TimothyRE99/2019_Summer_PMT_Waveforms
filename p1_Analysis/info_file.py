@@ -50,7 +50,7 @@ def info_file(datadate):
 if __name__ == "__main__":
     import argparse
     parser = argparse.ArgumentParser(prog="info file",description="write d1_info.txt.")
-    parser.add_argument("--datadate",type=str,help='date of collection, yyyymmdd',default='20190516')
+    parser.add_argument("--datadate",type=str,help='date of collection, yyyymmdd',default='20190724')
     args = parser.parse_args()
 
     info_file(args.datadate)

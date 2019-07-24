@@ -99,7 +99,7 @@ def p2_prelim(datadate,noise,gain_noise,gain_factor_2,gain_factor_4,gain_factor_
 if __name__ == '__main__':
     import argparse
     parser = argparse.ArgumentParser(prog='p3 prelim', description='moving files from d2 to d3')
-    parser.add_argument('--datadate',type = str,help = 'date when data was gathered, YYYYMMDD', default = '20190516')
+    parser.add_argument('--datadate',type = str,help = 'date when data was gathered, YYYYMMDD', default = '20190724')
     parser.add_argument('--noise',type = float,help = 'amount of noise in files you want to copy', default = 0)
     parser.add_argument("--gain_noise",type=float,help="standard deviation of noise gaussian for gain step",default=0)
     parser.add_argument("--gain_factor_2",type=float,help="Factor to multiply doubled by",default=3.5867418798)

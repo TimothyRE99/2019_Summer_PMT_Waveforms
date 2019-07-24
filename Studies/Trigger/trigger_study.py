@@ -102,7 +102,7 @@ def sixth_checker(datadate,numhead,mean,std,subfolder,new_fsps):
 if __name__ == '__main__':
     import argparse
     parser = argparse.ArgumentParser(prog="generate zero files",description="Generates files filled with zeroes and then noised.")
-    parser.add_argument('--datadate',type = str,help = 'date when data was gathered, YYYYMMDD', default = '20190516')
+    parser.add_argument('--datadate',type = str,help = 'date when data was gathered, YYYYMMDD', default = '20190724')
     parser.add_argument('--numhead',type=int,help='number of lines to ignore for header',default = 5)
     parser.add_argument('--mean',type=float,help='mean peak bits of waveform',default = 204.84)
     parser.add_argument('--std',type=float,help = 'standard deviation for noise in bits',default = 3.3)

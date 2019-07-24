@@ -36,6 +36,6 @@ if __name__ == '__main__':
     parser.add_argument("--x_label",type=str,help='label of x axis',default='Seconds')
     parser.add_argument("--title",type=str,help="title of histogram",default='Histogram of 20-80 Rise Times')
     parser.add_argument("--filename",type=str,help="filename",default='G:\\Data\\watchman\\20190516_watchman_spe\\studies\\timing\\nbox=2\\ndelay=1\\natt=2\\raw_gained\\ZCF_data\\ZCLs.txt')
-    parser.add_argument('--datadate',type = str,help = 'date when data was gathered, YYYYMMDD', default = '20190516')
+    parser.add_argument('--datadate',type = str,help = 'date when data was gathered, YYYYMMDD', default = '20190724')
     args = parser.parse_args()
     read_histogram(args.filename,args.x_label,args.title,"20_80_rise_time",args.datadate)

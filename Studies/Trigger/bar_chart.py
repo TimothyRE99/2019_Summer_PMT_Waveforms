@@ -33,6 +33,7 @@ def bar_chart(datadate,subfolder,dark_rate):
     ind = np.arange(len(bars_true_pos))
 
     #creates actual bars using values from above
+    plt.rcParams.update({'font.size': 14})
     fig, ax = plt.subplots()
     rects1 = ax.bar(ind, bars_true_pos, bar_width, color = 'blue')
     rects2 = ax.bar(ind + bar_width, bars_false_neg, bar_width, color = 'red')
@@ -71,7 +72,7 @@ def bar_chart(datadate,subfolder,dark_rate):
 if __name__ == '__main__':
     import argparse
     parser = argparse.ArgumentParser(prog="bar chart",description="Generates bar chart comparing detection vs miss.")
-    parser.add_argument('--datadate',type = str,help = 'date when data was gathered, YYYYMMDD', default = '20190516')
+    parser.add_argument('--datadate',type = str,help = 'date when data was gathered, YYYYMMDD', default = '20190724')
     parser.add_argument('--subfolder',type = str,help = 'how much the rise time was altered', default = 'raw')
     parser.add_argument('--dark_rate',type = list,help = 'occurence rate of noise being detected as spe, format = [1/3, 1/4, 1/6]', default = ['5 Hertz','10 Hertz','20 Hertz'])
     args = parser.parse_args()

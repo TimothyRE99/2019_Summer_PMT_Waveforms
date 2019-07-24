@@ -28,7 +28,7 @@ if __name__ == '__main__':
     import argparse
     parser = argparse.ArgumentParser(prog='waveform sort', description='sorting voltages, calculating differences, and showing minimum difference')
     parser.add_argument('--filenum',type = int,help = 'file to use',default = 1)
-    parser.add_argument('--datadate',type = str,help = 'date when data was gathered, YYYYMMDD', default = '20190516')
+    parser.add_argument('--datadate',type = str,help = 'date when data was gathered, YYYYMMDD', default = '20190724')
     parser.add_argument('--numhead',type=int,help='number of lines to ignore for header',default = 5)
     args = parser.parse_args()
 

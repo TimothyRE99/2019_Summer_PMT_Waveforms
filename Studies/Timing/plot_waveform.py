@@ -27,6 +27,7 @@ def plot_waveform(datadate,numhead,subfolder,n_box,n_delay,n_att):
         v_top = atw(v_box,n_att)
         v_bott = dlw(v_box,n_delay)
         (zcl,index_Cross,index_Peak) = locator(t,v,n_delay)     #determines time of zero crossing
+        plt.rcParams.update({'font.size': 14})
         plt.plot(t,v)   #plots CFD'd waveforms
         plt.plot(t_box,v_bott,color = 'green')  #plots original/delayed waveform
         plt.plot(t_box,v_top,color='purple')    #plots inverted/attenuated waveform
@@ -51,7 +52,7 @@ def plot_waveform(datadate,numhead,subfolder,n_box,n_delay,n_att):
 if __name__ == '__main__':
     import argparse
     parser = argparse.ArgumentParser(prog="plot waveform",description="cycles through CFD waveforms and plots them.")
-    parser.add_argument('--datadate',type = str,help = 'date when data was gathered, YYYYMMDD', default = '20190516')
+    parser.add_argument('--datadate',type = str,help = 'date when data was gathered, YYYYMMDD', default = '20190724')
     parser.add_argument('--numhead',type=int,help='number of lines to ignore for header',default = 5)
     parser.add_argument('--subfolder',type = str,help = 'how much the rise time was altered', default = 'raw')
     parser.add_argument('--n_box',type=int,help='n value for boxcar averager',default = 0)

@@ -21,7 +21,7 @@ def d1normalization(datadate,numhead):
 if __name__ == '__main__':
     import argparse
     parser = argparse.ArgumentParser(prog='d1normalization', description='Normalizing the data')
-    parser.add_argument('--datadate',type = str,help = 'date when data was gathered, YYYYMMDD', default = '20190516')
+    parser.add_argument('--datadate',type = str,help = 'date when data was gathered, YYYYMMDD', default = '20190724')
     parser.add_argument('--numhead',type=int,help='number of lines to ignore for header',default = 5)
     args = parser.parse_args()
 

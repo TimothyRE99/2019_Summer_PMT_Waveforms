@@ -17,6 +17,7 @@ def three_stage_compare(datadate,numhead,filenum,shaping):
     v1 = v1/min(v1)
     v2 = v2/min(v2)
     v3 = v3/min(v3)
+    plt.rcParams.update({'font.size': 14})
     p1, = plt.plot(t1,v1,color='orange',label='Waveform After P1')
     p2, = plt.plot(t2,v2,color='green',label='Waveform After P2')
     p3, = plt.plot(t3,v3,color='blue',label='Waveform After P3')
@@ -31,7 +32,7 @@ def three_stage_compare(datadate,numhead,filenum,shaping):
 if __name__ == '__main__':
     import argparse
     parser = argparse.ArgumentParser(prog="three_stage_compare",description="Gathers and plots three versions of the same waveform.")
-    parser.add_argument('--datadate',type = str,help = 'date when data was gathered, YYYYMMDD', default = '20190516')
+    parser.add_argument('--datadate',type = str,help = 'date when data was gathered, YYYYMMDD', default = '20190724')
     parser.add_argument('--numhead',type=int,help='number of lines to ignore for header',default = 5)
     parser.add_argument("--filenum",type=float,help="hz, samples/s",default=6)
     parser.add_argument("--shaping",type=str,help="hz, samples/s of new digitizer",default='rise_octupled')

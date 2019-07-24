@@ -69,7 +69,7 @@ def charge_calc(datadate,numhead,subfolder,sumtype):
 if __name__ == '__main__':
     import argparse
     parser = argparse.ArgumentParser(prog="charge calc",description="Calculates charge for original waveform digitized and digitized waveform with noise in bit*s/ohm.")
-    parser.add_argument('--datadate',type = str,help = 'date when data was gathered, YYYYMMDD', default = '20190516')
+    parser.add_argument('--datadate',type = str,help = 'date when data was gathered, YYYYMMDD', default = '20190724')
     parser.add_argument('--numhead',type=int,help='number of lines to ignore for header',default = 5)
     parser.add_argument('--subfolder',type = str,help = 'how much the rise time was altered', default = 'raw_gained')
     parser.add_argument('--sumtype',type = str,help = 'left or right rectangles or trapezoids (must be "left" or "right" or "trap")',default = 'left')
