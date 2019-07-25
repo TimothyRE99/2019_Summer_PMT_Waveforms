@@ -9,7 +9,7 @@ from gausshistogram import gauss_histogram as gh
 import os
 
 def determine(datadate,numhead):
-    Nloops = len(os.listdir('G:/data/watchman/'+datadate+'_watchman_spe/d1/d1_baseline_shifted'))
+    Nloops = len(os.listdir('G:/data/watchman/'+datadate+'_watchman_spe/d1/d1_50centered'))
     writename = 'G:/data/watchman/'+datadate+'_watchman_spe/d1/d1_histograms/charge.txt'
     if not os.path.exists('G:/data/watchman/'+datadate+'_watchman_spe/d1/d1_histograms/histogram_images'):
         os.makedirs('G:/data/watchman/'+datadate+'_watchman_spe/d1/d1_histograms/histogram_images')
@@ -17,7 +17,7 @@ def determine(datadate,numhead):
     for i in range(Nloops):
         print(i)
         area = 0
-        filename = 'G:/data/watchman/'+datadate+'_watchman_spe/d1/d1_baseline_shifted/D1--waveforms--%05d.txt' % i
+        filename = 'G:/data/watchman/'+datadate+'_watchman_spe/d1/d1_50centered/D1--waveforms--%05d.txt' % i
         (t,y,_) = rw(filename,numhead)
         #determining area under curve
         for i in range(len(y)-1):
