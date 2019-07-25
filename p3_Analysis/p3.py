@@ -124,7 +124,7 @@ if __name__ == '__main__':
     parser.add_argument('--datadate',type = str,help = 'date when data was gathered, YYYYMMDD', default = '20190724')
     parser.add_argument('--numhead',type=int,help='number of lines to ignore for header',default = 5)
     parser.add_argument("--fsps",type=float,help="hz, samples/s",default=20000000000.0)
-    parser.add_argument("--new_fsps",type=float,help="hz, samples/s of new digitizer",default=500000000.0)
+    parser.add_argument("--new_fsps",type=float,help="hz, samples/s of new digitizer",default=250000000.0)
     parser.add_argument("--gain_noise",type=float,help="standard deviation of noise gaussian for gain step",default=0)
     parser.add_argument("--gain_factor_2",type=float,help="Factor to multiply doubled by",default=3.00986332211)
     parser.add_argument("--gain_factor_4",type=float,help="Factor to multiply quadrupled by",default=3.97945011958)
