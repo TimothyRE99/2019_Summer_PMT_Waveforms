@@ -24,7 +24,7 @@ def determine_average_shape(datadate,numhead):
         else:
             ysum = np.add(ysum,y)
     yfinal = np.divide(ysum,Nloops)                 #diving array index-wise by number of files added
-    header_name = "Average Waveform Shape"
+    header_name = "Average Waveform Shape\n"
     write_waveform(t,yfinal,writename,header_name)      #writing array to waveform file
     return (t,yfinal)
 

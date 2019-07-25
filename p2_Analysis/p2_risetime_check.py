@@ -12,7 +12,7 @@ from writewaveform import write_waveform
 def risetime_check(datadate,x_values,fsps):
     if not os.path.exists('G:/data/watchman/'+datadate+'_watchman_spe/d2/d2_images/'):
         os.makedirs('G:/data/watchman/'+datadate+'_watchman_spe/d2/d2_images/')
-    (t,v,_) = rw('G:/data/watchman/'+datadate+'_watchman_spe/d2/d2_average_quadrupled.txt',1)      #reading in average waveform
+    (t,v,_) = rw('G:/data/watchman/'+datadate+'_watchman_spe/d2/d2_histograms/average_shape.txt',1)      #reading in average waveform
     #determining rise time of average waveform
     v_norm_notau = v/max(v)
     #determining where 10% and 90% are located
@@ -58,7 +58,7 @@ def risetime_check(datadate,x_values,fsps):
     #showing and saving plot
     plt.get_current_fig_manager().window.showMaximized()        #maximizes plot
     plt.show()
-    fig.savefig('G:/data/watchman/'+datadate+'_watchman_spe/d2/d2_images/tau_compare_quadruple.png',dpi = 2500)
+    fig.savefig('G:/data/watchman/'+datadate+'_watchman_spe/d2/d2_images/tau_compare_raw.png',dpi = 2500)
 
 #main function
 if __name__ == '__main__':
