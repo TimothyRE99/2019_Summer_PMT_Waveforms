@@ -24,11 +24,11 @@ def gain(v,gain_noise,gain_factor):
     return v_final
 
 #applying lowpass filter and writing
-def p2(datadate,numhead,fsps,x_values,noise,gain_noise,gain_factor_2,gain_factor_4,gain_factor_8):
+def p2(datadate,numhead,fsps,noise,gain_noise,gain_factor_2,gain_factor_4,gain_factor_8):
     #establish tau values from average waveform
-    tau_double = 2.18e-8
-    tau_quadruple = 1.13e-8
-    tau_octuple = 4.15e-8
+    tau_double = 1.52e-8
+    tau_quadruple = 1.05003120124805e-8
+    tau_octuple = 3.690110404416177e-8
     #establish directories for reading and writing waveforms
     filedir = 'g:/data/watchman/'+datadate+'_watchman_spe/d2/d2_raw/'
     if noise == 0 and gain_noise == 0:
@@ -115,12 +115,11 @@ if __name__ == '__main__':
     parser.add_argument('--datadate',type = str,help = 'date when data was gathered, YYYYMMDD', default = '20190724')
     parser.add_argument('--numhead',type=int,help='number of lines to ignore for header',default = 5)
     parser.add_argument("--fsps",type=float,help="hz, samples/s",default=20000000000.0)
-    parser.add_argument("--x_values",type=int,help="number of taus to generate",default=5000)
     parser.add_argument("--noise",type=float,help="standard deviation of noise gaussian",default=0)
     parser.add_argument("--gain_noise",type=float,help="standard deviation of noise gaussian for gain step",default=0)
-    parser.add_argument("--gain_factor_2",type=float,help="Factor to multiply doubled by",default=3.5867418798)
-    parser.add_argument("--gain_factor_4",type=float,help="Factor to multiply quadrupled by",default=4.52070370286)
-    parser.add_argument("--gain_factor_8",type=float,help="Factor to multiply octupled by",default=8.09019004097)
+    parser.add_argument("--gain_factor_2",type=float,help="Factor to multiply doubled by",default=3.00986332211)
+    parser.add_argument("--gain_factor_4",type=float,help="Factor to multiply quadrupled by",default=3.97945011958)
+    parser.add_argument("--gain_factor_8",type=float,help="Factor to multiply octupled by",default=7.36306539138)
     args = parser.parse_args()
 
-    p2(args.datadate,args.numhead,args.fsps,args.x_values,args.noise,args.gain_noise,args.gain_factor_2,args.gain_factor_4,args.gain_factor_8)
+    p2(args.datadate,args.numhead,args.fsps,args.noise,args.gain_noise,args.gain_factor_2,args.gain_factor_4,args.gain_factor_8)
