@@ -14,7 +14,7 @@ def determine(datadate,numhead):
     if not os.path.exists('G:/data/watchman/'+datadate+'_watchman_spe/d1/d1_histograms/histogram_images'):
         os.makedirs('G:/data/watchman/'+datadate+'_watchman_spe/d1/d1_histograms/histogram_images')
     #determine fall times
-    for i in range(7826,Nloops):
+    for i in range(Nloops):
         print(i)
         filename = 'G:/data/watchman/'+datadate+'_watchman_spe/d1/d1_50centered/D1--waveforms--%05d.txt' % i
         (t,y,_) = rw(filename,numhead)
