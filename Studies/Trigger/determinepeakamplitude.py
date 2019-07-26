@@ -23,8 +23,8 @@ def determine(datadate,numhead,directory,samplerate):
         wh(value,writename)                             #writing value to histogram txt file
     #create histogram from saved file
     (histo_mean,histo_std) = gh(writename)
-    (std,mean) = rh(writename,"Bits","Histogram of Peak Amplitudes","Peak_Amplitude"+directory,datadate,histo_mean,histo_std,samplerate)
-    return(std,mean)
+    (mean,std) = rh(writename,"Bits","Histogram of Peak Amplitudes","Peak_Amplitude"+directory,datadate,histo_mean,histo_std,samplerate)
+    return(mean,std)
 
 if __name__ == '__main__':
     import argparse
@@ -35,4 +35,4 @@ if __name__ == '__main__':
     parser.add_argument('--samplerate',type = str,help = 'downsampled rate to analyze (1 Gsps, 500 Msps, 250 Msps, 125 Msps)',default = '1 Gsps')
     args = parser.parse_args()
 
-    (std,mean) = determine(args.datadate,args.numhead,args.directory,args.samplerate)
+    (mean,std) = determine(args.datadate,args.numhead,args.directory,args.samplerate)
