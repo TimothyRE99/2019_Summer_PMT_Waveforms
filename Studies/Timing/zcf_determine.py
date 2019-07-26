@@ -33,9 +33,9 @@ def zc_locator(t,v,n_delay):
     return (t_cross,index_Cross,index_Peak)
 
 #running through CFD files to generate txt file to save ZCLs
-def ZCF(datadate,numhead,subfolder,n_box,n_delay,n_att):
+def ZCF(datadate,numhead,subfolder,n_box,n_delay,n_att,samplerate):
     #establishes file directory to read from and creates save directory if necessary
-    filedir = 'G:/data/watchman/'+datadate+'_watchman_spe/studies/timing/nbox='+str(n_box)+'/ndelay='+str(n_delay)+'/natt='+str(n_att)+'/'+subfolder+'/'
+    filedir = 'G:/data/watchman/'+datadate+'_watchman_spe/studies/timing/' + samplerate + '/nbox='+str(n_box)+'/ndelay='+str(n_delay)+'/natt='+str(n_att)+'/'+subfolder+'/'
     if not os.path.exists(filedir + 'ZCF_data/'):
         os.makedirs(filedir + 'ZCF_data/')
     Nloops = len(os.listdir(filedir)) - 1       #establishes number of files to cycle through
@@ -50,9 +50,9 @@ def ZCF(datadate,numhead,subfolder,n_box,n_delay,n_att):
     #runs through process to read, create, and display histogram plot
     (histo_mean,histo_std) = gh(writename)
     savename = subfolder + "/zero_crossing_time_nbox=" + str(n_box) + "_ndelay=" + str(n_delay) + "_natt=" + str(n_att)
-    if not os.path.exists('G:/data/watchman/'+datadate+'_watchman_spe/studies/timing/histogram_images/' + subfolder):
-        os.makedirs('G:/data/watchman/'+datadate+'_watchman_spe/studies/timing/histogram_images/' + subfolder + '/')
-    rh(writename,"Seconds","Histogram of Zero Crossing Times",savename,datadate,histo_mean,histo_std)
+    if not os.path.exists('G:/data/watchman/'+datadate+'_watchman_spe/studies/timing/' + samplerate + '/histogram_images/' + subfolder):
+        os.makedirs('G:/data/watchman/'+datadate+'_watchman_spe/studies/timing/' + samplerate + '/histogram_images/' + subfolder + '/')
+    rh(writename,"Seconds","Histogram of Zero Crossing Times",savename,datadate,histo_mean,histo_std,samplerate)
 
 #main function
 if __name__ == '__main__':
@@ -61,6 +61,7 @@ if __name__ == '__main__':
     parser.add_argument('--datadate',type = str,help = 'date when data was gathered, YYYYMMDD', default = '20190724')
     parser.add_argument('--numhead',type=int,help='number of lines to ignore for header',default = 1)
     parser.add_argument('--subfolder',type = str,help = 'how much the rise time was altered', default = 'averages/raw')
+    parser.add_argument('--samplerate',type = str,help = 'downsampled rate to analyze (1 Gsps, 500 Msps, 250 Msps, 125 Msps)',default = '1 Gsps')
     args = parser.parse_args()
 
     #cycles through each combination of n values
@@ -76,5 +77,5 @@ if __name__ == '__main__':
     #                    if n_att == 3:
     #                        pass
     #                    else:
-    #                        ZCF(args.datadate,args.numhead,args.subfolder,n_box,n_delay,n_att)
-    ZCF(args.datadate,args.numhead,args.subfolder,2,1,2)
+    #                        ZCF(args.datadate,args.numhead,args.subfolder,n_box,n_delay,n_att,args.samplerate)
+    ZCF(args.datadate,args.numhead,args.subfolder,2,1,2,args.samplerate)

@@ -11,7 +11,7 @@ def fit_function(x,B,mu,sigma):
     #funcion for a gaussian scaled by factor B
     return (B * (1/np.sqrt(2 * np.pi * sigma**2)) * np.exp(-1.0 * (x - mu)**2 / (2 * sigma**2)))
 
-def read_histogram(filename, x_label, title, savename, datadate, histo_mean, histo_std):
+def read_histogram(filename, x_label, title, savename, datadate, histo_mean, histo_std, samplerate):
     histo = np.array([])            #initializing array
     fin = open(filename,'r')        #opening histogram txt file in read mode
     #appending values from histogram txt file to array in order
@@ -40,7 +40,7 @@ def read_histogram(filename, x_label, title, savename, datadate, histo_mean, his
     plt.pause(2)
     plt.close()
     #finalizing plot saving
-    savedir = 'G:/data/watchman/'+datadate+'_watchman_spe/studies/timing/histogram_images/'
+    savedir = 'G:/data/watchman/'+datadate+'_watchman_spe/studies/timing/' + samplerate + '/histogram_images/'
     fig.savefig(savedir+savename+'_hist.png',dpi = 500)
 
 #For testing purposes
@@ -53,5 +53,6 @@ if __name__ == '__main__':
     parser.add_argument('--datadate',type = str,help = 'date when data was gathered, YYYYMMDD', default = '20190724')
     parser.add_argument('--histo_mean',type = float,help = 'mean of the histogram without outliers', default = 2.3890246551536875e-09)
     parser.add_argument('--histo_std',type = float,help = 'standard deviation of the histogram without outliers', default = 8.978658875273273e-11)
+    parser.add_argument('--samplerate',type = str,help = 'downsampled rate to analyze (1 Gsps, 500 Msps, 250 Msps, 125 Msps)',default = '1 Gsps')
     args = parser.parse_args()
-    read_histogram(args.filename,args.x_label,args.title,"20_80_rise_time",args.datadate,args.histo_mean,args.histo_std)
+    read_histogram(args.filename,args.x_label,args.title,"20_80_rise_time",args.datadate,args.histo_mean,args.histo_std,args.samplerate)

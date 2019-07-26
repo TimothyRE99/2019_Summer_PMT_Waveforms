@@ -11,13 +11,13 @@ from timing_CFD import attenuate_wf as atw
 import os
 
 #plotting loop function
-def plot_waveform(datadate,numhead,subfolder,n_box,n_delay,n_att):
-    filedir = 'G:/data/watchman/'+datadate+'_watchman_spe/studies/timing/nbox='+str(n_box)+'/ndelay='+str(n_delay)+'/natt='+str(n_att)+'/'+subfolder+'/'        #establishes directory to read from
+def plot_waveform(datadate,numhead,subfolder,n_box,n_delay,n_att,samplerate):
+    filedir = 'G:/data/watchman/'+datadate+'_watchman_spe/studies/timing/' + samplerate + '/nbox='+str(n_box)+'/ndelay='+str(n_delay)+'/natt='+str(n_att)+'/'+subfolder+'/'        #establishes directory to read from
     Nloops = len(os.listdir(filedir))   #establishes length to cycle through file
     for i in range(Nloops):
         #creates file names and prints them
         filename = filedir + 'D3--waveforms--%05d.txt' % i
-        filename2 = 'G:/data/watchman/'+datadate+'_watchman_spe/d3/d3_'+subfolder+'_analyzed/D3--waveforms--%05d.txt' % i
+        filename2 = 'G:/data/watchman/'+datadate+'_watchman_spe/d3/' + samplerate + '/d3_'+subfolder+'_analyzed/D3--waveforms--%05d.txt' % i
         print(filename)
         #takes in t and v values
         (t,v,_) = rw(filename,numhead)
@@ -58,6 +58,7 @@ if __name__ == '__main__':
     parser.add_argument('--n_box',type=int,help='n value for boxcar averager',default = 0)
     parser.add_argument('--n_delay',type=int,help='number of indices to delay base waveform',default = 1)
     parser.add_argument('--n_att',type=int,help='amount to attenuate inverted waveform by, must be base 2',default = 1)
+    parser.add_argument('--samplerate',type = str,help = 'downsampled rate to analyze (1 Gsps, 500 Msps, 250 Msps, 125 Msps)',default = '1 Gsps')
     args = parser.parse_args()
 
-    plot_waveform(args.datadate,args.numhead,args.subfolder,args.n_box,args.n_delay,args.n_att)
+    plot_waveform(args.datadate,args.numhead,args.subfolder,args.n_box,args.n_delay,args.n_att,args.samplerate)
