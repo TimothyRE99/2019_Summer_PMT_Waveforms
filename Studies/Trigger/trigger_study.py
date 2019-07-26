@@ -8,17 +8,17 @@ import shutil
 import scipy.integrate as integrate
 from math import erfc
 from bar_chart import bar_chart as bc
+from determinepeakamplitude import determine as det
 
-#checking how many times noise will register as SPE
-def noise_check(std,threshold,new_fsps):
-    num_of_stds = threshold / std               #determines how many stds away from mean
+#checking probability of being outside threshold in one direction
+def gauss_check(std,threshold,mean):
+    num_of_stds = abs(threshold - mean) / std   #determines how many stds away from mean
     erfc_val = erfc(num_of_stds / np.sqrt(2))   #calculates complementary error function
     prob_happening = ((erfc_val) / 2)           #calculates probability of noise
-    noise_rate = prob_happening * new_fsps      #calculates noise rate
-    return noise_rate
+    return prob_happening
 
 #checking against 1/3 mean peak
-def third_checker(datadate,numhead,mean,std,subfolder,new_fsps,samplerate):
+def third_checker(datadate,numhead,mean,std_noise,subfolder,new_fsps,samplerate,mean_noise,std):
     threshold = mean / 3                        #establishes threshold
     Nloops = len(os.listdir('G:/data/watchman/'+datadate+'_watchman_spe/d3/' + samplerate + '/d3_'+subfolder+'_analyzed/'))    #establishes number of files to cycle through
     for i in range(Nloops):
@@ -41,11 +41,13 @@ def third_checker(datadate,numhead,mean,std,subfolder,new_fsps,samplerate):
         else:
             shutil.copy2(filename,false_neg_dir)
     true_positives = len(os.listdir(true_pos_dir))
-    noise_rate = noise_check(std,threshold,new_fsps)
-    return(true_positives,Nloops,noise_rate)
+    prob_happening_noise = gauss_check(std_noise,threshold,mean_noise)
+    noise_rate = prob_happening_noise * new_fsps
+    percent_above = 1 - gauss_check(std,threshold,mean)
+    return(true_positives,Nloops,noise_rate,percent_above)
 
 #checking against 1/4 mean peak
-def fourth_checker(datadate,numhead,mean,std,subfolder,new_fsps,samplerate):
+def fourth_checker(datadate,numhead,mean,std_noise,subfolder,new_fsps,samplerate,mean_noise,std):
     threshold = mean / 4                        #establishes threshold
     Nloops = len(os.listdir('G:/data/watchman/'+datadate+'_watchman_spe/d3/' + samplerate + '/d3_'+subfolder+'_analyzed/'))    #establishes number of files to cycle through
     for i in range(Nloops):
@@ -68,11 +70,13 @@ def fourth_checker(datadate,numhead,mean,std,subfolder,new_fsps,samplerate):
         else:
             shutil.copy2(filename,false_neg_dir)
     true_positives = len(os.listdir(true_pos_dir))
-    noise_rate = noise_check(std,threshold,new_fsps)
-    return(true_positives,Nloops,noise_rate)
+    prob_happening_noise = gauss_check(std_noise,threshold,mean_noise)
+    noise_rate = prob_happening_noise * new_fsps
+    percent_above = 1 - gauss_check(std,threshold,mean)
+    return(true_positives,Nloops,noise_rate,percent_above)
 
 #checking against 1/6 mean peak
-def sixth_checker(datadate,numhead,mean,std,subfolder,new_fsps,samplerate):
+def sixth_checker(datadate,numhead,mean,std_noise,subfolder,new_fsps,samplerate,mean_noise,std):
     threshold = mean / 6                        #establishes threshold
     Nloops = len(os.listdir('G:/data/watchman/'+datadate+'_watchman_spe/d3/' + samplerate + '/d3_'+subfolder+'_analyzed/'))    #establishes number of files to cycle through
     for i in range(Nloops):
@@ -95,8 +99,10 @@ def sixth_checker(datadate,numhead,mean,std,subfolder,new_fsps,samplerate):
         else:
             shutil.copy2(filename,false_neg_dir)
     true_positives = len(os.listdir(true_pos_dir))
-    noise_rate = noise_check(std,threshold,new_fsps)
-    return(true_positives,Nloops,noise_rate)
+    prob_happening_noise = gauss_check(std_noise,threshold,mean_noise)
+    noise_rate = prob_happening_noise * new_fsps
+    percent_above = 1 - gauss_check(std,threshold,mean)
+    return(true_positives,Nloops,noise_rate,percent_above)
 
 #main function
 if __name__ == '__main__':
@@ -104,20 +110,25 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(prog="generate zero files",description="Generates files filled with zeroes and then noised.")
     parser.add_argument('--datadate',type = str,help = 'date when data was gathered, YYYYMMDD', default = '20190724')
     parser.add_argument('--numhead',type=int,help='number of lines to ignore for header',default = 5)
-    parser.add_argument('--mean',type=float,help='mean peak bits of waveform',default = 204.84)
-    parser.add_argument('--std',type=float,help = 'standard deviation for noise in bits',default = 3.3)
-    parser.add_argument('--subfolder',type = str,help = 'how much the rise time was altered', default = 'rise_octupled_gained')
-    parser.add_argument('--new_fsps',type=float,help = 'sample rate of digitizer',default = 250000000.0)
+    parser.add_argument('--mean_noise',type=float,help='mean peak bits of noise',default = 0)
+    parser.add_argument('--std_noise',type=float,help = 'standard deviation for noise in bits',default = 3.3)
+    parser.add_argument('--subfolder',type = str,help = 'how much the rise time was altered', default = 'raw_gained')
+    parser.add_argument('--new_fsps',type=float,help = 'sample rate of digitizer',default = 1000000000.0)
     parser.add_argument('--samplerate',type = str,help = 'downsampled rate to analyze (1 Gsps, 500 Msps, 250 Msps, 125 Msps)',default = '1 Gsps')
     args = parser.parse_args()
 
-    (third_true_positives, third_Nloops, third_noise_rate) = third_checker(args.datadate,args.numhead,args.mean,args.std,args.subfolder,args.new_fsps,args.samplerate)
-    (fourth_true_positives, fourth_Nloops, fourth_noise_rate) = fourth_checker(args.datadate,args.numhead,args.mean,args.std,args.subfolder,args.new_fsp,args.samplerate)
-    (sixth_true_positives, sixth_Nloops, sixth_noise_rate) = sixth_checker(args.datadate,args.numhead,args.mean,args.std,args.subfolder,args.new_fsps,args.samplerate)
+    (mean,std) = det(args.datadate,args.numhead,args.subfolder,args.samplerate)
+
+    (third_true_positives, third_Nloops, third_noise_rate, third_percent_above) = third_checker(args.datadate,args.numhead,mean,args.std_noise,args.subfolder,args.new_fsps,args.samplerate,args.mean_noise,std)
+    (fourth_true_positives, fourth_Nloops, fourth_noise_rate, fourth_percent_above) = fourth_checker(args.datadate,args.numhead,mean,args.std_noise,args.subfolder,args.new_fsps,args.samplerate,args.mean_noise,std)
+    (sixth_true_positives, sixth_Nloops, sixth_noise_rate, sixth_percent_above) = sixth_checker(args.datadate,args.numhead,mean,args.std_noise,args.subfolder,args.new_fsps,args.samplerate,args.mean_noise,std)
 
     print('One Third Mean Peak Gives:\n\t' + str(third_true_positives) + '/' + str(third_Nloops) + ' True Positives')
     print('One Fourth Mean Peak Gives:\n\t' + str(fourth_true_positives) + '/' + str(fourth_Nloops) + ' True Positives')
     print('One Sixth Mean Peak Gives:\n\t' + str(sixth_true_positives) + '/' + str(sixth_Nloops) + ' True Positives')
+    print('One Third Mean Peak Gives: ' + str(third_percent_above))
+    print('One Fourth Mean Peak Gives: ' + str(fourth_percent_above))
+    print('One Sixth Mean Peak Gives: ' + str(sixth_percent_above))
 
     dark_rate = ['%05g Hertz' % third_noise_rate, '%05g Hertz' % fourth_noise_rate, '%05g Hertz' % sixth_noise_rate]
 
