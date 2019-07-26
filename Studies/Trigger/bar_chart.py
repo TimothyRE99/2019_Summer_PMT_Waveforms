@@ -7,22 +7,22 @@ import numpy as np
 import os
 
 #plotting data
-def bar_chart(datadate,subfolder,dark_rate):
-    savedir = 'G:/data/watchman/'+datadate+'_watchman_spe/studies/trigger/images/'      #sets up name for directory to save images to
+def bar_chart(datadate,subfolder,dark_rate,samplerate):
+    savedir = 'G:/data/watchman/'+datadate+'_watchman_spe/studies/trigger/' + samplerate + '/images/'      #sets up name for directory to save images to
     #creates directory if it doesn't exist
     if not os.path.exists(savedir):
         os.makedirs(savedir)
     savename = savedir + 'bars_' + str(subfolder) + '.png'       #creates name for plot
 
     #establishes values for each bar
-    true_positives_third = len(os.listdir('G:/data/watchman/'+datadate+'_watchman_spe/studies/trigger/third/'+subfolder+'/true_positives'))
-    false_negatives_third = len(os.listdir('G:/data/watchman/'+datadate+'_watchman_spe/studies/trigger/third/'+subfolder+'/false_negatives'))
+    true_positives_third = len(os.listdir('G:/data/watchman/'+datadate+'_watchman_spe/studies/trigger/' + samplerate + '/third/'+subfolder+'/true_positives'))
+    false_negatives_third = len(os.listdir('G:/data/watchman/'+datadate+'_watchman_spe/studies/trigger/' + samplerate + '/third/'+subfolder+'/false_negatives'))
 
-    true_positives_fourth = len(os.listdir('G:/data/watchman/'+datadate+'_watchman_spe/studies/trigger/fourth/'+subfolder+'/true_positives'))
-    false_negatives_fourth = len(os.listdir('G:/data/watchman/'+datadate+'_watchman_spe/studies/trigger/fourth/'+subfolder+'/false_negatives'))
+    true_positives_fourth = len(os.listdir('G:/data/watchman/'+datadate+'_watchman_spe/studies/trigger/' + samplerate + '/fourth/'+subfolder+'/true_positives'))
+    false_negatives_fourth = len(os.listdir('G:/data/watchman/'+datadate+'_watchman_spe/studies/trigger/' + samplerate + '/fourth/'+subfolder+'/false_negatives'))
 
-    true_positives_sixth = len(os.listdir('G:/data/watchman/'+datadate+'_watchman_spe/studies/trigger/sixth/'+subfolder+'/true_positives'))
-    false_negatives_sixth = len(os.listdir('G:/data/watchman/'+datadate+'_watchman_spe/studies/trigger/sixth/'+subfolder+'/false_negatives'))
+    true_positives_sixth = len(os.listdir('G:/data/watchman/'+datadate+'_watchman_spe/studies/trigger/' + samplerate + '/sixth/'+subfolder+'/true_positives'))
+    false_negatives_sixth = len(os.listdir('G:/data/watchman/'+datadate+'_watchman_spe/studies/trigger/' + samplerate + '/sixth/'+subfolder+'/false_negatives'))
 
     #sets bar width and creates bar value arrays
     bar_width = 0.4
@@ -75,6 +75,7 @@ if __name__ == '__main__':
     parser.add_argument('--datadate',type = str,help = 'date when data was gathered, YYYYMMDD', default = '20190724')
     parser.add_argument('--subfolder',type = str,help = 'how much the rise time was altered', default = 'raw')
     parser.add_argument('--dark_rate',type = list,help = 'occurence rate of noise being detected as spe, format = [1/3, 1/4, 1/6]', default = ['5 Hertz','10 Hertz','20 Hertz'])
+    parser.add_argument('--samplerate',type = str,help = 'downsampled rate to analyze (1 Gsps, 500 Msps, 250 Msps, 125 Msps)',default = '1 Gsps')
     args = parser.parse_args()
 
-    bar_chart(args.datadate,args.subfolder,args.dark_rate)
+    bar_chart(args.datadate,args.subfolder,args.dark_rate,args.samplerate)
