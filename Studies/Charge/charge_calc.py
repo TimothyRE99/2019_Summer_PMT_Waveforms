@@ -32,8 +32,8 @@ def digitize(v):
     return(v_final)
 
 #calling functions
-def charge_calc(datadate,numhead,subfolder,sumtype):
-    writedir = 'G:/data/watchman/'+datadate+'_watchman_spe/studies/charge/' + sumtype + '/' #establish name of directory to write data to
+def charge_calc(datadate,numhead,subfolder,sumtype,samplerate):
+    writedir = 'G:/data/watchman/'+datadate+'_watchman_spe/studies/charge/' + samplerate + '/' + sumtype + '/' #establish name of directory to write data to
     #creating directory if it doesn't exist
     if not os.path.exists(writedir):
         os.makedirs(writedir)
@@ -41,7 +41,7 @@ def charge_calc(datadate,numhead,subfolder,sumtype):
     writename = writedir + subfolder + '_normal_charge.txt'
     writename_digitized = writedir + subfolder + '_digitized_charge.txt'
     filedir = 'G:/data/watchman/'+datadate+'_watchman_spe/d3/d3_'+subfolder+'/'
-    filedir_digitized = 'G:/data/watchman/'+datadate+'_watchman_spe/d3/d3_'+subfolder+'_analyzed/'
+    filedir_digitized = 'G:/data/watchman/'+datadate+'_watchman_spe/d3/' + samplerate + '/d3_'+subfolder+'_analyzed/'
     Nloops = len(os.listdir(filedir_digitized))     #establish number of files to cycle through
     for i in range(Nloops):
         print('Filename: %05d' % i)
@@ -73,6 +73,7 @@ if __name__ == '__main__':
     parser.add_argument('--numhead',type=int,help='number of lines to ignore for header',default = 5)
     parser.add_argument('--subfolder',type = str,help = 'how much the rise time was altered', default = 'raw_gained')
     parser.add_argument('--sumtype',type = str,help = 'left or right rectangles or trapezoids (must be "left" or "right" or "trap")',default = 'left')
+    parser.add_argument('--samplerate',type = str,help = 'downsampled rate to analyze (1 Gsps, 500 Msps, 250 Msps, 125 Msps)',default = '1 Gsps')
     args = parser.parse_args()
 
     #defaulting sumtype to left if the input is improper
@@ -82,4 +83,4 @@ if __name__ == '__main__':
         print("Improper Sumtype, defaulting to Left Rectangles")
         sumtype = 'left'
 
-    charge_calc(args.datadate,args.numhead,args.subfolder,sumtype)
+    charge_calc(args.datadate,args.numhead,args.subfolder,sumtype,args.samplerate)

@@ -24,9 +24,9 @@ def read_charge(filename):
     return(charge)
 
 #call functions
-def charge_compare(datadate,subfolder,sumtype):
+def charge_compare(datadate,subfolder,sumtype,samplerate):
     #establish directories to read from and write to
-    filedir = 'G:/data/watchman/'+datadate+'_watchman_spe/studies/charge/' + sumtype + '/'
+    filedir = 'G:/data/watchman/'+datadate+'_watchman_spe/studies/charge/' + samplerate + '/' + sumtype + '/'
     writedir = filedir + 'errors/'
     #creates writing directory if it doesn't exist
     if not os.path.exists(writedir):
@@ -45,7 +45,7 @@ def charge_compare(datadate,subfolder,sumtype):
         wh(error,writename)
     (histo_mean,histo_std) = gh(writename)
     savename = subfolder + '_errors_' + sumtype
-    rh(writename,"Percent","Histogram of Percent Erros",savename,datadate,histo_mean,histo_std)
+    rh(writename,"Percent","Histogram of Percent Erros",savename,datadate,histo_mean,histo_std,samplerate)
 
 #main function
 if __name__ == '__main__':
@@ -54,6 +54,7 @@ if __name__ == '__main__':
     parser.add_argument('--datadate',type = str,help = 'date when data was gathered, YYYYMMDD', default = '20190724')
     parser.add_argument('--subfolder',type = str,help = 'how much the rise time was altered', default = 'raw_gained')
     parser.add_argument('--sumtype',type = str,help = 'left or right rectangles or trapezoids (must be "left" or "right" or "trap")',default = 'left')
+    parser.add_argument('--samplerate',type = str,help = 'downsampled rate to analyze (1 Gsps, 500 Msps, 250 Msps, 125 Msps)',default = '1 Gsps')
     args = parser.parse_args()
 
     #defaulting sumtype to left if the input is improper
@@ -63,4 +64,4 @@ if __name__ == '__main__':
         print("Improper Sumtype, defaulting to Left Rectangles")
         sumtype = 'left'
 
-    charge_compare(args.datadate,args.subfolder,sumtype)
+    charge_compare(args.datadate,args.subfolder,sumtype,args.samplerate)
