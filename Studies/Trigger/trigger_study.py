@@ -126,9 +126,9 @@ if __name__ == '__main__':
     print('One Third Mean Peak Gives:\n\t' + str(third_true_positives) + '/' + str(third_Nloops) + ' True Positives')
     print('One Fourth Mean Peak Gives:\n\t' + str(fourth_true_positives) + '/' + str(fourth_Nloops) + ' True Positives')
     print('One Sixth Mean Peak Gives:\n\t' + str(sixth_true_positives) + '/' + str(sixth_Nloops) + ' True Positives')
-    print('One Third Mean Peak Gives: ' + str(third_percent_above))
-    print('One Fourth Mean Peak Gives: ' + str(fourth_percent_above))
-    print('One Sixth Mean Peak Gives: ' + str(sixth_percent_above))
+    print('One Third Mean Peak Gives: %05d Files Predicted' % int(third_percent_above*third_Nloops))
+    print('One Fourth Mean Peak Gives: %05d Files Predicted' % int(fourth_percent_above*fourth_Nloops))
+    print('One Sixth Mean Peak Gives: %05d Files Predicted' % int(sixth_percent_above*sixth_Nloops))
 
     dark_rate = ['%05g Hertz' % third_noise_rate, '%05g Hertz' % fourth_noise_rate, '%05g Hertz' % sixth_noise_rate]
 
