@@ -27,7 +27,7 @@ def read_histogram(filename, x_label, title, savename, datadate, histo_mean, his
     #establishing 5 significant figure versions of the mean and std from curve fit
     gauss_mean = '%s' % float('%.5g' % popt[1])
     gauss_std = '%s' % float('%.5g' % popt[2])
-    x_values = np.linspace(popt[1] - 1.5*popt[2], popt[1] + 1.5*popt[2], 100000)    #creating 100,000 x values to map curvefit gaussian to
+    x_values = np.linspace(popt[1] - 1.5*popt[2], popt[1] + 1.5*popt[2], 1000000)    #creating 100,000 x values to map curvefit gaussian to
     fig = plt.figure(figsize=(6,4))                         #intializing saving the figure
     plt.bar(binscenters, histo_data, width=binwidth)        #plotting histogram
     plt.plot(x_values, fit_function(x_values, *popt), color='darkorange')   #plotting curve fit
