@@ -79,5 +79,5 @@ if __name__ == '__main__':
                             pass
                         else:
                             for i in range(len(subfolder_list)):
-                                ZCF(args.datadate,args.numhead,args.subfolder,n_box,n_delay,n_att,args.samplerate)
-    #ZCF(args.datadate,args.numhead,args.subfolder,2,1,2,args.samplerate)
+                                ZCF(args.datadate,args.numhead,subfolder_list[i],n_box,n_delay,n_att,args.samplerate)
+    #ZCF(args.datadate,args.numhead,subfolder_list[0],2,1,2,samplerate)

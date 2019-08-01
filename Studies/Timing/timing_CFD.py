@@ -92,4 +92,4 @@ if __name__ == '__main__':
                         else:
                             for i in range(len(subfolder_list)):
                                 timing_CFD(args.datadate,args.numhead,subfolder_list[i],n_box,n_delay,n_att,args.samplerate)
-    #timing_CFD(args.datadate,args.numhead,args.subfolder,2,1,2,args.samplerate)
+    #timing_CFD(args.datadate,args.numhead,subfolder_list[0],2,1,2,args.samplerate)
