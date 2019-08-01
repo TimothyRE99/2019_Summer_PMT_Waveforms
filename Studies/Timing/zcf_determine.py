@@ -10,7 +10,7 @@ from readhistogram import read_histogram as rh
 
 #determining ZCL from t and v
 def zc_locator(t,v):
-    stop_ind = len(v)/3
+    stop_ind = int(len(v)/3)
     v_norm = v/max(v[0:stop_ind])     #normalizes for easy checking
     #creates array of "True" and "False" entries for where condition is met
     checkPeak = v_norm == 1
