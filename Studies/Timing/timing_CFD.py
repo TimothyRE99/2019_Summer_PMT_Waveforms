@@ -72,12 +72,13 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(prog="timing CFD",description="Applies CFD algorithm to prepare for ZCF.")
     parser.add_argument('--datadate',type = str,help = 'date when data was gathered, YYYYMMDD', default = '20190724')
     parser.add_argument('--numhead',type=int,help='number of lines to ignore for header',default = 5)
-    parser.add_argument('--subfolder',type = str,help = 'how much the rise time was altered', default = 'raw_gained')
     parser.add_argument('--samplerate',type = str,help = 'downsampled rate to analyze (1 Gsps, 500 Msps, 250 Msps, 125 Msps)',default = '1 Gsps')
     args = parser.parse_args()
 
+    subfolder_list = ['raw_gained','rise_doubled_gained','rise_quadrupled_gained','rise_octupled_gained']
+
     #cycles through each combination of n values
-    for n_box in range(1,5):
+    for n_box in range(0,5):
         if n_box == 3:
             pass
         else:
@@ -89,5 +90,6 @@ if __name__ == '__main__':
                         if n_att == 3:
                             pass
                         else:
-                            timing_CFD(args.datadate,args.numhead,args.subfolder,n_box,n_delay,n_att,args.samplerate)
+                            for i in range(len(subfolder_list)):
+                                timing_CFD(args.datadate,args.numhead,subfolder_list[i],n_box,n_delay,n_att,args.samplerate)
     #timing_CFD(args.datadate,args.numhead,args.subfolder,2,1,2,args.samplerate)
