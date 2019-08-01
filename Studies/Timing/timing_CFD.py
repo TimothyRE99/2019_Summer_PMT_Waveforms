@@ -78,7 +78,7 @@ if __name__ == '__main__':
     subfolder_list = ['raw_gained','rise_doubled_gained','rise_quadrupled_gained','rise_octupled_gained']
 
     #cycles through each combination of n values
-    for n_box in range(0,5):
+    for n_box in range(5):
         if n_box == 3:
             pass
         else:
