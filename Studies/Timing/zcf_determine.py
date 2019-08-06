@@ -41,7 +41,7 @@ def ZCF(datadate,numhead,subfolder,n_box,n_delay,n_att,samplerate):
     Nloops = len(os.listdir(filedir)) - 1       #establishes number of files to cycle through
     writename = filedir + 'ZCF_data/ZCLs.txt'   #establishes name of txt file to save to
     for i in range(Nloops):
-        print("File: %05d, NBOX: " % i + str(n_box) + ", NDELAY: " + str(n_delay) + " , NATT: " + str(n_att))    #prints name of file
+        print(subfolder + "File: %05d, NBOX: " % i + str(n_box) + ", NDELAY: " + str(n_delay) + " , NATT: " + str(n_att))    #prints name of file
         #establishes file to read and takes in data
         filename = filedir + 'D3--waveforms--%05d.txt' % i
         (t,v,_) = rw(filename,numhead)
@@ -80,4 +80,4 @@ if __name__ == '__main__':
                         else:
                             for i in range(len(subfolder_list)):
                                 ZCF(args.datadate,args.numhead,subfolder_list[i],n_box,n_delay,n_att,args.samplerate)
-    #ZCF(args.datadate,args.numhead,subfolder_list[0],2,1,2,samplerate)
+    #ZCF(args.datadate,args.numhead,subfolder_list[3],0,1,1,args.samplerate)
