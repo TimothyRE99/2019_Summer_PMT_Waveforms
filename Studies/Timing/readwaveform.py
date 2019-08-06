@@ -14,8 +14,8 @@ def read_waveform(filename,numhead):
     for _ in range(numhead):
         header.append(fin.readline())
     for line in fin:
-        x = np.append(x,float(line.split(',')[0]))
-        y = np.append(y,float(line.split(',')[1]))
+        x = np.append(x,float(str(line.split(',')[0]).strip()))
+        y = np.append(y,float(str(line.split(',')[1]).strip()))
     fin.close
     return x,y,header
 
