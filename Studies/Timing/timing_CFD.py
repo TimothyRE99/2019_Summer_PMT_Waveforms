@@ -54,7 +54,7 @@ def timing_CFD(datadate,numhead,subfolder,n_box,n_delay,n_att,samplerate):
     filedir = 'G:/data/watchman/'+datadate+'_watchman_spe/d3/' + samplerate + '/d3_' + subfolder + '_analyzed/'        #says what directory to read from
     Nloops = len(os.listdir(filedir))       #establishes number of files to cylce through
     for i in range(Nloops):
-        print("File: %05d, NBOX: " % i + str(n_box) + ", NDELAY: " + str(n_delay) + " , NATT: " + str(n_att))
+        print(subfolder+"File: %05d, NBOX: " % i + str(n_box) + ", NDELAY: " + str(n_delay) + " , NATT: " + str(n_att))
         #establishes file to read from and write to
         filename = filedir + 'D3--waveforms--%05d.txt' % i
         writename = writedir + 'D3--waveforms--%05d.txt' % i
@@ -72,7 +72,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(prog="timing CFD",description="Applies CFD algorithm to prepare for ZCF.")
     parser.add_argument('--datadate',type = str,help = 'date when data was gathered, YYYYMMDD', default = '20190724')
     parser.add_argument('--numhead',type=int,help='number of lines to ignore for header',default = 5)
-    parser.add_argument('--samplerate',type = str,help = 'downsampled rate to analyze (1 Gsps, 500 Msps, 250 Msps, 125 Msps)',default = '1 Gsps')
+    parser.add_argument('--samplerate',type = str,help = 'downsampled rate to analyze (1 Gsps, 500 Msps, 250 Msps, 125 Msps)',default = '500 Msps')
     args = parser.parse_args()
 
     subfolder_list = ['raw_gained','rise_doubled_gained','rise_quadrupled_gained','rise_octupled_gained']
