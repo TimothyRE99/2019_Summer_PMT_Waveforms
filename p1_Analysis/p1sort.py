@@ -36,7 +36,7 @@ def p1_sort(filenum,datadate,lowpass,numhead,numtaps,threshold,baseline):
 
         y_flip = -1*y2
         height = -1*(baseline+threshold)
-        peaks, _ = signal.find_peaks(y_flip, height, distance = 10)
+        peaks, _ = signal.find_peaks(y_flip, height, distance = 370)
         y_peaks = y2[peaks]
         t_peaks = t2[peaks]
 

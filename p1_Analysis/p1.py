@@ -18,7 +18,7 @@ if __name__ == '__main__':
     parser.add_argument('--fsps',type=int,help='hz, samples/s',default = 20000000000)
     parser.add_argument('--fc',type=int,help='hz, cutoff frequency',default = 250000000)
     parser.add_argument('--numtaps',type=int,help='length of filter',default = 51)
-    parser.add_argument('--j',type=int,help='starting file number',default=70143)
+    parser.add_argument('--j',type=int,help='starting file number',default=38821)
     parser.add_argument('--threshold',type = int,help='voltage threshold',default=-0.0015)
     parser.add_argument('--baseline',type = int,help='baseline voltage',default=-0.0074)
     args = parser.parse_args()
