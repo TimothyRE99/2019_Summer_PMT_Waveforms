@@ -117,9 +117,9 @@ if __name__ == '__main__':
     parser.add_argument("--fsps",type=float,help="hz, samples/s",default=20000000000.0)
     parser.add_argument("--noise",type=float,help="standard deviation of noise gaussian",default=0)
     parser.add_argument("--gain_noise",type=float,help="standard deviation of noise gaussian for gain step",default=0)
-    parser.add_argument("--gain_factor_2",type=float,help="Factor to multiply doubled by",default=3.00986332211)
-    parser.add_argument("--gain_factor_4",type=float,help="Factor to multiply quadrupled by",default=3.97945011958)
-    parser.add_argument("--gain_factor_8",type=float,help="Factor to multiply octupled by",default=7.36306539138)
+    parser.add_argument("--gain_factor_2",type=float,help="Factor to multiply doubled by",default=2.9702411538)
+    parser.add_argument("--gain_factor_4",type=float,help="Factor to multiply quadrupled by",default=3.9455513908)
+    parser.add_argument("--gain_factor_8",type=float,help="Factor to multiply octupled by",default=7.3329373547)
     args = parser.parse_args()
 
     p2(args.datadate,args.numhead,args.fsps,args.noise,args.gain_noise,args.gain_factor_2,args.gain_factor_4,args.gain_factor_8)
