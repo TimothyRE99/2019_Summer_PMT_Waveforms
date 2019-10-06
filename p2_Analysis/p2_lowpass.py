@@ -26,7 +26,7 @@ if __name__ == '__main__':
     parser.add_argument("--numhead",type=int,help='number of header lines to skip in the raw file',default=5)
     parser.add_argument("--filename",type=str,help="filename",default='g:/data/watchman/20190724_watchman_spe/d2/d2_histograms/average_quadrupled.txt')
     parser.add_argument("--writename",type=str,help="filename",default='g:/data/watchman/20190724_watchman_spe/d2/d2_histograms/average_octupled.txt')
-    parser.add_argument("--tau",type=float,help="tau value",default=3.690110404416177e-8)
+    parser.add_argument("--tau",type=float,help="tau value",default=3.690110404416177e-08)
     parser.add_argument("--fsps",type=float,help="hz, samples/s",default=20e9)
     args = parser.parse_args()
 

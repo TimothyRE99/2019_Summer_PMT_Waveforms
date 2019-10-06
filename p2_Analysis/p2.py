@@ -26,9 +26,9 @@ def gain(v,gain_noise,gain_factor):
 #applying lowpass filter and writing
 def p2(datadate,numhead,fsps,noise,gain_noise,gain_factor_2,gain_factor_4,gain_factor_8):
     #establish tau values from average waveform
-    tau_double = 1.52e-8
-    tau_quadruple = 1.05003120124805e-8
-    tau_octuple = 3.690110404416177e-8
+    tau_double = 1.4900444017760711e-08
+    tau_quadruple = 1.05003120124805e-08
+    tau_octuple = 3.690110404416177e-08
     #establish directories for reading and writing waveforms
     filedir = 'g:/data/watchman/'+datadate+'_watchman_spe/d2/d2_raw/'
     if noise == 0 and gain_noise == 0:
