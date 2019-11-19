@@ -72,7 +72,7 @@ if __name__ == '__main__':
     parser.add_argument('--numhead',type=int,help='number of lines to ignore for header',default = 5)
     parser.add_argument('--mean_noise',type=float,help='mean peak bits of noise',default = 0)
     parser.add_argument('--std_noise',type=float,help = 'standard deviation for noise in bits',default = 3.3)
-    parser.add_argument('--subfolder',type = str,help = 'how much the rise time was altered', default = 'rise_doubled_gained')
+    parser.add_argument('--subfolder',type = str,help = 'how much the rise time was altered', default = 'raw_gained')
     parser.add_argument('--new_fsps',type=float,help = 'sample rate of digitizer',default = 1000000000.0)
     parser.add_argument('--samplerate',type = str,help = 'downsampled rate to analyze (1 Gsps, 500 Msps, 250 Msps, 125 Msps)',default = '1 Gsps')
     args = parser.parse_args()
