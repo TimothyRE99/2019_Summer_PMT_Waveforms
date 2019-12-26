@@ -46,11 +46,11 @@ def downsampling(t,v,fsps,new_fsps):
 
 #reading and writing waveforms and calling other functions
 def p3_average_cycling(datadate,numhead,fsps,new_fsps,noise):
-    filedir = 'G:/Data/watchman/20190516_watchman_spe/d2/'
-    writedir1 = 'G:/Data/watchman/20190516_watchman_spe/d3/d3_averages/raw/'
-    writedir2 = 'G:/Data/watchman/20190516_watchman_spe/d3/d3_averages/rise_doubled/'
-    writedir4 = 'G:/Data/watchman/20190516_watchman_spe/d3/d3_averages/rise_quadrupled/'
-    writedir8 = 'G:/Data/watchman/20190516_watchman_spe/d3/d3_averages/rise_octupled/'
+    filedir = 'G:/Data/watchman/'+datadate+'_watchman_spe/d2/'
+    writedir1 = 'G:/Data/watchman/'+datadate+'_watchman_spe/d3/d3_averages/raw/'
+    writedir2 = 'G:/Data/watchman/'+datadate+'_watchman_spe/d3/d3_averages/rise_doubled/'
+    writedir4 = 'G:/Data/watchman/'+datadate+'_watchman_spe/d3/d3_averages/rise_quadrupled/'
+    writedir8 = 'G:/Data/watchman/'+datadate+'_watchman_spe/d3/d3_averages/rise_octupled/'
     if not os.path.exists(writedir1):
         os.makedirs(writedir1)
     if not os.path.exists(writedir2):
@@ -98,7 +98,7 @@ if __name__ == '__main__':
     parser.add_argument('--datadate',type = str,help = 'date when data was gathered, YYYYMMDD', default = '20190724')
     parser.add_argument('--numhead',type=int,help='number of lines to ignore for header',default = 1)
     parser.add_argument("--fsps",type=float,help="hz, samples/s",default=20000000000.0)
-    parser.add_argument("--new_fsps",type=float,help="hz, samples/s of new digitizer",default=250000000.0)
+    parser.add_argument("--new_fsps",type=float,help="hz, samples/s of new digitizer",default=125000000.0)
     parser.add_argument("--noise",type=float,help='bits of noise from digitizer',default=3.3)
     args = parser.parse_args()
 
