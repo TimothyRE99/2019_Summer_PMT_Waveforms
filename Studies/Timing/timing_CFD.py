@@ -47,11 +47,11 @@ def sum_wf(v_att,v_delay):
 #calls other functions
 def timing_CFD(datadate,numhead,subfolder,n_box,n_delay,n_att,samplerate):
     #establishes directory to write to
-    writedir = 'G:/data/watchman/'+datadate+'_watchman_spe/studies/timing/averages_' + samplerate + '/nbox='+str(n_box)+'/ndelay='+str(n_delay)+'/natt='+str(n_att)+'/'+subfolder+'/'
+    writedir = 'G:/data/watchman/'+datadate+'_watchman_spe/studies/timing/' + samplerate + '/nbox='+str(n_box)+'/ndelay='+str(n_delay)+'/natt='+str(n_att)+'/'+subfolder+'/'
     #creates write directory if needed
     if not os.path.exists(writedir):
         os.makedirs(writedir)
-    filedir = 'G:/data/watchman/'+datadate+'_watchman_spe/d3/' + samplerate + '/d3_averages/' + subfolder + '/'       #says what directory to read from
+    filedir = 'G:/data/watchman/'+datadate+'_watchman_spe/d3/' + samplerate + '/d3_' + subfolder + '_analyzed/'        #says what directory to read from
     Nloops = len(os.listdir(filedir))       #establishes number of files to cylce through
     for i in range(Nloops):
         print(subfolder+"File: %05d, NBOX: " % i + str(n_box) + ", NDELAY: " + str(n_delay) + " , NATT: " + str(n_att))
@@ -72,10 +72,10 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(prog="timing CFD",description="Applies CFD algorithm to prepare for ZCF.")
     parser.add_argument('--datadate',type = str,help = 'date when data was gathered, YYYYMMDD', default = '20190724')
     parser.add_argument('--numhead',type=int,help='number of lines to ignore for header',default = 5)
-    parser.add_argument('--samplerate',type = str,help = 'downsampled rate to analyze (1 Gsps, 500 Msps, 250 Msps, 125 Msps)',default = '500 Msps')
+    parser.add_argument('--samplerate',type = str,help = 'downsampled rate to analyze (1 Gsps, 500 Msps, 250 Msps, 125 Msps)',default = '125 Msps')
     args = parser.parse_args()
 
-    subfolder_list = ['raw','rise_doubled','rise_quadrupled','rise_octupled']
+    subfolder_list = ['raw_gained','rise_doubled_gained','rise_quadrupled_gained','rise_octupled_gained']
 
     #cycles through each combination of n values
     for n_box in range(5):
