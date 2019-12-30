@@ -35,7 +35,7 @@ def zc_locator(t,v):
 #running through CFD files to generate txt file to save ZCLs
 def ZCF(datadate,numhead,subfolder,n_box,n_delay,n_att,samplerate):
     #establishes file directory to read from and creates save directory if necessary
-    filedir = 'G:/data/watchman/'+datadate+'_watchman_spe/studies/timing/averages_' + samplerate + '/nbox='+str(n_box)+'/ndelay='+str(n_delay)+'/natt='+str(n_att)+'/'+subfolder+'/'
+    filedir = 'G:/data/watchman/'+datadate+'_watchman_spe/studies/timing/' + samplerate + '/nbox='+str(n_box)+'/ndelay='+str(n_delay)+'/natt='+str(n_att)+'/'+subfolder+'/'
     if not os.path.exists(filedir + 'ZCF_data/'):
         os.makedirs(filedir + 'ZCF_data/')
     Nloops = len(os.listdir(filedir)) - 1       #establishes number of files to cycle through
@@ -50,8 +50,8 @@ def ZCF(datadate,numhead,subfolder,n_box,n_delay,n_att,samplerate):
     #runs through process to read, create, and display histogram plot
     (histo_mean,histo_std) = gh(writename)
     savename = subfolder + "/zero_crossing_time_nbox=" + str(n_box) + "_ndelay=" + str(n_delay) + "_natt=" + str(n_att)
-    if not os.path.exists('G:/data/watchman/'+datadate+'_watchman_spe/studies/timing/averages_' + samplerate + '/histogram_images/' + subfolder):
-        os.makedirs('G:/data/watchman/'+datadate+'_watchman_spe/studies/timing/averages_' + samplerate + '/histogram_images/' + subfolder + '/')
+    if not os.path.exists('G:/data/watchman/'+datadate+'_watchman_spe/studies/timing/' + samplerate + '/histogram_images/' + subfolder):
+        os.makedirs('G:/data/watchman/'+datadate+'_watchman_spe/studies/timing/' + samplerate + '/histogram_images/' + subfolder + '/')
     rh(writename,"Seconds","Histogram of Zero Crossing Times",savename,datadate,histo_mean,histo_std,samplerate)
 
 #main function
@@ -60,10 +60,10 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(prog="timing CFD",description="Applies CFD algorithm to prepare for ZCF.")
     parser.add_argument('--datadate',type = str,help = 'date when data was gathered, YYYYMMDD', default = '20190724')
     parser.add_argument('--numhead',type=int,help='number of lines to ignore for header',default = 5)
-    parser.add_argument('--samplerate',type = str,help = 'downsampled rate to analyze (1 Gsps, 500 Msps, 250 Msps, 125 Msps)',default = '250 Msps')
+    parser.add_argument('--samplerate',type = str,help = 'downsampled rate to analyze (1 Gsps, 500 Msps, 250 Msps, 125 Msps)',default = '1 Gsps')
     args = parser.parse_args()
 
-    subfolder_list = ['raw','rise_doubled','rise_quadrupled','rise_octupled']
+    subfolder_list = ['raw_gained','rise_doubled_gained','rise_quadrupled_gained','rise_octupled_gained']
 
     #cycles through each combination of n values
     for n_box in range(5):

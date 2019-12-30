@@ -40,7 +40,7 @@ def read_histogram(filename, x_label, title, savename, datadate, histo_mean, his
     plt.pause(2)
     plt.close()
     #finalizing plot saving
-    savedir = 'G:/data/watchman/'+datadate+'_watchman_spe/studies/timing/averages_' + samplerate + '/histogram_images/'
+    savedir = 'G:/data/watchman/'+datadate+'_watchman_spe/studies/timing/' + samplerate + '/histogram_images/'
     fig.savefig(savedir+savename+'_hist.png',dpi = 500)
 
 #For testing purposes
