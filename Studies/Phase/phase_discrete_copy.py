@@ -33,7 +33,7 @@ def downsampling(t,v,fsps,new_fsps,start_index):
     return t_new,v_new
 
 #reading and writing waveforms and calling other functions
-def p3(noise_filter,noise,datadate,numhead,fsps,new_fsps,gain_noise,gain_factor_2,gain_factor_4,gain_factor_8,start_index):
+def p3(noise_filter,noise,datadate,numhead,fsps,new_fsps,gain_noise,gain_factor_2,gain_factor_4,gain_factor_8,start_index,steps):
     #establishing directory names
     if new_fsps == 1000000000:
         sample_rate = '1 Gsps'
@@ -108,7 +108,7 @@ def p3(noise_filter,noise,datadate,numhead,fsps,new_fsps,gain_noise,gain_factor_
         os.makedirs(writedir8)
     Nloops = len(os.listdir(filedir2))      #establishing how many files to cycle through
     for i in range(Nloops):
-        print('File: %05d' % i)             #printing number of file currently being processed
+        print('%s/%s, File: %05d' % (start_index + 1,steps,i))             #printing number of file currently being processed
         #establishing read and write names
         filename1 = filedir1 + 'D2--waveforms--%05d.txt' % i
         filename2 = filedir2 + 'D2--waveforms--%05d.txt' % i
@@ -159,4 +159,4 @@ if __name__ == '__main__':
         steps = int(args.fsps/new_fsps[i] + 0.5)
         for j in range(steps):
             start_index = j
-            p3(args.noise_filter,args.noise,args.datadate,args.numhead,args.fsps,new_fsps[i],args.gain_noise,args.gain_factor_2,args.gain_factor_4,args.gain_factor_8,start_index)
+            p3(args.noise_filter,args.noise,args.datadate,args.numhead,args.fsps,new_fsps[i],args.gain_noise,args.gain_factor_2,args.gain_factor_4,args.gain_factor_8,start_index,steps)
