@@ -154,7 +154,7 @@ if __name__ == '__main__':
     parser.add_argument("--gain_factor_8",type=float,help="Factor to multiply octupled by",default=7.3329373547)
     args = parser.parse_args()
 
-    new_fsps = np.array({1000000000,500000000,250000000})
+    new_fsps = np.array([1000000000,500000000,250000000])
     for i in range(len(new_fsps)):
         steps = int(args.fsps/new_fsps[i] + 0.5)
         for j in range(steps):
