@@ -71,6 +71,9 @@ def phase_hist_gen(samplerate,samplerate_name,shaping,datadate,n_box,n_delay,n_a
     phase_array = np.arange(0,maxphase)
     x = np.array([])
     y = np.array([])
+    ybin = 1e-8
+    y_bins = np.linspace(-ybin,ybin,num=200,endpoint = True)
+    x_bins = np.array([])
     for i in range(len(phase_array)):
         filedir = 'G:/data/watchman/'+str(datadate)+'_watchman_spe/studies/phase/'+samplerate_name+'/phase='+str(phase_array[i])+'/phase_'+shaping+'/'
         Nloops = len(os.listdir(filedir))
@@ -88,8 +91,9 @@ def phase_hist_gen(samplerate,samplerate_name,shaping,datadate,n_box,n_delay,n_a
             y_j = np.append(y_j,t_cross)
         y_j = y_j - np.median(y_j)
         y = np.concatenate((y,y_j))
+        x_bins = np.append(x_bins,i-0.5)
     fig,ax = plt.subplots()
-    h = ax.hist2d(x,y,bins = [20,200],norm = LogNorm())
+    h = ax.hist2d(x,y,bins = [x_bins,y_bins],norm = LogNorm())
     plt.colorbar(h[3],ax = ax)
     ax.set_title('Timing Resolution vs. Phase')
     ax.set_xlabel('Phase (Index #)')
