@@ -79,7 +79,7 @@ def phase_hist_gen(samplerate,samplerate_name,shaping,datadate,n_box,n_delay,n_a
         Nloops = len(os.listdir(filedir))
         y_j = np.array([])
         for j in range(Nloops):
-            print(samplerate_name+','+str(n_box)+','+str(n_delay)+','+str(n_att)+','+str(i)+','+str(j))
+            print(samplerate_name+';'+str(n_box)+','+str(n_delay)+','+str(n_att)+';'+str(i)+','+str(j))
             filename = filename = filedir + 'Phase--waveforms--%05d.txt' % j
             (t,v,_) = rw(filename,numhead)
             t_avg,v_avg = boxcar_wf(t,v,n_box)
@@ -110,7 +110,6 @@ def phase_hist_gen(samplerate,samplerate_name,shaping,datadate,n_box,n_delay,n_a
     filename = samplerate_name+'_'+shaping+'_nbox='+str(n_box)+'_ndel='+str(n_delay)+'_natt='+str(n_att)+'.png'
     savename = savedir + filename
     fig.savefig(savename,dpi = 500)
-    plt.pause(2)
     plt.close()
     return()
 
@@ -127,7 +126,7 @@ if __name__ == '__main__':
     median_shift_list = np.array([True,False])
 
     for i in range(len(samplerate_list)):
-        samplerate = samplerate[i]
+        samplerate = samplerate_list[i]
         if samplerate == 1000000000:
             samplerate_name = '1 Gsps'
         elif samplerate == 500000000:
