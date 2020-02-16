@@ -121,7 +121,7 @@ if __name__ == '__main__':
     parser.add_argument('--numhead',type=int,help='number of lines to ignore for header',default = 5)
     args = parser.parse_args()
 
-    samplerate_list = np.array([1000000000,500000000,250000000000])
+    samplerate_list = np.array([1000000000])
     shaping_list = np.array(['raw_gained_analyzed','rise_doubled_gained_analyzed','rise_quadrupled_gained_analyzed','rise_octupled_gained_analyzed'])
     median_shift_list = np.array([True,False])
 
@@ -137,7 +137,7 @@ if __name__ == '__main__':
             samplerate_name = 'trash'
         for j in range(len(shaping_list)):
             shaping = shaping_list[j]
-            for n_box in range(5):
+            for n_box in range(1,5):
                 if n_box == 3:
                     pass
                 else:
