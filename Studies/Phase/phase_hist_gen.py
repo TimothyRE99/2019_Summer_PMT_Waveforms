@@ -99,7 +99,7 @@ def phase_hist_gen(samplerate,samplerate_name,shaping,datadate,n_box,n_delay,n_a
     ax.set_xlabel('Phase (Index #)')
     ax.set_ylabel('Timing Resolution (Seconds)')
     plt.get_current_fig_manager().window.showMaximized()
-    plt.show(Block = False)
+    plt.show(block = False)
     savedir = 'G:/data/watchman/'+str(datadate)+'_watchman_spe/studies/phase/Histograms/'
     if not os.path.exists(savedir):
         os.makedirs(savedir)
