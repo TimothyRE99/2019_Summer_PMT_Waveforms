@@ -113,3 +113,6 @@ def phase_hist_gen(samplerate,samplerate_name,shaping,datadate,n_box,n_delay,n_a
 phase_hist_gen(1000000000,'1 Gsps','raw_gained_analyzed',20190724,2,4,2,5)
 phase_hist_gen(500000000,'500 Msps','raw_gained_analyzed',20190724,2,2,2,5)
 phase_hist_gen(250000000,'250 Msps','raw_gained_analyzed',20190724,2,1,2,5)
+phase_hist_gen(1000000000,'1 Gsps','raw_gained_analyzed',20190724,0,1,4,5)
+phase_hist_gen(500000000,'500 Msps','raw_gained_analyzed',20190724,0,16,4,5)
+phase_hist_gen(250000000,'250 Msps','raw_gained_analyzed',20190724,0,16,4,5)
