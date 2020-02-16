@@ -71,7 +71,7 @@ def phase_hist_gen(samplerate,samplerate_name,shaping,datadate,n_box,n_delay,n_a
     phase_array = np.arange(0,maxphase)
     x = np.array([])
     y = np.array([])
-    ybin = 1e-8
+    ybin = 2e-8
     y_bins = np.linspace(-ybin,ybin,num=200,endpoint = True)
     x_bins = np.array([])
     for i in range(len(phase_array)):
@@ -80,7 +80,7 @@ def phase_hist_gen(samplerate,samplerate_name,shaping,datadate,n_box,n_delay,n_a
         y_j = np.array([])
         for j in range(Nloops):
             print(str(i)+','+str(j))
-            filename = filename = filedir + 'Phase--waveforms--%05d.txt' % i
+            filename = filename = filedir + 'Phase--waveforms--%05d.txt' % j
             (t,v,_) = rw(filename,numhead)
             t_avg,v_avg = boxcar_wf(t,v,n_box)
             v_delay = delay_wf(v_avg,n_delay)
