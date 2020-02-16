@@ -93,7 +93,7 @@ def phase_hist_gen(samplerate,samplerate_name,shaping,datadate,n_box,n_delay,n_a
         y = np.concatenate((y,y_j))
         x_bins = np.append(x_bins,i-0.5)
     fig,ax = plt.subplots()
-    h = ax.hist2d(x,y,bins = [x_bins,y_bins],norm = LogNorm())
+    h = ax.hist2d(x,y,bins = [x_bins,y_bins])
     plt.colorbar(h[3],ax = ax)
     ax.set_title('Timing Resolution vs. Phase')
     ax.set_xlabel('Phase (Index #)')
