@@ -79,7 +79,7 @@ def phase_hist_gen(samplerate,samplerate_name,shaping,datadate,n_box,n_delay,n_a
         Nloops = len(os.listdir(filedir))
         y_j = np.array([])
         for j in range(Nloops):
-            print(str(i)+','+str(j))
+            print(samplerate_name+','+str(n_box)+','+str(n_delay)+','+str(n_att)+','+str(i)+','+str(j))
             filename = filename = filedir + 'Phase--waveforms--%05d.txt' % j
             (t,v,_) = rw(filename,numhead)
             t_avg,v_avg = boxcar_wf(t,v,n_box)
