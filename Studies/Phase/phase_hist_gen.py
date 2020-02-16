@@ -66,7 +66,7 @@ def zc_locator(t,v):
     t_cross = t_bef + t_pass
     return (t_cross,index_Cross,index_Peak)
 
-def phase_hist_gen(samplerate,samplerate_name,shaping,datadate,n_box,n_delay,n_att,numhead):
+def phase_hist_gen(samplerate,samplerate_name,shaping,datadate,n_box,n_delay,n_att,numhead,median_shift):
     maxphase = int(20000000000/samplerate + 0.5)
     phase_array = np.arange(0,maxphase)
     x = np.array([])
@@ -89,7 +89,11 @@ def phase_hist_gen(samplerate,samplerate_name,shaping,datadate,n_box,n_delay,n_a
             t_cross,_,_ = zc_locator(t_avg,v_sum)
             x = np.append(x,i)
             y_j = np.append(y_j,t_cross)
-        y_j = y_j - np.median(y_j)
+        if median_shift:
+            y_j = y_j - np.median(y_j)
+            medianshifted = 'median_shifted/'
+        else:
+            medianshifted = 'non_median_shifted/'
         y = np.concatenate((y,y_j))
         x_bins = np.append(x_bins,i-0.5)
     fig,ax = plt.subplots()
@@ -100,7 +104,7 @@ def phase_hist_gen(samplerate,samplerate_name,shaping,datadate,n_box,n_delay,n_a
     ax.set_ylabel('Timing Resolution (Seconds)')
     plt.get_current_fig_manager().window.showMaximized()
     plt.show(block = False)
-    savedir = 'G:/data/watchman/'+str(datadate)+'_watchman_spe/studies/phase/Histograms/'
+    savedir = 'G:/data/watchman/'+str(datadate)+'_watchman_spe/studies/phase/Histograms/'+medianshifted
     if not os.path.exists(savedir):
         os.makedirs(savedir)
     filename = samplerate_name+'_'+shaping+'_nbox='+str(n_box)+'_ndel='+str(n_delay)+'_natt='+str(n_att)+'.png'
@@ -110,9 +114,42 @@ def phase_hist_gen(samplerate,samplerate_name,shaping,datadate,n_box,n_delay,n_a
     plt.close()
     return()
 
-phase_hist_gen(1000000000,'1 Gsps','raw_gained_analyzed',20190724,2,4,2,5)
-phase_hist_gen(500000000,'500 Msps','raw_gained_analyzed',20190724,2,2,2,5)
-phase_hist_gen(250000000,'250 Msps','raw_gained_analyzed',20190724,2,1,2,5)
-phase_hist_gen(1000000000,'1 Gsps','raw_gained_analyzed',20190724,0,1,4,5)
-phase_hist_gen(500000000,'500 Msps','raw_gained_analyzed',20190724,0,16,4,5)
-phase_hist_gen(250000000,'250 Msps','raw_gained_analyzed',20190724,0,16,4,5)
+#main function
+if __name__ == '__main__':
+    import argparse
+    parser = argparse.ArgumentParser(prog="phase_hist_gen",description="Generates 2D Histograms of timing resolution vs. phase.")
+    parser.add_argument('--datadate',type = str,help = 'date when data was gathered, YYYYMMDD', default = '20190724')
+    parser.add_argument('--numhead',type=int,help='number of lines to ignore for header',default = 5)
+    args = parser.parse_args()
+
+    samplerate_list = np.array([1000000000,500000000,250000000000])
+    shaping_list = np.array(['raw_gained_analyzed','rise_doubled_gained_analyzed','rise_quadrupled_gained_analyzed','rise_octupled_gained_analyzed'])
+    median_shift_list = np.array([True,False])
+
+    for i in range(len(samplerate_list)):
+        samplerate = samplerate[i]
+        if samplerate == 1000000000:
+            samplerate_name = '1 Gsps'
+        elif samplerate == 500000000:
+            samplerate_name = '500 Msps'
+        elif samplerate == 250000000:
+            samplerate_name = '250 Msps'
+        else:
+            samplerate_name = 'trash'
+        for j in range(len(shaping_list)):
+            shaping = shaping_list[j]
+            for n_box in range(5):
+                if n_box == 3:
+                    pass
+                else:
+                    for n_delay in range(1,17):
+                        if n_delay != 1 and n_delay != 2 and n_delay != 4 and n_delay != 8 and n_delay !=  16:
+                            pass
+                        else:
+                            for n_att in range(1,5):
+                                if n_att == 3:
+                                    pass
+                                else:
+                                    for k in range(len(median_shift_list)):
+                                        median_shift = median_shift_list[k]
+                                        phase_hist_gen(samplerate,samplerate_name,shaping,args.datadate,n_box,n_delay,n_att,args.numhead,median_shift)
