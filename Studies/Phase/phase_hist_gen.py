@@ -125,8 +125,7 @@ if __name__ == '__main__':
     shaping_list = np.array(['raw_gained_analyzed','rise_doubled_gained_analyzed','rise_quadrupled_gained_analyzed','rise_octupled_gained_analyzed'])
     median_shift_list = np.array([True,False])
 
-    for i in range(len(samplerate_list)):
-        samplerate = samplerate_list[i]
+    for samplerate in samplerate_list:
         if samplerate == 1000000000:
             samplerate_name = '1 Gsps'
         elif samplerate == 500000000:
@@ -135,8 +134,7 @@ if __name__ == '__main__':
             samplerate_name = '250 Msps'
         else:
             samplerate_name = 'trash'
-        for j in range(len(shaping_list)):
-            shaping = shaping_list[j]
+        for shaping in shaping_list:
             for n_box in range(1,5):
                 if n_box == 3:
                     pass
@@ -149,6 +147,5 @@ if __name__ == '__main__':
                                 if n_att == 3:
                                     pass
                                 else:
-                                    for k in range(len(median_shift_list)):
-                                        median_shift = median_shift_list[k]
+                                    for median_shift in median_shift_list:
                                         phase_hist_gen(samplerate,samplerate_name,shaping,args.datadate,n_box,n_delay,n_att,args.numhead,median_shift)
