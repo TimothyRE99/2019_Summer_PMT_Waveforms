@@ -66,13 +66,12 @@ def zc_locator(t,v):
     t_cross = t_bef + t_pass
     return (t_cross,index_Cross,index_Peak)
 
-def phase_hist_gen(samplerate,samplerate_name,shaping,datadate,n_box,n_delay,n_att,numhead,median_shift):
+def phase_hist_gen(samplerate,samplerate_name,shaping,datadate,n_box,n_delay,n_att,numhead):
+    phase_time = 1/20000000000
     maxphase = int(20000000000/samplerate + 0.5)
     phase_array = np.arange(0,maxphase)
     x = np.array([])
     y = np.array([])
-    ybin = 2e-8
-    y_bins = np.linspace(-ybin,ybin,num=200,endpoint = True)
     x_bins = np.array([])
     for i in range(len(phase_array)):
         filedir = 'G:/data/watchman/'+str(datadate)+'_watchman_spe/studies/phase/'+samplerate_name+'/phase='+str(phase_array[i])+'/phase_'+shaping+'/'
@@ -87,24 +86,22 @@ def phase_hist_gen(samplerate,samplerate_name,shaping,datadate,n_box,n_delay,n_a
             v_att = attenuate_wf(v_avg,n_att)
             v_sum = sum_wf(v_att,v_delay)
             t_cross,_,_ = zc_locator(t_avg,v_sum)
-            x = np.append(x,i)
+            x = np.append(x,i*phase_time)
             y_j = np.append(y_j,t_cross)
-        if median_shift:
-            y_j = y_j - np.median(y_j)
-            medianshifted = 'median_shifted/'
-        else:
-            medianshifted = 'non_median_shifted/'
         y = np.concatenate((y,y_j))
-        x_bins = np.append(x_bins,i-0.5)
+        x_bins = np.append(x_bins,i*phase_time)
+    median = np.median(y)
+    ybin = 1/(2*samplerate)
+    y_bins = np.linspace(median-ybin,median+ybin,num=maxphase,endpoint = True)
     fig,ax = plt.subplots()
     h = ax.hist2d(x,y,bins = [x_bins,y_bins])
     plt.colorbar(h[3],ax = ax)
-    ax.set_title('Timing Resolution vs. Phase')
-    ax.set_xlabel('Phase (Index #)')
-    ax.set_ylabel('Timing Resolution (Seconds)')
+    ax.set_title('Measured vs. True Timing')
+    ax.set_xlabel('True Timing (Seconds)')
+    ax.set_ylabel('Measured Timing (Seconds)')
     plt.get_current_fig_manager().window.showMaximized()
     plt.show(block = False)
-    savedir = 'G:/data/watchman/'+str(datadate)+'_watchman_spe/studies/phase/Histograms/'+medianshifted
+    savedir = 'G:/data/watchman/'+str(datadate)+'_watchman_spe/studies/phase/Histograms/'
     if not os.path.exists(savedir):
         os.makedirs(savedir)
     filename = samplerate_name+'_'+shaping+'_nbox='+str(n_box)+'_ndel='+str(n_delay)+'_natt='+str(n_att)+'.png'
@@ -121,31 +118,16 @@ if __name__ == '__main__':
     parser.add_argument('--numhead',type=int,help='number of lines to ignore for header',default = 5)
     args = parser.parse_args()
 
-    samplerate_list = np.array([1000000000])
-    shaping_list = np.array(['raw_gained_analyzed','rise_doubled_gained_analyzed','rise_quadrupled_gained_analyzed','rise_octupled_gained_analyzed'])
-    median_shift_list = np.array([True,False])
-
-    for samplerate in samplerate_list:
-        if samplerate == 1000000000:
-            samplerate_name = '1 Gsps'
-        elif samplerate == 500000000:
-            samplerate_name = '500 Msps'
-        elif samplerate == 250000000:
-            samplerate_name = '250 Msps'
+    for n_box in range(5):
+        if n_box == 3:
+            pass
         else:
-            samplerate_name = 'trash'
-        for shaping in shaping_list:
-            for n_box in range(1,5):
-                if n_box == 3:
+            for n_delay in range(1,17):
+                if n_delay != 1 and n_delay != 2 and n_delay != 4 and n_delay != 8 and n_delay !=  16:
                     pass
                 else:
-                    for n_delay in range(1,17):
-                        if n_delay != 1 and n_delay != 2 and n_delay != 4 and n_delay != 8 and n_delay !=  16:
+                    for n_att in range(1,5):
+                        if n_att == 3:
                             pass
                         else:
-                            for n_att in range(1,5):
-                                if n_att == 3:
-                                    pass
-                                else:
-                                    for median_shift in median_shift_list:
-                                        phase_hist_gen(samplerate,samplerate_name,shaping,args.datadate,n_box,n_delay,n_att,args.numhead,median_shift)
+                            phase_hist_gen(250000000,'250 Msps','raw_gained_analyzed',args.datadate,n_box,n_delay,n_att,args.numhead)

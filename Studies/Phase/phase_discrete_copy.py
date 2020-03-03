@@ -124,10 +124,10 @@ def p3(noise_filter,noise,datadate,numhead,fsps,new_fsps,gain_noise,gain_factor_
         (t4,v4,header4) = rw(filename4,numhead)
         (t8,v8,header8) = rw(filename8,numhead)
         #downsampling waveform values
-        (t_down_1,v_down_1) = downsampling(t1,v1,fsps,new_fsps,start_index)
-        (t_down_2,v_down_2) = downsampling(t2,v2,fsps,new_fsps,start_index)
-        (t_down_4,v_down_4) = downsampling(t4,v4,fsps,new_fsps,start_index)
-        (t_down_8,v_down_8) = downsampling(t8,v8,fsps,new_fsps,start_index)
+        (t_down_1,v_down_1) = downsampling(t1-start_index*20000000000,v1,fsps,new_fsps,start_index)
+        (t_down_2,v_down_2) = downsampling(t2-start_index*20000000000,v2,fsps,new_fsps,start_index)
+        (t_down_4,v_down_4) = downsampling(t4-start_index*20000000000,v4,fsps,new_fsps,start_index)
+        (t_down_8,v_down_8) = downsampling(t8-start_index*20000000000,v8,fsps,new_fsps,start_index)
         #digitizing waveform values
         v_digit_1 = digitize(v_down_1,noise)
         v_digit_2 = digitize(v_down_2,noise)
@@ -154,7 +154,7 @@ if __name__ == '__main__':
     parser.add_argument("--gain_factor_8",type=float,help="Factor to multiply octupled by",default=7.3329373547)
     args = parser.parse_args()
 
-    new_fsps = np.array([1000000000,500000000,250000000])
+    new_fsps = np.array([250000000])
     for i in range(len(new_fsps)):
         steps = int(args.fsps/new_fsps[i] + 0.5)
         for j in range(steps):
