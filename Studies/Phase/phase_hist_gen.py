@@ -125,7 +125,7 @@ def phase_hist_gen(samplerate,samplerate_name,shaping,datadate,n_box,n_delay,n_a
     ax.set_ylabel('Measured Timing (Seconds)')
     plt.get_current_fig_manager().window.showMaximized()
     plt.show(block = False)
-    savedir = 'G:/data/watchman/'+str(datadate)+'_watchman_spe/studies/phase/Histograms/'
+    savedir = 'G:/data/watchman/'+str(datadate)+'_watchman_spe/studies/phase/' + samplerate_name + '/Histograms/'
     if not os.path.exists(savedir):
         os.makedirs(savedir)
     filename = samplerate_name+'_'+shaping+'_nbox='+str(n_box)+'_ndel='+str(n_delay)+'_natt='+str(n_att)+'.png'
@@ -142,7 +142,7 @@ def phase_hist_gen(samplerate,samplerate_name,shaping,datadate,n_box,n_delay,n_a
     ax.set_ylabel('Timing Corrections (Seconds)')
     plt.get_current_fig_manager().window.showMaximized()
     plt.show(block = False)
-    savedir = 'G:/data/watchman/'+str(datadate)+'_watchman_spe/studies/phase/Histograms/'
+    savedir = 'G:/data/watchman/'+str(datadate)+'_watchman_spe/studies/phase/' + samplerate_name + '/Histograms/'
     if not os.path.exists(savedir):
         os.makedirs(savedir)
     filename = samplerate_name+'_'+shaping+'_nbox='+str(n_box)+'_ndel='+str(n_delay)+'_natt='+str(n_att)+'_corrections.png'
@@ -190,7 +190,7 @@ def phase_hist_gen(samplerate,samplerate_name,shaping,datadate,n_box,n_delay,n_a
     ax.set_ylabel('Measured Timing (Seconds)')
     plt.get_current_fig_manager().window.showMaximized()
     plt.show(block = False)
-    savedir = 'G:/data/watchman/'+str(datadate)+'_watchman_spe/studies/phase/Histograms/'
+    savedir = 'G:/data/watchman/'+str(datadate)+'_watchman_spe/studies/phase/' + samplerate_name + '/Histograms/'
     if not os.path.exists(savedir):
         os.makedirs(savedir)
     filename = 'corrected '+samplerate_name+'_'+shaping+'_nbox='+str(n_box)+'_ndel='+str(n_delay)+'_natt='+str(n_att)+'.png'
@@ -207,7 +207,7 @@ def phase_hist_gen(samplerate,samplerate_name,shaping,datadate,n_box,n_delay,n_a
     ax.set_ylabel('Timing Corrections (Seconds)')
     plt.get_current_fig_manager().window.showMaximized()
     plt.show(block = False)
-    savedir = 'G:/data/watchman/'+str(datadate)+'_watchman_spe/studies/phase/Histograms/'
+    savedir = 'G:/data/watchman/'+str(datadate)+'_watchman_spe/studies/phase/' + samplerate_name + '/Histograms/'
     if not os.path.exists(savedir):
         os.makedirs(savedir)
     filename = 'corrected '+samplerate_name+'_'+shaping+'_nbox='+str(n_box)+'_ndel='+str(n_delay)+'_natt='+str(n_att)+'_corrections.png'
@@ -225,4 +225,4 @@ if __name__ == '__main__':
     parser.add_argument('--numhead',type=int,help='number of lines to ignore for header',default = 5)
     args = parser.parse_args()
 
-    phase_hist_gen(250000000,'250 Msps','raw_gained_analyzed',args.datadate,2,1,2,args.numhead)
+    phase_hist_gen(500000000,'500 Msps','raw_gained_analyzed',args.datadate,2,2,2,args.numhead)
