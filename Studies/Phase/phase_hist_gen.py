@@ -106,6 +106,7 @@ def phase_hist_gen(samplerate,samplerate_name,shaping,datadate,n_box,n_delay,n_a
     correction = correction + median_array[0]
     correction_median_array = np.asarray(correction_median_array)
     correction_median_array = correction_median_array + median_array[0]
+    median_value = median_array[0]
     median_array = np.asarray(median_array)
     median_array = median_array - median_array[0]
     ybin = 1/(2*samplerate)
@@ -167,7 +168,7 @@ def phase_hist_gen(samplerate,samplerate_name,shaping,datadate,n_box,n_delay,n_a
             v_att = attenuate_wf(v_avg,n_att)
             v_sum = sum_wf(v_att,v_delay)
             t_cross,_,_ = zc_locator(t_avg,v_sum)
-            t_corrected = t_cross - median_array[0] + correction_median_array[i]
+            t_corrected = t_cross - median_value + correction_median_array[i]
             y_corrected_j.append(t_corrected)
             corrected_correction = -1*i*phase_time - t_corrected
             corrected_corrections_j.append(corrected_correction)
