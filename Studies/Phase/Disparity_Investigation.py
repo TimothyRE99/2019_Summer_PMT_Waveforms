@@ -134,6 +134,10 @@ def disparity_investigation(samplerate,samplerate_name,shaping,datadate,n_box,n_
 
         corrected_difference_list = np.asarray(corrected_difference_list)
 
+        set_mean = np.mean(corrected_difference_list)
+        set_std = np.std(corrected_difference_list)
+        set_mean = '%.5g' % set_mean
+        set_std = '%.5g' % set_std
         histo_mean,histo_std = gauss_histogram(corrected_difference_list)
         corrected_difference_list = corrected_difference_list[(corrected_difference_list >= histo_mean - 4*histo_std) & (corrected_difference_list <= histo_mean + 4*histo_std)]
         histo_data, bins_data = np.histogram(corrected_difference_list, bins = 200)
@@ -146,14 +150,20 @@ def disparity_investigation(samplerate,samplerate_name,shaping,datadate,n_box,n_
         gauss_std = '%s' % float('%.5g' % popt[2])
         #establishing 5 significant figure versions of the mean and std from curve fit
         x_values = np.linspace(popt[1] - 1.5*popt[2], popt[1] + 1.5*popt[2], 100000)    #creating 100,000 x values to map curvefit gaussian to
-        plt.rcParams.update({'font.size': 14})
-        plt.bar(binscenters, histo_data, width=binwidth)        #plotting histogram
-        plt.plot(x_values, fit_function(x_values, *popt), color='darkorange')   #plotting curve fit
-        plt.xlabel('True Timing - Recovered Timing')
-        plt.ylabel('Count')
-        plt.title('Corrected Timings for Phase=%d' %i +'\nGaussian Fit Values:\nMean = '+gauss_mean+' seconds\nStandard Deviation = '+gauss_std+' seconds')
+        fig,ax = plt.subplots()
+        ax.bar(binscenters, histo_data, width=binwidth)        #plotting histogram
+        ax.plot(x_values, fit_function(x_values, *popt), color='darkorange')   #plotting curve fit
+        ax.set_xlabel('True Timing - Recovered Timing')
+        ax.set_ylabel('Count')
+        ax.set_title('Corrected Timings for Phase=%d' %i +'\nGaussian Fit Values:\nMean = '+gauss_mean+' seconds, '+set_mean+'seconds\nStandard Deviation = '+gauss_std+' seconds, '+set_std+'seconds', fontdict={'fontsize': 14})
         plt.get_current_fig_manager().window.showMaximized()
-        plt.show()
+        plt.show(block = False)
+        plt.pause(1)
+        filedir = 'G:/data/watchman/20190724_watchman_spe/studies/disparity/'
+        filename = 'Phase_%d.png' % i
+        savename = filedir + filename
+        fig.savefig(savename,dpi = 500)
+        plt.close()
 
 #main function
 if __name__ == '__main__':

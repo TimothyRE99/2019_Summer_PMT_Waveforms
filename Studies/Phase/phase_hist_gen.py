@@ -77,7 +77,7 @@ def phase_hist_gen(samplerate,samplerate_name,shaping,datadate,n_box,n_delay,n_a
     correction = []
     correction_median_array = []
     for i in range(len(phase_array)):
-        filedir = 'G:/data/watchman/'+str(datadate)+'_watchman_spe/studies/phase/'+samplerate_name+'/phase='+str(phase_array[i])+'/phase_'+shaping+'/'
+        filedir = 'G:/data/watchman/'+str(datadate)+'_watchman_spe/studies/phase/'+samplerate_name+'/averages/phase='+str(phase_array[i])+'/phase_'+shaping+'/'
         Nloops = len(os.listdir(filedir))
         y_j = []
         x_j = []
@@ -116,36 +116,36 @@ def phase_hist_gen(samplerate,samplerate_name,shaping,datadate,n_box,n_delay,n_a
     x_bins = np.flip(x_bins)
 
     fig,ax = plt.subplots()
-    h = ax.hist2d(x,y,bins = [x_bins,y_bins])
+    h = ax.hist2d(x,y,bins = [x_bins,y_bins],norm = LogNorm())
     plt.colorbar(h[3],ax = ax)
-    ax.plot(np.flip(x_bins)-0.5*phase_time,median_array,c = 'Green')
-    ax.plot(np.flip(x_bins)-0.5*phase_time,np.flip(x_bins)-0.5*phase_time,c = 'Green',ls = '--')
+    #ax.plot(np.flip(x_bins)-0.5*phase_time,median_array,c = 'Green')
+    #ax.plot(np.flip(x_bins)-0.5*phase_time,np.flip(x_bins)-0.5*phase_time,c = 'Green',ls = '--')
     ax.set_title('Measured vs. True Timing')
     ax.set_xlabel('True Timing (Seconds)')
     ax.set_ylabel('Measured Timing (Seconds)')
     plt.get_current_fig_manager().window.showMaximized()
     plt.show(block = False)
-    savedir = 'G:/data/watchman/'+str(datadate)+'_watchman_spe/studies/phase/' + samplerate_name + '/Histograms/'
+    savedir = 'G:/data/watchman/'+str(datadate)+'_watchman_spe/studies/phase/' + samplerate_name + '/Histograms/averages/'
     if not os.path.exists(savedir):
         os.makedirs(savedir)
-    filename = samplerate_name+'_'+shaping+'_nbox='+str(n_box)+'_ndel='+str(n_delay)+'_natt='+str(n_att)+'.png'
+    filename = samplerate_name+'_'+shaping+'_nbox='+str(n_box)+'_ndel='+str(n_delay)+'_natt='+str(n_att)+'_log.png'
     savename = savedir + filename
     fig.savefig(savename,dpi = 500)
     plt.close()
 
     fig,ax = plt.subplots()
-    h = ax.hist2d(x,correction,bins = [x_bins,y_bins_corrections])
+    h = ax.hist2d(x,correction,bins = [x_bins,y_bins_corrections],norm = LogNorm())
     plt.colorbar(h[3],ax = ax)
-    ax.plot(np.flip(x_bins)-0.5*phase_time,correction_median_array,c = 'Green')
+    #ax.plot(np.flip(x_bins)-0.5*phase_time,correction_median_array,c = 'Green')
     ax.set_title('Timing Corrections vs. True Timing')
     ax.set_xlabel('True Timing (Seconds)')
     ax.set_ylabel('Timing Corrections (Seconds)')
     plt.get_current_fig_manager().window.showMaximized()
     plt.show(block = False)
-    savedir = 'G:/data/watchman/'+str(datadate)+'_watchman_spe/studies/phase/' + samplerate_name + '/Histograms/'
+    savedir = 'G:/data/watchman/'+str(datadate)+'_watchman_spe/studies/phase/' + samplerate_name + '/Histograms/averages/'
     if not os.path.exists(savedir):
         os.makedirs(savedir)
-    filename = samplerate_name+'_'+shaping+'_nbox='+str(n_box)+'_ndel='+str(n_delay)+'_natt='+str(n_att)+'_corrections.png'
+    filename = samplerate_name+'_'+shaping+'_nbox='+str(n_box)+'_ndel='+str(n_delay)+'_natt='+str(n_att)+'_corrections_log.png'
     savename = savedir + filename
     fig.savefig(savename,dpi = 500)
     plt.close()
@@ -155,7 +155,7 @@ def phase_hist_gen(samplerate,samplerate_name,shaping,datadate,n_box,n_delay,n_a
     corrected_corrections = []
     corrected_correction_median_array = []
     for i in range(len(phase_array)):
-        filedir = 'G:/data/watchman/'+str(datadate)+'_watchman_spe/studies/phase/'+samplerate_name+'/phase='+str(phase_array[i])+'/phase_'+shaping+'/'
+        filedir = 'G:/data/watchman/'+str(datadate)+'_watchman_spe/studies/phase/'+samplerate_name+'/averages/phase='+str(phase_array[i])+'/phase_'+shaping+'/'
         Nloops = len(os.listdir(filedir))
         corrected_corrections_j = []
         y_corrected_j = []
@@ -181,36 +181,36 @@ def phase_hist_gen(samplerate,samplerate_name,shaping,datadate,n_box,n_delay,n_a
     corrected_corrections = np.asarray(corrected_corrections)
 
     fig,ax = plt.subplots()
-    h = ax.hist2d(x,y_corrected,bins = [x_bins,y_bins])
+    h = ax.hist2d(x,y_corrected,bins = [x_bins,y_bins],norm = LogNorm())
     plt.colorbar(h[3],ax = ax)
-    ax.plot(np.flip(x_bins)-0.5*phase_time,corrected_median_array,c = 'Green')
-    ax.plot(np.flip(x_bins)-0.5*phase_time,np.flip(x_bins)-0.5*phase_time,c = 'Green',ls = '--')
+    #ax.plot(np.flip(x_bins)-0.5*phase_time,corrected_median_array,c = 'Green')
+    #ax.plot(np.flip(x_bins)-0.5*phase_time,np.flip(x_bins)-0.5*phase_time,c = 'Green',ls = '--')
     ax.set_title('Measured vs. True Timing')
     ax.set_xlabel('True Timing (Seconds)')
     ax.set_ylabel('Measured Timing (Seconds)')
     plt.get_current_fig_manager().window.showMaximized()
     plt.show(block = False)
-    savedir = 'G:/data/watchman/'+str(datadate)+'_watchman_spe/studies/phase/' + samplerate_name + '/Histograms/'
+    savedir = 'G:/data/watchman/'+str(datadate)+'_watchman_spe/studies/phase/' + samplerate_name + '/Histograms/averages/'
     if not os.path.exists(savedir):
         os.makedirs(savedir)
-    filename = 'corrected '+samplerate_name+'_'+shaping+'_nbox='+str(n_box)+'_ndel='+str(n_delay)+'_natt='+str(n_att)+'.png'
+    filename = 'corrected '+samplerate_name+'_'+shaping+'_nbox='+str(n_box)+'_ndel='+str(n_delay)+'_natt='+str(n_att)+'_log.png'
     savename = savedir + filename
     fig.savefig(savename,dpi = 500)
     plt.close()
 
     fig,ax = plt.subplots()
-    h = ax.hist2d(x,corrected_corrections,bins = [x_bins,y_bins_corrections])
+    h = ax.hist2d(x,corrected_corrections,bins = [x_bins,y_bins_corrections],norm = LogNorm())
     plt.colorbar(h[3],ax = ax)
-    ax.plot(np.flip(x_bins)-0.5*phase_time,corrected_correction_median_array,c = 'Green')
+    #ax.plot(np.flip(x_bins)-0.5*phase_time,corrected_correction_median_array,c = 'Green')
     ax.set_title('Timing Corrections vs. True Timing')
     ax.set_xlabel('True Timing (Seconds)')
     ax.set_ylabel('Timing Corrections (Seconds)')
     plt.get_current_fig_manager().window.showMaximized()
     plt.show(block = False)
-    savedir = 'G:/data/watchman/'+str(datadate)+'_watchman_spe/studies/phase/' + samplerate_name + '/Histograms/'
+    savedir = 'G:/data/watchman/'+str(datadate)+'_watchman_spe/studies/phase/' + samplerate_name + '/Histograms/averages/'
     if not os.path.exists(savedir):
         os.makedirs(savedir)
-    filename = 'corrected '+samplerate_name+'_'+shaping+'_nbox='+str(n_box)+'_ndel='+str(n_delay)+'_natt='+str(n_att)+'_corrections.png'
+    filename = 'corrected '+samplerate_name+'_'+shaping+'_nbox='+str(n_box)+'_ndel='+str(n_delay)+'_natt='+str(n_att)+'_corrections_log.png'
     savename = savedir + filename
     fig.savefig(savename,dpi = 500)
     plt.close()
@@ -222,7 +222,7 @@ if __name__ == '__main__':
     import argparse
     parser = argparse.ArgumentParser(prog="phase_hist_gen",description="Generates 2D Histograms of timing resolution vs. phase.")
     parser.add_argument('--datadate',type = str,help = 'date when data was gathered, YYYYMMDD', default = '20190724')
-    parser.add_argument('--numhead',type=int,help='number of lines to ignore for header',default = 5)
+    parser.add_argument('--numhead',type=int,help='number of lines to ignore for header',default = 1)
     args = parser.parse_args()
 
-    phase_hist_gen(500000000,'500 Msps','raw_gained_analyzed',args.datadate,2,2,2,args.numhead)
+    phase_hist_gen(250000000,'250 Msps','raw_gained_analyzed',args.datadate,2,1,2,args.numhead)

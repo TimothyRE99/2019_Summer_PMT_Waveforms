@@ -70,11 +70,11 @@ def zc_locator(t,v):
 
 def plot_waveform(datadate,numhead,shaping,n_box,n_delay,n_att,samplerate_name):
     phase_time = 1/20000000000
-    phase_array = np.array([0,33])
+    phase_array = np.array([0,41])
     median_array = []
     correction_median_array = []
     for i in range(len(phase_array)):
-        filedir = 'G:/data/watchman/'+str(datadate)+'_watchman_spe/studies/phase/'+samplerate_name+'/phase='+str(phase_array[i])+'/phase_'+shaping+'/'
+        filedir = 'G:/data/watchman/'+str(datadate)+'_watchman_spe/studies/phase/'+samplerate_name+'/averages/phase='+str(phase_array[i])+'/phase_'+shaping+'/'
         Nloops = len(os.listdir(filedir))
         y_j = []
         correction_j = []
@@ -94,7 +94,7 @@ def plot_waveform(datadate,numhead,shaping,n_box,n_delay,n_att,samplerate_name):
     correction_median_array = np.asarray(correction_median_array)
     correction_median_array = correction_median_array + median_array[0]
 
-    filedir = 'G:/data/watchman/'+str(datadate)+'_watchman_spe/studies/phase/'+samplerate_name+'/phase=33/phase_'+shaping+'/'
+    filedir = 'G:/data/watchman/'+str(datadate)+'_watchman_spe/studies/phase/'+samplerate_name+'/averages/phase=33/phase_'+shaping+'/'
     Nloops = len(os.listdir(filedir))   #establishes length to cycle through file
     for i in range(Nloops):
         filename = filedir + 'Phase--waveforms--%05d.txt' % i
@@ -126,10 +126,10 @@ def plot_waveform(datadate,numhead,shaping,n_box,n_delay,n_att,samplerate_name):
         #shows plot
         plt.get_current_fig_manager().window.showMaximized()
         plt.show(block = False)
-        if ((-33*phase_time + median_array[0]) - t_cross) <= -3.9e-10:
-            savedir = 'G:/data/watchman/'+str(datadate)+'_watchman_spe/studies/disparity/bad/'
+        if ((-33*phase_time + median_array[0]) - t_cross) <= -3e-12:
+            savedir = 'G:/data/watchman/'+str(datadate)+'_watchman_spe/studies/disparity/averages/bad/'
         else:
-            savedir = 'G:/data/watchman/'+str(datadate)+'_watchman_spe/studies/disparity/good/'
+            savedir = 'G:/data/watchman/'+str(datadate)+'_watchman_spe/studies/disparity/averages/good/'
         if not os.path.exists(savedir):
             os.makedirs(savedir)
         filename = 'Waveform_%d.png' % i
@@ -142,7 +142,7 @@ if __name__ == '__main__':
     import argparse
     parser = argparse.ArgumentParser(prog="plot waveform",description="cycles through CFD waveforms and plots them.")
     parser.add_argument('--datadate',type = str,help = 'date when data was gathered, YYYYMMDD', default = '20190724')
-    parser.add_argument('--numhead',type=int,help='number of lines to ignore for header',default = 5)
+    parser.add_argument('--numhead',type=int,help='number of lines to ignore for header',default = 1)
     parser.add_argument('--subfolder',type = str,help = 'how much the rise time was altered', default = 'raw_gained_analyzed')
     parser.add_argument('--n_box',type=int,help='n value for boxcar averager',default = 2)
     parser.add_argument('--n_delay',type=int,help='number of indices to delay base waveform',default = 1)
