@@ -64,7 +64,7 @@ def p3(new_fsps,datadate,numhead,scale_array,phase,noise,fsps,steps):
             #digitizing waveform values
             v_digit = digitize(v_scaled,noise)
             #saving downsampled and digitized waveforms
-            ww(t_array,v_digit,writename,header)
+            ww(t_array-i/fsps,v_digit,writename,header)
 
 #main function
 if __name__ == '__main__':
