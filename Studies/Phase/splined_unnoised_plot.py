@@ -124,7 +124,7 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     new_fsps = 250000000
-    num_phases = 80
+    num_phases = 10000
     phase_array = np.linspace(0,1/new_fsps,num_phases,endpoint=False)
     scale = .0065313
     p3(new_fsps,args.datadate,args.numhead,scale,phase_array,2,1,2,num_phases)
