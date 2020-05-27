@@ -31,7 +31,7 @@ def downsampling(t,v,fsps,new_fsps,start_index):
     return t_new,v_new
 
 #reading and writing waveforms and calling other functions
-def p3(new_fsps,datadate,numhead,scale_array,phase,noise,fsps,steps):
+def p3(new_fsps,datadate,numhead,scale_array,phase_array,noise,fsps,steps):
     #establishing directory names
     if new_fsps == 1000000000:
         sample_rate = '1 Gsps'
