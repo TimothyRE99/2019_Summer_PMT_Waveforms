@@ -86,6 +86,14 @@ def digitize(v,noise):
 #reading and writing waveforms and calling other functions
 def p3(new_fsps,datadate,numhead,scale,phase_array,n_box,n_delay,n_att,num_phases):
     #establishing directory names
+    if new_fsps == 1000000000:
+        sample_rate = '1 Gsps'
+    elif new_fsps == 500000000:
+        sample_rate = '500 Msps'
+    elif new_fsps == 250000000:
+        sample_rate = '250 Msps'
+    else:
+        sample_rate = 'trash'
     filename = 'G:/data/watchman/'+datadate+'_watchman_spe/d2/d2_average.txt'
     t,v,_ = rw(filename,numhead)
     uspl = us(t,v)
@@ -110,10 +118,19 @@ def p3(new_fsps,datadate,numhead,scale,phase_array,n_box,n_delay,n_att,num_phase
     t_cross_array = np.flip(np.asarray(t_cross_array))
     true_timing_array = np.flip(np.zeros(num_phases) - phase_array)
 
-    _,ax = plt.subplots()
+    fig,ax = plt.subplots()
     ax.plot(true_timing_array,t_cross_array)
+    ax.set_title('Recovered Timing vs. True Timing')
+    ax.set_xlabel('True Timing (Seconds)')
+    ax.set_ylabel('Recovered Timing (Seconds)')
     plt.get_current_fig_manager().window.showMaximized()
-    plt.show()
+    plt.show(block = False)
+    savedir = 'G:/data/watchman/'+str(datadate)+'_watchman_spe/studies/phase/' + sample_rate + '/Histograms/averages_splined/'
+    if not os.path.exists(savedir):
+        os.makedirs(savedir)
+    filename = 'Phases=%d.png' % num_phases
+    savename = savedir + filename
+    fig.savefig(savename,dpi = 500)
 
 #main function
 if __name__ == '__main__':
@@ -124,7 +141,7 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     new_fsps = 250000000
-    num_phases = 10000
+    num_phases = 1000000
     phase_array = np.linspace(0,1/new_fsps,num_phases,endpoint=False)
     scale = .0065313
     p3(new_fsps,args.datadate,args.numhead,scale,phase_array,2,1,2,num_phases)
