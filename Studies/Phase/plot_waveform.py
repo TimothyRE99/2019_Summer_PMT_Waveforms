@@ -74,7 +74,7 @@ def plot_waveform(datadate,numhead,shaping,n_box,n_delay,n_att,samplerate_name):
     median_array = []
     correction_median_array = []
     for i in range(len(phase_array)):
-        filedir = 'G:/data/watchman/'+str(datadate)+'_watchman_spe/studies/phase/'+samplerate_name+'/averages/phase='+str(phase_array[i])+'/phase_'+shaping+'/'
+        filedir = 'G:/data/watchman/'+str(datadate)+'_watchman_spe/studies/phase/'+samplerate_name+'/averages_splined/phase='+str(phase_array[i])+'/phase_'+shaping+'/'
         Nloops = len(os.listdir(filedir))
         y_j = []
         correction_j = []
@@ -94,7 +94,7 @@ def plot_waveform(datadate,numhead,shaping,n_box,n_delay,n_att,samplerate_name):
     correction_median_array = np.asarray(correction_median_array)
     correction_median_array = correction_median_array + median_array[0]
 
-    filedir = 'G:/data/watchman/'+str(datadate)+'_watchman_spe/studies/phase/'+samplerate_name+'/averages/phase=33/phase_'+shaping+'/'
+    filedir = 'G:/data/watchman/'+str(datadate)+'_watchman_spe/studies/phase/'+samplerate_name+'/averages_splined/phase=33/phase_'+shaping+'/'
     Nloops = len(os.listdir(filedir))   #establishes length to cycle through file
     for i in range(Nloops):
         filename = filedir + 'Phase--waveforms--%05d.txt' % i
@@ -127,9 +127,9 @@ def plot_waveform(datadate,numhead,shaping,n_box,n_delay,n_att,samplerate_name):
         plt.get_current_fig_manager().window.showMaximized()
         plt.show(block = False)
         if ((-33*phase_time + median_array[0]) - t_cross) <= -3e-12:
-            savedir = 'G:/data/watchman/'+str(datadate)+'_watchman_spe/studies/disparity/averages/bad/'
+            savedir = 'G:/data/watchman/'+str(datadate)+'_watchman_spe/studies/disparity/averages_splined/bad/'
         else:
-            savedir = 'G:/data/watchman/'+str(datadate)+'_watchman_spe/studies/disparity/averages/good/'
+            savedir = 'G:/data/watchman/'+str(datadate)+'_watchman_spe/studies/disparity/averages_splined/good/'
         if not os.path.exists(savedir):
             os.makedirs(savedir)
         filename = 'Waveform_%d.png' % i
