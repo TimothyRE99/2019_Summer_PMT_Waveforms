@@ -99,7 +99,7 @@ def p3(new_fsps,datadate,numhead,scale,phase_array,n_box,n_delay,n_att,num_phase
     uspl = us(t,v)
     t_cross_array = []
     for i in range(len(phase_array)):
-        print(i)
+        print('ndel='+str(n_delay)+', natt='+str(n_att)+', '+str(i))
         start_value = t[0] + i/(new_fsps*num_phases)
         end_value = t[-1]
         t_array = np.arange(start_value,end_value,1/new_fsps)
@@ -128,9 +128,10 @@ def p3(new_fsps,datadate,numhead,scale,phase_array,n_box,n_delay,n_att,num_phase
     savedir = 'G:/data/watchman/'+str(datadate)+'_watchman_spe/studies/phase/' + sample_rate + '/Histograms/averages_splined/'
     if not os.path.exists(savedir):
         os.makedirs(savedir)
-    filename = 'Phases=%d.png' % num_phases
+    filename = 'ndelay='+str(n_delay)+'_natt='+str(n_att)+'_Phases=%d.png' % num_phases
     savename = savedir + filename
     fig.savefig(savename,dpi = 500)
+    plt.close()
 
 #main function
 if __name__ == '__main__':
@@ -141,7 +142,12 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     new_fsps = 250000000
-    num_phases = 1000000
+    num_phases = 100000
     phase_array = np.linspace(0,1/new_fsps,num_phases,endpoint=False)
     scale = .0065313
-    p3(new_fsps,args.datadate,args.numhead,scale,phase_array,2,1,2,num_phases)
+    n_list = np.array([1,2,4,8,16])
+    for i in n_list:
+        n_delay = i
+        for j in n_list:
+            n_att = j
+            p3(new_fsps,args.datadate,args.numhead,scale,phase_array,2,n_delay,n_att,num_phases)
