@@ -138,6 +138,8 @@ def phase_hist_gen(samplerate,samplerate_name,shaping,datadate,n_box,n_delay,n_a
     corrected_difference_list = np.asarray(corrected_difference_list)
 
     histo_mean,histo_std = gauss_histogram(difference_list)
+    true_mean = '%5g' % np.mean(difference_list)
+    true_std = '%5g' % np.std(difference_list)
     difference_list = difference_list[(difference_list >= histo_mean - 4*histo_std) & (difference_list <= histo_mean + 4*histo_std)]
     histo_data, bins_data = np.histogram(difference_list, bins = 200)
     binwidth = (bins_data[1] - bins_data[0])                    #determining bin width
@@ -154,11 +156,13 @@ def phase_hist_gen(samplerate,samplerate_name,shaping,datadate,n_box,n_delay,n_a
     plt.plot(x_values, fit_function(x_values, *popt), color='darkorange')   #plotting curve fit
     plt.xlabel('True Timing - Recovered Timing')
     plt.ylabel('Count')
-    plt.title('Uncorrected Timings'+'\nGaussian Fit Values:\nMean = '+gauss_mean+' seconds\nStandard Deviation = '+gauss_std+' seconds')
+    plt.title('Uncorrected Timings'+'\nGaussian Fit Values:\nMean = '+gauss_mean+' seconds, '+true_mean+' seconds\nStandard Deviation = '+gauss_std+' seconds, '+true_std+' seconds')
     plt.get_current_fig_manager().window.showMaximized()
     plt.show()
 
     histo_mean,histo_std = gauss_histogram(corrected_difference_list)
+    true_mean = '%5g' % np.mean(corrected_difference_list)
+    true_std = '%5g' % np.std(corrected_difference_list)
     corrected_difference_list = corrected_difference_list[(corrected_difference_list >= histo_mean - 4*histo_std) & (corrected_difference_list <= histo_mean + 4*histo_std)]
     histo_data, bins_data = np.histogram(corrected_difference_list, bins = 200)
     binwidth = (bins_data[1] - bins_data[0])                    #determining bin width
@@ -175,7 +179,7 @@ def phase_hist_gen(samplerate,samplerate_name,shaping,datadate,n_box,n_delay,n_a
     plt.plot(x_values, fit_function(x_values, *popt), color='darkorange')   #plotting curve fit
     plt.xlabel('True Timing - Recovered Timing')
     plt.ylabel('Count')
-    plt.title('Corrected Timings'+'\nGaussian Fit Values:\nMean = '+gauss_mean+' seconds\nStandard Deviation = '+gauss_std+' seconds')
+    plt.title('Corrected Timings'+'\nGaussian Fit Values:\nMean = '+gauss_mean+' seconds, '+true_mean+' seconds\nStandard Deviation = '+gauss_std+' seconds, '+true_std+' seconds')
     plt.get_current_fig_manager().window.showMaximized()
     plt.show()
 
@@ -187,4 +191,4 @@ if __name__ == '__main__':
     parser.add_argument('--numhead',type=int,help='number of lines to ignore for header',default = 5)
     args = parser.parse_args()
 
-    phase_hist_gen(500000000,'500 Msps','raw_gained_analyzed',args.datadate,2,2,2,args.numhead)
+    phase_hist_gen(250000000,'250 Msps','raw_gained_analyzed',args.datadate,2,1,2,args.numhead)
