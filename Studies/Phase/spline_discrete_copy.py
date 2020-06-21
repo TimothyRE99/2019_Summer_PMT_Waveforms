@@ -46,7 +46,7 @@ def p3(new_fsps,datadate,numhead,scale_array,phase_array,noise,fsps,steps):
     uspl = us(t,v)
     for i in range(len(phase_array)):
         print(i)
-        writedir = 'G:/data/watchman/'+datadate+'_watchman_spe/studies/phase/' + sample_rate + '/averages_splined/phase=' + str(i) + '/phase_raw_gained_analyzed/'
+        writedir = 'G:/data/watchman/'+datadate+'_watchman_spe/studies/phase/' + sample_rate + '/averages_splined/phase=' + str(i) + '/phase_raw_gained_analyzed_unnoised/'
         #creating directories if they don't exist
         if not os.path.exists(writedir):
             os.makedirs(writedir)
@@ -70,7 +70,7 @@ def p3(new_fsps,datadate,numhead,scale_array,phase_array,noise,fsps,steps):
 if __name__ == '__main__':
     import argparse
     parser = argparse.ArgumentParser(prog="phase_discrete_copy",description="Runs Downsampling and Digitizing based on discrete phases.")
-    parser.add_argument("--noise",type=float,help='bits of noise from digitizer',default=3.3)
+    parser.add_argument("--noise",type=float,help='bits of noise from digitizer',default=0)
     parser.add_argument('--datadate',type = str,help = 'date when data was gathered, YYYYMMDD', default = '20190724')
     parser.add_argument('--numhead',type=int,help='number of lines to ignore for header',default = 1)
     parser.add_argument("--fsps",type=float,help="hz, samples/s",default=20000000000.0)
