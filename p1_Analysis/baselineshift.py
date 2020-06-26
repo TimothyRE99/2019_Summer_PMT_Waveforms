@@ -8,18 +8,18 @@ import os
 
 #shift baseline
 def baselineshift(datadate,numhead):
-    Nloops = len(os.listdir('G:/data/watchman/'+datadate+'_watchman_spe/d1/d1_renamed'))
-    if not os.path.exists('G:/data/watchman/'+datadate+'_watchman_spe/d1/d1_baseline_shifted/'):
+    Nloops = len(os.listdir('G:/data/watchman/'+datadate+'_watchman_spe/d1/d1_renamed'))    #establish size of directory
+    if not os.path.exists('G:/data/watchman/'+datadate+'_watchman_spe/d1/d1_baseline_shifted/'):    #create write directory if nonexistant
         os.makedirs('G:/data/watchman/'+datadate+'_watchman_spe/d1/d1_baseline_shifted/')
     for i in range(Nloops):
-        filename = 'G:/data/watchman/'+datadate+'_watchman_spe/d1/d1_renamed/D1--waveforms--%05d.txt' % i
-        writename = 'G:/data/watchman/'+datadate+'_watchman_spe/d1/d1_baseline_shifted/D1--waveforms--%05d.txt' % i
-        (t,y,header) = rw(filename,numhead)
+        filename = 'G:/data/watchman/'+datadate+'_watchman_spe/d1/d1_renamed/D1--waveforms--%05d.txt' % i   #establish file name to read
+        writename = 'G:/data/watchman/'+datadate+'_watchman_spe/d1/d1_baseline_shifted/D1--waveforms--%05d.txt' % i #establish file name to write
+        (t,y,header) = rw(filename,numhead) #collect waveform data into array
         baseline = np.mean(y[0:200])                            #determining average value at beginning to establish baseline
-        if abs(baseline) >= 0.0005:
+        if abs(baseline) >= 0.0005: #used to check baselines that are too big
                 print(str(baseline)+', '+str(i))
         y_new = (y - baseline)                                  #reducing y to factor out baseline
-        write_waveform(t,y_new,writename,header)
+        write_waveform(t,y_new,writename,header)    #writing waveforms
 
 if __name__ == '__main__':
     import argparse

@@ -9,16 +9,16 @@ from gausshistogram import gauss_histogram as gh
 import os
 
 def determine(datadate,numhead):
-    Nloops = len(os.listdir('G:/data/watchman/'+datadate+'_watchman_spe/d1/d1_50centered'))
-    writename = 'G:/data/watchman/'+datadate+'_watchman_spe/d1/d1_histograms/20_80_fall_time.txt'
-    if not os.path.exists('G:/data/watchman/'+datadate+'_watchman_spe/d1/d1_histograms/histogram_images'):
+    Nloops = len(os.listdir('G:/data/watchman/'+datadate+'_watchman_spe/d1/d1_50centered')) #determining size of directory
+    writename = 'G:/data/watchman/'+datadate+'_watchman_spe/d1/d1_histograms/20_80_fall_time.txt'   #setting file name to write to
+    if not os.path.exists('G:/data/watchman/'+datadate+'_watchman_spe/d1/d1_histograms/histogram_images'):  #creating write directory if nonexistant
         os.makedirs('G:/data/watchman/'+datadate+'_watchman_spe/d1/d1_histograms/histogram_images')
     #determine fall times
     for i in range(Nloops):
         print(i)
-        filename = 'G:/data/watchman/'+datadate+'_watchman_spe/d1/d1_50centered/D1--waveforms--%05d.txt' % i
-        (t,y,_) = rw(filename,numhead)
-        y_norm = y/min(y)
+        filename = 'G:/data/watchman/'+datadate+'_watchman_spe/d1/d1_50centered/D1--waveforms--%05d.txt' % i    #setting file name to read from
+        (t,y,_) = rw(filename,numhead)      #taking in waveform values
+        y_norm = y/min(y)       #normalizing voltage values
         check20 = y_norm <= .2                                          #determining where 20% and 80% falling are located
         check80 = y_norm >= .8
         index20 = np.asarray([k for k, x in enumerate(check20) if x])

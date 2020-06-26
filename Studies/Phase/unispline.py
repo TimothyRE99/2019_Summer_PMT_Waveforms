@@ -1,3 +1,4 @@
+#establishes splined waveform
 import numpy as np
 from readwaveform import read_waveform as rw
 import matplotlib.pyplot as plt

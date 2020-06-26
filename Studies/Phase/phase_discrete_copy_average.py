@@ -66,7 +66,7 @@ def p3(noise_filter,noise,datadate,numhead,fsps,new_fsps,gain_noise,gain_factor_
 #main function
 if __name__ == '__main__':
     import argparse
-    parser = argparse.ArgumentParser(prog="phase_discrete_copy",description="Runs Downsampling and Digitizing based on discrete phases.")
+    parser = argparse.ArgumentParser(prog="phase_discrete_copy_average",description="Runs Downsampling and Digitizing based on discrete phases for average waveform.")
     parser.add_argument("--noise_filter",type=float,help='bits of noise from filter',default=0)
     parser.add_argument("--noise",type=float,help='bits of noise from digitizer',default=3.3)
     parser.add_argument('--datadate',type = str,help = 'date when data was gathered, YYYYMMDD', default = '20190724')

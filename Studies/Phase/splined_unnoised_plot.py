@@ -136,7 +136,7 @@ def p3(new_fsps,datadate,numhead,scale,phase_array,n_box,n_delay,n_att,num_phase
 #main function
 if __name__ == '__main__':
     import argparse
-    parser = argparse.ArgumentParser(prog="phase_discrete_copy",description="Runs Downsampling and Digitizing based on discrete phases.")
+    parser = argparse.ArgumentParser(prog="splined_unnoised_plot",description="Plots comparison of recovered vs true timing for splined waveforms")
     parser.add_argument('--datadate',type = str,help = 'date when data was gathered, YYYYMMDD', default = '20190724')
     parser.add_argument('--numhead',type=int,help='number of lines to ignore for header',default = 1)
     args = parser.parse_args()
