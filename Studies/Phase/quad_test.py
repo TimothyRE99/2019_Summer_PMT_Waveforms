@@ -8,7 +8,7 @@ from readwaveform import read_waveform as rw
 from writewaveform import write_waveform as ww
 import scipy.interpolate as it
 from unispline import unispline as us
-import math
+import cmath
 
 #runs boxcar averaging algorithm
 def boxcar_wf(t,v,n):
@@ -69,8 +69,8 @@ def zc_locator(t,v):
     b = (x3*x3 * (y1-y2) + x2*x2 * (y3-y1) + x1*x1 * (y2-y3)) / denom
     c = (x2 * x3 * (x2-x3) * y1+x3 * x1 * (x3-x1) * y2+x1 * x2 * (x1-x2) * y3) / denom
     d = b**2-4*a*c
-    cross_1 = (-b + math.sqrt(d))/(2*a)
-    cross_2 = (-b - math.sqrt(d))/(2*a)
+    cross_1 = (-b + cmath.sqrt(d))/(2*a)
+    cross_2 = (-b - cmath.sqrt(d))/(2*a)
     if x1 < cross_1 < x3:
         t_cross = cross_1
     else:
