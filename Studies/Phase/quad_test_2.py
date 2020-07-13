@@ -48,18 +48,23 @@ def zc_locator(t,v):
     v_norm = v/max(v[0:stop_ind])     #normalizes for easy checking
     #creates array of "True" and "False" entries for where condition is met
     checkPeak = v_norm == 1
+    checkCross = v_norm <= 0
     #turns into array of indices each value held above
     indexPeak = np.asarray([k for k, x in enumerate(checkPeak) if x])
+    indexCross = np.asarray([k for k, x in enumerate(checkCross) if x])
     index_Peak = indexPeak[0]       #creates peak index into int
+    #establishes first crossed index after peak
+    indexCross_removed = indexCross[np.where(indexCross > index_Peak)]
+    index_Cross = indexCross_removed[0]
     #interpolates time of crossing
-    index_Second = index_Peak + 1
-    index_Third = index_Peak + 2
-    x1 = t[index_Peak]
-    x2 = t[index_Second]
-    x3 = t[index_Third]
-    y1 = v[index_Peak]
-    y2 = v[index_Second]
-    y3 = v[index_Third]
+    index_Bef = index_Cross - 1
+    index_Aft = index_Cross + 1
+    x1 = t[index_Bef]
+    x2 = t[index_Cross]
+    x3 = t[index_Aft]
+    y1 = v[index_Bef]
+    y2 = v[index_Cross]
+    y3 = v[index_Aft]
     denom = (x1-x2) * (x1-x3) * (x2-x3)
     a = (x3 * (y2-y1) + x2 * (y1-y3) + x1 * (y3-y2)) / denom
     b = (x3*x3 * (y1-y2) + x2*x2 * (y3-y1) + x1*x1 * (y2-y3)) / denom
@@ -71,7 +76,7 @@ def zc_locator(t,v):
         t_cross = cross_1
     else:
         t_cross = cross_2
-    return (t_cross,index_Peak,index_Second,index_Third)
+    return (t_cross,index_Bef,index_Cross,index_Aft)
 
 def phase_hist_gen(samplerate,samplerate_name,shaping,datadate,n_box,n_delay,n_att,numhead):
     phase_time = 1/20000000000

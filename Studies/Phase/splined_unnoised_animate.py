@@ -90,7 +90,6 @@ def p3(new_fsps,datadate,numhead,scale,phase_array,n_box,n_delay,n_att,num_phase
     uspl = us(t,v)
     t_cross_array = []
     for i in range(len(phase_array)):
-        print('ndel='+str(n_delay)+', natt='+str(n_att)+', '+str(i))
         start_value = t[0] + i/(new_fsps*num_phases)
         end_value = t[-1]
         t_array = np.arange(start_value,end_value,1/new_fsps)
@@ -158,7 +157,7 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     new_fsps = 250000000
-    num_phases = 500
+    num_phases = 160
     phase_array = np.linspace(0,1/new_fsps,num_phases,endpoint=False)
     scale = .0065313
     p3(new_fsps,args.datadate,args.numhead,scale,phase_array,2,1,2,num_phases)
