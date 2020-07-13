@@ -58,16 +58,20 @@ def zc_locator(t,v):
     index_Peak = indexPeak[0]       #creates peak index into int
     #establishes first crossed index after peak
     indexCross_removed = indexCross[np.where(indexCross > index_Peak)]
-    index_Cross = indexCross_removed[0]
+    index_2 = indexCross_removed[0]
     #interpolates time of crossing
-    index_Bef = index_Cross - 1
-    index_Aft = index_Cross + 1
-    x1 = t[index_Bef]
-    x2 = t[index_Cross]
-    x3 = t[index_Aft]
-    y1 = v[index_Bef]
-    y2 = v[index_Cross]
-    y3 = v[index_Aft]
+    index_1 = index_2 - 1
+    index_3 = index_2 + 1
+    if (v[index_1] - v[index_2]) > (v[index_2] - v[index_3]):
+        index_1 = index_1  -  1
+        index_2 = index_2  -  1
+        index_3 = index_3  -  1
+    x1 = t[index_1]
+    x2 = t[index_2]
+    x3 = t[index_3]
+    y1 = v[index_1]
+    y2 = v[index_2]
+    y3 = v[index_3]
     denom = (x1-x2) * (x1-x3) * (x2-x3)
     a = (x3 * (y2-y1) + x2 * (y1-y3) + x1 * (y3-y2)) / denom
     b = (x3*x3 * (y1-y2) + x2*x2 * (y3-y1) + x1*x1 * (y2-y3)) / denom
@@ -79,7 +83,7 @@ def zc_locator(t,v):
         t_cross = cross_1
     else:
         t_cross = cross_2
-    return (t_cross,index_Bef,index_Cross,index_Aft)
+    return (t_cross,index_1,index_2,index_3)
 
 #digitizing
 def digitize(v,noise):
@@ -138,7 +142,7 @@ def p3(new_fsps,datadate,numhead,scale,phase_array,n_box,n_delay,n_att,num_phase
         v_delay = delay_wf(v_avg,n_delay)
         v_mult = mult_wf(v_delay,n_att)
         v_sum = sum_wf(v_mult,v_avg)
-        t_cross,index_Bef,index_Cross,index_Aft  = zc_locator(t_avg,v_sum)
+        t_cross,index_1,index_2,index_3  = zc_locator(t_avg,v_sum)
         plt.clf()
         plt.subplot(1,2,1)
         plt.plot(t_avg,v_sum)
@@ -150,9 +154,9 @@ def p3(new_fsps,datadate,numhead,scale,phase_array,n_box,n_delay,n_att,num_phase
         plt.axhline(0,color='black')
         plt.axvline(t_cross,color='red')
         plt.axvline(true_timing_array[-1*i],color='black')
-        plt.plot(t_avg[index_Bef],v_sum[index_Bef],'x',color = 'orange')
-        plt.plot(t_avg[index_Cross],v_sum[index_Cross],'x',color = 'yellow')
-        plt.plot(t_avg[index_Aft],v_sum[index_Aft],'x',color = 'magenta')
+        plt.plot(t_avg[index_1],v_sum[index_1],'x',color = 'orange')
+        plt.plot(t_avg[index_2],v_sum[index_2],'x',color = 'yellow')
+        plt.plot(t_avg[index_3],v_sum[index_3],'x',color = 'magenta')
         plt.subplot(1,2,2)
         true_timing_value = true_timing_array[-1*i]
         plt.plot(true_timing_array,t_cross_array)
