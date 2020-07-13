@@ -4,7 +4,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.colors import LogNorm
 from readwaveform import read_waveform as rw
-import cmath
+import math
 
 #runs boxcar averaging algorithm
 def boxcar_wf(t,v,n):
@@ -65,8 +65,8 @@ def zc_locator(t,v):
     b = (x3*x3 * (y1-y2) + x2*x2 * (y3-y1) + x1*x1 * (y2-y3)) / denom
     c = (x2 * x3 * (x2-x3) * y1+x3 * x1 * (x3-x1) * y2+x1 * x2 * (x1-x2) * y3) / denom
     d = b**2-4*a*c
-    cross_1 = (-b + cmath.sqrt(d))/(2*a)
-    cross_2 = (-b - cmath.sqrt(d))/(2*a)
+    cross_1 = (-b + math.sqrt(d))/(2*a)
+    cross_2 = (-b - math.sqrt(d))/(2*a)
     if x1 < cross_1 < x3:
         t_cross = cross_1
     else:
@@ -96,7 +96,7 @@ def phase_hist_gen(samplerate,samplerate_name,shaping,datadate,n_box,n_delay,n_a
             t_avg,v_avg = boxcar_wf(t,v,n_box)
             v_delay = delay_wf(v_avg,n_delay)
             v_mult = mult_wf(v_delay,n_att)
-            v_sum = sum_wf(v_delay,v_avg)
+            v_sum = sum_wf(v_mult,v_avg)
             t_cross,_,_,_ = zc_locator(t_avg,v_sum)
             y_j.append(t_cross)
             x_j.append(-1*i*phase_time)
@@ -125,8 +125,8 @@ def phase_hist_gen(samplerate,samplerate_name,shaping,datadate,n_box,n_delay,n_a
     fig,ax = plt.subplots()
     h = ax.hist2d(x,y,bins = [x_bins,y_bins],norm = LogNorm())
     plt.colorbar(h[3],ax = ax)
-    #ax.plot(np.flip(x_bins)-0.5*phase_time,median_array,c = 'Green')
-    #ax.plot(np.flip(x_bins)-0.5*phase_time,np.flip(x_bins)-0.5*phase_time,c = 'Green',ls = '--')
+    ax.plot(np.flip(x_bins)-0.5*phase_time,median_array,c = 'Green')
+    ax.plot(np.flip(x_bins)-0.5*phase_time,np.flip(x_bins)-0.5*phase_time,c = 'Green',ls = '--')
     ax.set_title('Measured vs. True Timing')
     ax.set_xlabel('True Timing (Seconds)')
     ax.set_ylabel('Measured Timing (Seconds)')
@@ -143,7 +143,7 @@ def phase_hist_gen(samplerate,samplerate_name,shaping,datadate,n_box,n_delay,n_a
     fig,ax = plt.subplots()
     h = ax.hist2d(x,correction,bins = [x_bins,y_bins_corrections],norm = LogNorm())
     plt.colorbar(h[3],ax = ax)
-    #ax.plot(np.flip(x_bins)-0.5*phase_time,correction_median_array,c = 'Green')
+    ax.plot(np.flip(x_bins)-0.5*phase_time,correction_median_array,c = 'Green')
     ax.set_title('Timing Corrections vs. True Timing')
     ax.set_xlabel('True Timing (Seconds)')
     ax.set_ylabel('Timing Corrections (Seconds)')
