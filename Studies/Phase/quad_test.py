@@ -76,9 +76,15 @@ def zc_locator(t,v):
     a = (x3 * (y2-y1) + x2 * (y1-y3) + x1 * (y3-y2)) / denom
     b = (x3*x3 * (y1-y2) + x2*x2 * (y3-y1) + x1*x1 * (y2-y3)) / denom
     c = (x2 * x3 * (x2-x3) * y1+x3 * x1 * (x3-x1) * y2+x1 * x2 * (x1-x2) * y3) / denom
-    d = b**2-4*a*c
-    cross_1 = (-b + math.sqrt(d))/(2*a)
-    cross_2 = (-b - math.sqrt(d))/(2*a)
+    if a != 0:
+        d = b**2-4*a*c
+        cross_1 = (-b + math.sqrt(d))/(2*a)
+        cross_2 = (-b - math.sqrt(d))/(2*a)
+    else:
+        slope = (y1 - y3) / (x1 - x3)
+        zero_pass = (-1 * y1) / slope
+        cross_1 = x1 + zero_pass
+        cross_2 = 1e1000
     if x1 < cross_1 < x3:
         t_cross = cross_1
     else:
