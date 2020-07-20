@@ -55,15 +55,15 @@ def zc_locator(t,v):
     index_Peak = indexPeak[0]       #creates peak index into int
     #establishes first crossed index after peak
     indexCross_removed = indexCross[np.where(indexCross > index_Peak)]
-    index_2 = 4
+    index_2 = indexCross_removed[0]
     #interpolates time of crossing
     index_1 = index_2 - 1
     index_3 = index_2 + 1
-    #if v[index_3] >= v[index_2]:
+    if v[index_3] >= v[index_2]:
     #if (v[index_1] - v[index_2]) > (v[index_2] - v[index_3]):
-    #    index_1 = index_1  -  1
-    #    index_2 = index_2  -  1
-    #    index_3 = index_3  -  1
+        index_1 = index_1  -  1
+        index_2 = index_2  -  1
+        index_3 = index_3  -  1
     x1 = t[index_1]
     x2 = t[index_2]
     x3 = t[index_3]
