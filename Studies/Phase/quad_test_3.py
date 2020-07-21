@@ -161,9 +161,9 @@ def phase_hist_gen(samplerate,samplerate_name,shaping,datadate,n_box,n_delay,n_a
     corrected_difference_list = np.asarray(corrected_difference_list)
 
     histo_mean,histo_std = gauss_histogram(difference_list)
+    difference_list = difference_list[(difference_list >= histo_mean - 5*histo_std) & (difference_list <= histo_mean + 5*histo_std)]
     true_mean = '%5g' % np.mean(difference_list)
     true_std = '%5g' % np.std(difference_list)
-    difference_list = difference_list[(difference_list >= histo_mean - 4*histo_std) & (difference_list <= histo_mean + 4*histo_std)]
     histo_data, bins_data = np.histogram(difference_list, bins = 200)
     binwidth = (bins_data[1] - bins_data[0])                    #determining bin width
     #determining bin centers
@@ -185,9 +185,9 @@ def phase_hist_gen(samplerate,samplerate_name,shaping,datadate,n_box,n_delay,n_a
     plt.show()
 
     histo_mean,histo_std = gauss_histogram(corrected_difference_list)
+    corrected_difference_list = corrected_difference_list[(corrected_difference_list >= histo_mean - 5*histo_std) & (corrected_difference_list <= histo_mean + 5*histo_std)]
     true_mean = '%5g' % np.mean(corrected_difference_list)
     true_std = '%5g' % np.std(corrected_difference_list)
-    corrected_difference_list = corrected_difference_list[(corrected_difference_list >= histo_mean - 4*histo_std) & (corrected_difference_list <= histo_mean + 4*histo_std)]
     histo_data, bins_data = np.histogram(corrected_difference_list, bins = 200)
     binwidth = (bins_data[1] - bins_data[0])                    #determining bin width
     #determining bin centers

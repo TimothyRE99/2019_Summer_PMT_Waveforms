@@ -97,7 +97,7 @@ def phase_hist_gen(samplerate,samplerate_name,shaping,datadate,n_box,n_delay,n_a
     median_array = []
     correction_median_array = []
     for i in range(len(phase_array)):
-        filedir = 'G:/data/watchman/'+str(datadate)+'_watchman_spe/studies/phase/'+samplerate_name+'/averages_splined/phase='+str(phase_array[i])+'/phase_'+shaping+'_unnoised/'
+        filedir = 'G:/data/watchman/'+str(datadate)+'_watchman_spe/studies/phase/'+samplerate_name+'/averages_splined/phase='+str(phase_array[i])+'/phase_'+shaping+'/'
         Nloops = len(os.listdir(filedir))
         y_j = []
         correction_j = []
@@ -122,7 +122,7 @@ def phase_hist_gen(samplerate,samplerate_name,shaping,datadate,n_box,n_delay,n_a
     for j in range(Nloops):
         print(j)
         i = random.randint(0,maxphase - 1)
-        filedir = 'G:/data/watchman/'+str(datadate)+'_watchman_spe/studies/phase/'+samplerate_name+'/averages_splined/phase='+str(i)+'/phase_'+shaping+'_unnoised/'
+        filedir = 'G:/data/watchman/'+str(datadate)+'_watchman_spe/studies/phase/'+samplerate_name+'/averages_splined/phase='+str(i)+'/phase_'+shaping+'/'
         filename = filedir + 'Phase--waveforms--%05d.txt' % j
         (t,v,_) = rw(filename,numhead)
         t_avg,v_avg = boxcar_wf(t,v,n_box)
@@ -138,9 +138,9 @@ def phase_hist_gen(samplerate,samplerate_name,shaping,datadate,n_box,n_delay,n_a
     corrected_difference_list = np.asarray(corrected_difference_list)
 
     histo_mean,histo_std = gauss_histogram(difference_list)
+    difference_list = difference_list[(difference_list >= histo_mean - 5*histo_std) & (difference_list <= histo_mean + 5*histo_std)]
     true_mean = '%5g' % np.mean(difference_list)
     true_std = '%5g' % np.std(difference_list)
-    difference_list = difference_list[(difference_list >= histo_mean - 4*histo_std) & (difference_list <= histo_mean + 4*histo_std)]
     histo_data, bins_data = np.histogram(difference_list, bins = 200)
     binwidth = (bins_data[1] - bins_data[0])                    #determining bin width
     #determining bin centers
@@ -161,9 +161,9 @@ def phase_hist_gen(samplerate,samplerate_name,shaping,datadate,n_box,n_delay,n_a
     plt.show()
 
     histo_mean,histo_std = gauss_histogram(corrected_difference_list)
+    corrected_difference_list = corrected_difference_list[(corrected_difference_list >= histo_mean - 5*histo_std) & (corrected_difference_list <= histo_mean + 5*histo_std)]
     true_mean = '%5g' % np.mean(corrected_difference_list)
     true_std = '%5g' % np.std(corrected_difference_list)
-    corrected_difference_list = corrected_difference_list[(corrected_difference_list >= histo_mean - 4*histo_std) & (corrected_difference_list <= histo_mean + 4*histo_std)]
     histo_data, bins_data = np.histogram(corrected_difference_list, bins = 200)
     binwidth = (bins_data[1] - bins_data[0])                    #determining bin width
     #determining bin centers
