@@ -185,7 +185,7 @@ def phase_hist_gen(samplerate,samplerate_name,shaping,datadate,n_box,n_delay,n_a
     plt.show()
 
     histo_mean,histo_std = gauss_histogram(corrected_difference_list)
-    corrected_difference_list = corrected_difference_list[(corrected_difference_list >= histo_mean - 5*histo_std) & (corrected_difference_list <= histo_mean + 5*histo_std)]
+    corrected_difference_list = corrected_difference_list[(corrected_difference_list >= histo_mean - 10*histo_std) & (corrected_difference_list <= histo_mean + 10*histo_std)]
     true_mean = '%5g' % np.mean(corrected_difference_list)
     true_std = '%5g' % np.std(corrected_difference_list)
     histo_data, bins_data = np.histogram(corrected_difference_list, bins = 200)
