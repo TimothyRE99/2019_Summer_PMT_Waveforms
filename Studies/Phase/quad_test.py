@@ -62,7 +62,8 @@ def zc_locator(t,v):
     #interpolates time of crossing
     index_1 = index_2 - 1
     index_3 = index_2 + 1
-    if (v[index_1] - v[index_2]) > (v[index_2] - v[index_3]):
+    if v[index_3] >= v[index_2]:
+    #if (v[index_1] - v[index_2]) > (v[index_2] - v[index_3]):
         index_1 = index_1  -  1
         index_2 = index_2  -  1
         index_3 = index_3  -  1

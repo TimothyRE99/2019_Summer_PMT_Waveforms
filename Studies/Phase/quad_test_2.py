@@ -55,15 +55,15 @@ def zc_locator(t,v):
     index_Peak = indexPeak[0]       #creates peak index into int
     #establishes first crossed index after peak
     indexCross_removed = indexCross[np.where(indexCross > index_Peak)]
-    index_2 = indexCross_removed[0]
+    index_2 = 4#indexCross_removed[0]
     #interpolates time of crossing
     index_1 = index_2 - 1
     index_3 = index_2 + 1
-    if v[index_3] >= v[index_2]:
+    #if v[index_3] >= v[index_2]:
     #if (v[index_1] - v[index_2]) > (v[index_2] - v[index_3]):
-        index_1 = index_1  -  1
-        index_2 = index_2  -  1
-        index_3 = index_3  -  1
+    #    index_1 = index_1  -  1
+    #    index_2 = index_2  -  1
+    #    index_3 = index_3  -  1
     x1 = t[index_1]
     x2 = t[index_2]
     x3 = t[index_3]
@@ -76,8 +76,11 @@ def zc_locator(t,v):
     c = (x2 * x3 * (x2-x3) * y1+x3 * x1 * (x3-x1) * y2+x1 * x2 * (x1-x2) * y3) / denom
     if a != 0:
         d = b**2-4*a*c
-        cross_1 = (-b + math.sqrt(d))/(2*a)
-        cross_2 = (-b - math.sqrt(d))/(2*a)
+        if d < 0:
+            return(5000,5000,5000,5000)
+        else:
+            cross_1 = (-b + math.sqrt(d))/(2*a)
+            cross_2 = (-b - math.sqrt(d))/(2*a)
     else:
         slope = (y1 - y3) / (x1 - x3)
         zero_pass = (-1 * y1) / slope
@@ -93,6 +96,7 @@ def phase_hist_gen(samplerate,samplerate_name,shaping,datadate,n_box,n_delay,n_a
     phase_time = 1/20000000000
     maxphase = int(20000000000/samplerate + 0.5)
     phase_array = np.arange(0,maxphase)
+    skipped_count = 0
     x = []
     y = []
     x_bins = []
@@ -115,9 +119,12 @@ def phase_hist_gen(samplerate,samplerate_name,shaping,datadate,n_box,n_delay,n_a
             v_mult = mult_wf(v_delay,n_att)
             v_sum = sum_wf(v_mult,v_avg)
             t_cross,_,_,_ = zc_locator(t_avg,v_sum)
-            y_j.append(t_cross)
-            x_j.append(-1*i*phase_time)
-            correction_j.append(-1*i*phase_time - t_cross)
+            if t_cross == 5000:
+                skipped_count += 1
+            else:
+                y_j.append(t_cross)
+                x_j.append(-1*i*phase_time)
+                correction_j.append(-1*i*phase_time - t_cross)
         median_array.append(np.median(np.asarray(y_j)))
         correction_median_array.append(np.median(np.asarray(correction_j)))
         y = y + y_j
@@ -193,10 +200,13 @@ def phase_hist_gen(samplerate,samplerate_name,shaping,datadate,n_box,n_delay,n_a
             v_mult = mult_wf(v_delay,n_att)
             v_sum = sum_wf(v_mult,v_avg)
             t_cross,_,_,_ = zc_locator(t_avg,v_sum)
-            t_corrected = t_cross - median_value + correction_median_array[i]
-            y_corrected_j.append(t_corrected)
-            corrected_correction = -1*i*phase_time - t_corrected
-            corrected_corrections_j.append(corrected_correction)
+            if t_cross == 5000:
+                pass
+            else:
+                t_corrected = t_cross - median_value + correction_median_array[i]
+                y_corrected_j.append(t_corrected)
+                corrected_correction = -1*i*phase_time - t_corrected
+                corrected_corrections_j.append(corrected_correction)
         corrected_median_array.append(np.median(np.asarray(y_corrected_j)))
         corrected_correction_median_array.append(np.median(np.asarray(corrected_corrections_j)))
         y_corrected = y_corrected + y_corrected_j
@@ -240,7 +250,7 @@ def phase_hist_gen(samplerate,samplerate_name,shaping,datadate,n_box,n_delay,n_a
     fig.savefig(savename,dpi = 500)
     plt.close()
 
-    return()
+    return(skipped_count)
 
 #main function
 if __name__ == '__main__':
@@ -250,4 +260,5 @@ if __name__ == '__main__':
     parser.add_argument('--numhead',type=int,help='number of lines to ignore for header',default = 1)
     args = parser.parse_args()
 
-    phase_hist_gen(250000000,'250 Msps','raw_gained_analyzed',args.datadate,2,1,2,args.numhead)
+    skipped_count = phase_hist_gen(250000000,'250 Msps','raw_gained_analyzed',args.datadate,2,1,2,args.numhead)
+    print("%d Files Skippepd!" % skipped_count)
