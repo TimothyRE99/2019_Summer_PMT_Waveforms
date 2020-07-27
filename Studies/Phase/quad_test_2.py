@@ -105,7 +105,7 @@ def phase_hist_gen(samplerate,samplerate_name,shaping,datadate,n_box,n_delay,n_a
     correction_median_array = []
     for i in range(len(phase_array)):
         #print(i)
-        filedir = 'G:/data/watchman/'+str(datadate)+'_watchman_spe/studies/phase/'+samplerate_name+'/averages/phase='+str(phase_array[i])+'/phase_'+shaping+'/'
+        filedir = 'G:/data/watchman/'+str(datadate)+'_watchman_spe/studies/phase/'+samplerate_name+'/averages_splined/phase='+str(phase_array[i])+'/phase_'+shaping+'/'
         Nloops = len(os.listdir(filedir))
         y_j = []
         x_j = []
@@ -187,7 +187,7 @@ def phase_hist_gen(samplerate,samplerate_name,shaping,datadate,n_box,n_delay,n_a
     corrected_correction_median_array = []
     for i in range(len(phase_array)):
         #print(i)
-        filedir = 'G:/data/watchman/'+str(datadate)+'_watchman_spe/studies/phase/'+samplerate_name+'/averages/phase='+str(phase_array[i])+'/phase_'+shaping+'/'
+        filedir = 'G:/data/watchman/'+str(datadate)+'_watchman_spe/studies/phase/'+samplerate_name+'/averages_splined/phase='+str(phase_array[i])+'/phase_'+shaping+'/'
         Nloops = len(os.listdir(filedir))
         corrected_corrections_j = []
         y_corrected_j = []

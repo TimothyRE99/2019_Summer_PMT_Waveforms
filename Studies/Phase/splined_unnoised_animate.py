@@ -33,18 +33,17 @@ def delay_wf(v,n):
     return v1
 
 #runs inversion and attenuation of waveform
-def attenuate_wf(v,n):
-    v1 = -1 * v     #inverts waveform
+def mult_wf(v,n):
     #doesn't attenuate if n = 1
     if n == 1:
-        return v1
-    #divides by n otherwise
-    v1 = v1 / n
-    return v1
+        return v
+    #multiplies by n otherwise
+    v = v * n
+    return v
 
 #sums waveforms together
-def sum_wf(v_att,v_delay):
-    v_sum = np.add(v_att,v_delay)       #adds waveforms together
+def sum_wf(v_mult,v_avg):
+    v_sum = np.add(v_mult,-1*v_avg)       #adds waveforms together
     return v_sum
 
 def zc_locator(t,v):
@@ -100,8 +99,8 @@ def p3(new_fsps,datadate,numhead,scale,phase_array,n_box,n_delay,n_att,num_phase
         v_digit = digitize(v_scaled,0)
         t_avg,v_avg = boxcar_wf(t_array,v_digit,n_box)
         v_delay = delay_wf(v_avg,n_delay)
-        v_att = attenuate_wf(v_avg,n_att)
-        v_sum = sum_wf(v_att,v_delay)
+        v_mult = mult_wf(v_delay,n_att)
+        v_sum = sum_wf(v_mult,v_avg)
         t_cross,_,_ = zc_locator(t_avg,v_sum)
         t_cross_array.append(t_cross)
     t_cross_init = t_cross_array[0]
@@ -125,17 +124,17 @@ def p3(new_fsps,datadate,numhead,scale,phase_array,n_box,n_delay,n_att,num_phase
         t_avg,v_avg = boxcar_wf(t_array,v_digit,n_box)
         t_avg = t_avg - t_cross_init
         v_delay = delay_wf(v_avg,n_delay)
-        v_att = attenuate_wf(v_avg,n_att)
-        v_sum = sum_wf(v_att,v_delay)
+        v_mult = mult_wf(v_delay,n_att)
+        v_sum = sum_wf(v_mult,v_avg)
         t_cross,index_Cross,index_Peak = zc_locator(t_avg,v_sum)
         plt.clf()
         plt.subplot(1,2,1)
         plt.plot(t_avg,v_sum)
-        plt.plot(t_avg,v_delay,color = 'green')
-        plt.plot(t_avg,v_att,color='purple')
+        plt.plot(t_avg,v_mult,color = 'green')
+        plt.plot(t_avg,v_avg*-1,color='purple')
         plt.scatter(t_avg,v_sum)
-        plt.scatter(t_avg,v_delay,color = 'green')
-        plt.scatter(t_avg,v_att,color='purple')
+        plt.scatter(t_avg,v_mult,color = 'green')
+        plt.scatter(t_avg,v_avg*-1,color='purple')
         plt.axhline(0,color='black')
         plt.axvline(t_cross,color='red')
         plt.axvline(true_timing_array[-1*i],color='black')
