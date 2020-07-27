@@ -79,15 +79,15 @@ def zc_locator(t,v):
     index_Peak = indexPeak[0]       #creates peak index into int
     #establishes first crossed index after peak
     indexCross_removed = indexCross[np.where(indexCross > index_Peak)]
-    index_2 = indexCross_removed[0]
+    index_2 = 4#indexCross_removed[0]
     #interpolates time of crossing
     index_1 = index_2 - 1
     index_3 = index_2 + 1
-    if v[index_3] >= v[index_2]:
+    #if v[index_3] >= v[index_2]:
     #if (v[index_1] - v[index_2]) > (v[index_2] - v[index_3]):
-        index_1 = index_1  -  1
-        index_2 = index_2  -  1
-        index_3 = index_3  -  1
+    #    index_1 = index_1  -  1
+    #    index_2 = index_2  -  1
+    #    index_3 = index_3  -  1
     x1 = t[index_1]
     x2 = t[index_2]
     x3 = t[index_3]
@@ -100,8 +100,11 @@ def zc_locator(t,v):
     c = (x2 * x3 * (x2-x3) * y1+x3 * x1 * (x3-x1) * y2+x1 * x2 * (x1-x2) * y3) / denom
     if a != 0:
         d = b**2-4*a*c
-        cross_1 = (-b + math.sqrt(d))/(2*a)
-        cross_2 = (-b - math.sqrt(d))/(2*a)
+        if d < 0:
+            return(5000,5000,5000,5000)
+        else:
+            cross_1 = (-b + math.sqrt(d))/(2*a)
+            cross_2 = (-b - math.sqrt(d))/(2*a)
     else:
         slope = (y1 - y3) / (x1 - x3)
         zero_pass = (-1 * y1) / slope
@@ -114,6 +117,7 @@ def zc_locator(t,v):
     return (t_cross,index_1,index_2,index_3)
 
 def phase_hist_gen(samplerate,samplerate_name,shaping,datadate,n_box,n_delay,n_att,numhead):
+    skipped_count = 0
     phase_time = 1/20000000000
     maxphase = int(20000000000/samplerate + 0.5)
     phase_array = np.arange(0,maxphase)
@@ -133,8 +137,11 @@ def phase_hist_gen(samplerate,samplerate_name,shaping,datadate,n_box,n_delay,n_a
             v_mult = mult_wf(v_delay,n_att)
             v_sum = sum_wf(v_mult,v_avg)
             t_cross,_,_,_ = zc_locator(t_avg,v_sum)
-            y_j.append(t_cross)
-            correction_j.append(-1*i*phase_time - t_cross)
+            if t_cross == 5000:
+                skipped_count += 1
+            else:
+                y_j.append(t_cross)
+                correction_j.append(-1*i*phase_time - t_cross)
         median_array.append(np.median(np.asarray(y_j)))
         correction_median_array.append(np.median(np.asarray(correction_j)))
     correction_median_array = np.asarray(correction_median_array)
@@ -153,9 +160,12 @@ def phase_hist_gen(samplerate,samplerate_name,shaping,datadate,n_box,n_delay,n_a
         v_mult = mult_wf(v_delay,n_att)
         v_sum = sum_wf(v_mult,v_avg)
         t_cross,_,_,_ = zc_locator(t_avg,v_sum)
-        t_cross = t_cross - median_array[0]
-        difference_list.append(-1*i*phase_time - t_cross)
-        corrected_difference_list.append(-1*i*phase_time - (t_cross + correction_median_array[i]))
+        if t_cross == 5000:
+            pass
+        else:
+            t_cross = t_cross - median_array[0]
+            difference_list.append(-1*i*phase_time - t_cross)
+            corrected_difference_list.append(-1*i*phase_time - (t_cross + correction_median_array[i]))
 
     difference_list = np.asarray(difference_list)
     corrected_difference_list = np.asarray(corrected_difference_list)
@@ -206,6 +216,8 @@ def phase_hist_gen(samplerate,samplerate_name,shaping,datadate,n_box,n_delay,n_a
     plt.title('Corrected Timings'+'\nGaussian Fit Values:\nMean = '+gauss_mean+' seconds, '+true_mean+' seconds\nStandard Deviation = '+gauss_std+' seconds, '+true_std+' seconds')
     plt.get_current_fig_manager().window.showMaximized()
     plt.show()
+    
+    return(skipped_count)
 
 #main function
 if __name__ == '__main__':
@@ -215,4 +227,5 @@ if __name__ == '__main__':
     parser.add_argument('--numhead',type=int,help='number of lines to ignore for header',default = 1)
     args = parser.parse_args()
 
-    phase_hist_gen(250000000,'250 Msps','raw_gained_analyzed',args.datadate,2,1,2,args.numhead)
+    skipped_count = phase_hist_gen(250000000,'250 Msps','raw_gained_analyzed',args.datadate,2,1,2,args.numhead)
+    print("%d Files Skippepd!" % skipped_count)
