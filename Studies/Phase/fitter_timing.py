@@ -57,50 +57,17 @@ def fitter_timing(datadate,numhead,samplerate,samplerate_name,shaping):
         return("Failed")
     phase_time = 1/20000000000
     maxphase = int(20000000000/samplerate + 0.5)
-    phase_array = np.arange(0,maxphase)
-    median_array = []
-    correction_median_array = []
-    for i in phase_array:
-        t_fitter,v_fitter,_ = rw('G:/data/watchman/'+datadate+'_watchman_spe/d2/d2_average.txt',1)
-        t_fitter = t_fitter + np.random.normal(loc=0.0, scale = 5e-11)
-        filedir = 'G:/data/watchman/'+str(datadate)+'_watchman_spe/studies/phase/'+samplerate_name+'/phase='+str(i)+'/phase_'+shaping+'/'
-        Nloops = len(os.listdir(filedir))
-        y_j = []
-        correction_j = []
-        for j in range(Nloops):
-            print(str(i)+', '+str(j))
-            scale_array = []
-            filename = filedir + 'Phase--waveforms--%05d.txt' % j
-            (t,v,_) = rw(filename,numhead)
-            v = -1*v
-            scale_1 = scale_determine(t,v,t_fitter,v_fitter,-1)
-            scale_2 = scale_determine(t,v,t_fitter,v_fitter,0)
-            scale_3 = scale_determine(t,v,t_fitter,v_fitter,1)
-            scale_array.append(scale_1)
-            scale_array.append(scale_2)
-            scale_array.append(scale_3)
-            scale = 0
-            for k in scale_array:
-                scale += k
-            scale = scale/len(scale_array)
-            v_fitter = v_fitter*scale
-            t_cross = timing_extraction(t_fitter, v_fitter)
-            t_cross = t_cross[0]
-            y_j.append(t_cross)
-            correction_j.append(-1*i*phase_time - t_cross)
-        median_array.append(np.median(np.asarray(y_j)))
-        correction_median_array.append(np.median(np.asarray(correction_j)))
-    correction_median_array = np.asarray(correction_median_array)
-    correction_median_array = correction_median_array + median_array[0]
 
     difference_list = []
-    corrected_difference_list = []
+    filedir = 'G:/data/watchman/'+str(datadate)+'_watchman_spe/studies/phase/'+samplerate_name
+    Nloops = len(os.listdir(filedir + '/phase=0/phase_'+shaping+'/'))
     for j in range(Nloops):
+        scale_array = []
         print(j)
         i = random.randint(0,maxphase - 1)
         t_fitter,v_fitter,_ = rw('G:/data/watchman/'+datadate+'_watchman_spe/d2/d2_average.txt',1)
-        t_fitter = t_fitter -i*1/20000000000
-        filename = filedir + 'Phase--waveforms--%05d.txt' % j
+        t_fitter = t_fitter - i*1/20000000000
+        filename = filedir + '/phase='+str(i)+'/phase_'+shaping+'/Phase--waveforms--%05d.txt' % j
         (t,v,_) = rw(filename,numhead)
         v = -1*v
         scale_1 = scale_determine(t,v,t_fitter,v_fitter,-1)
@@ -110,38 +77,38 @@ def fitter_timing(datadate,numhead,samplerate,samplerate_name,shaping):
         scale_array.append(scale_2)
         scale_array.append(scale_3)
         scale = 0
+        num_ignore = 0
         for k in scale_array:
-            scale += k
-        scale = scale/len(scale_array)
+            if k < 0:
+                num_ignore += 1
+            else:
+                scale += k
+        scale = scale/(len(scale_array) - num_ignore)
         v_fitter = v_fitter*scale
         t_cross = timing_extraction(t_fitter, v_fitter)
-        t_cross = t_cross - median_array[0]
         difference_list.append(-1*i*phase_time - t_cross)
-        corrected_difference_list.append(-1*i*phase_time - (t_cross + correction_median_array[i]))
+        if difference_list[j] < -1e-9 or difference_list[j] > 1e-9:
+            plt.plot(t,v)
+            plt.scatter(t,v)
+            plt.plot(t_fitter,v_fitter)
+            plt.scatter(t_fitter,v_fitter)
+            plt.axvline(t_cross,color = 'Red')
+            plt.axvline(-1*i*phase_time,color = 'Black')
+            plt.title(str(j))
+            plt.show()
 
     difference_list = np.asarray(difference_list)
-    corrected_difference_list = np.asarray(corrected_difference_list)
 
-    ##histo_mean,histo_std = gauss_histogram(corrected_difference_list)
-    ##corrected_difference_list = corrected_difference_list[(corrected_difference_list >= histo_mean - 10*histo_std) & (corrected_difference_list <= histo_mean + 10*histo_std)]
-    true_mean = '%5g' % np.mean(corrected_difference_list)
-    true_std = '%5g' % np.std(corrected_difference_list)
-    histo_data, bins_data = np.histogram(corrected_difference_list, bins = 200)
+    true_mean = '%5g' % np.mean(difference_list)
+    true_std = '%5g' % np.std(difference_list)
+    histo_data, bins_data = np.histogram(difference_list, bins = 200)
     binwidth = (bins_data[1] - bins_data[0])                    #determining bin width
     #determining bin centers
     binscenters = np.array([0.5 * (bins_data[i] + bins_data[i+1]) for i in range(len(bins_data)-1)])
-    ##b_guess = (len(corrected_difference_list) * binwidth)   #using area approximation to guess at B value
-    ##popt, _ = cf(fit_function,xdata = binscenters,ydata = histo_data, p0 = [b_guess,histo_mean,histo_std], maxfev = 10000)
-    ##gauss_mean = '%s' % float('%.5g' % popt[1])
-    ##gauss_std = '%s' % float('%.5g' % popt[2])
-    #establishing 5 significant figure versions of the mean and std from curve fit
-    ##x_values = np.linspace(popt[1] - 1.5*popt[2], popt[1] + 1.5*popt[2], 100000)    #creating 100,000 x values to map curvefit gaussian to
     plt.rcParams.update({'font.size': 14})
     plt.bar(binscenters, histo_data, width=binwidth)        #plotting histogram
-    ##plt.plot(x_values, fit_function(x_values, *popt), color='darkorange')   #plotting curve fit
     plt.xlabel('True Timing - Recovered Timing')
     plt.ylabel('Count')
-    ##plt.title('Corrected Timings\nGaussian Fit Values:\nMean = '+gauss_mean+' seconds, '+true_mean+' seconds\nStandard Deviation = '+gauss_std+' seconds, '+true_std+' seconds')
     plt.title('Corrected Timings\nGaussian Fite Values:\nMean = '+true_mean+' seconds\nStandard Deviation ='+true_std+' seconds')
     plt.get_current_fig_manager().window.showMaximized()
     plt.show()
