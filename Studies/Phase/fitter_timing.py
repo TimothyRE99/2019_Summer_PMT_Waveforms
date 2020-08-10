@@ -19,6 +19,10 @@ def timing_extraction(t_fitter,v_fitter):
     t_cross = t_fitter[v_fitter_zero_index]
     return(t_cross)
 
+def chi_squared(observed,expected):
+    chi2 = np.sum(np.true_divide(np.square(observed - expected),expected))
+    return(chi2)
+
 def fitter_timing(datadate,numhead,samplerate,samplerate_name,shaping):
     if samplerate_name == 'INVALID':
         return("Failed")
@@ -29,7 +33,8 @@ def fitter_timing(datadate,numhead,samplerate,samplerate_name,shaping):
     shifts = np.arange(0,80/20000000000,1/20000000000)
     for shift in shifts:
         pass
-    plt.show()
+    chi2 = chi_squared(np.array([1,2,3]),np.array([2,3,4]))
+    print(chi2)
     return("Passed")
 
 if __name__ == '__main__':
