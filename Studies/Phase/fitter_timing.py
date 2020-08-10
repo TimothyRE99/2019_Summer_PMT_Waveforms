@@ -10,7 +10,9 @@ import scipy.interpolate as it
 from unispline import unispline as us
 
 def horiz_align(t,v,t_fitter,v_fitter,i):
-    return(t_fitter - i*1/20000000000)
+    offset = t_fitter[i] - t[0]
+    t_fitter = t_fitter - offset
+    return(t_fitter)
 
 def scale_determine(t,v,t_fitter,v_fitter,offset):
     v_max = np.amax(v)
@@ -75,7 +77,7 @@ def fitter_timing(datadate,numhead,samplerate,samplerate_name,shaping):
     true_mean = '%5g' % np.mean(difference_list)
     true_std = '%5g' % np.std(difference_list)
     #difference_list = np.append(difference_list,[-2.5e-10,2.5e-10])
-    histo_data, bins_data = np.histogram(difference_list, bins = 15)
+    histo_data, bins_data = np.histogram(difference_list, bins = 200)
     binwidth = (bins_data[1] - bins_data[0])                    #determining bin width
     #determining bin centers
     binscenters = np.array([0.5 * (bins_data[i] + bins_data[i+1]) for i in range(len(bins_data)-1)])
