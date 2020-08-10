@@ -67,15 +67,6 @@ def fitter_timing(datadate,numhead,samplerate,samplerate_name,shaping):
         v_fitter = v_fitter*scale
         t_cross = timing_extraction(t_fitter, v_fitter)
         difference_list.append(-1*i*phase_time - t_cross)
-        if difference_list[j] < -1e-9 or difference_list[j] > 1e-9:
-            plt.plot(t,v)
-            plt.scatter(t,v)
-            plt.plot(t_fitter,v_fitter)
-            plt.scatter(t_fitter,v_fitter)
-            plt.axvline(t_cross,color = 'Red')
-            plt.axvline(-1*i*phase_time,color = 'Black')
-            plt.title(str(j))
-            plt.show()
 
     difference_list = np.asarray(difference_list)
     median_value = np.median(difference_list)
