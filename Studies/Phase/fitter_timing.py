@@ -24,7 +24,7 @@ def fitter_timing(datadate,numhead,samplerate,samplerate_name,shaping):
         return("Failed")
     t_fitter,v_fitter,_ = rw('G:/data/watchman/'+datadate+'_watchman_spe/d2/d2_average.txt',1)
     uspl = us(t_fitter,v_fitter)
-    t,v,_ = rw('G:/data/watchman/'+datadate+'_watchman_spe/studies/phase/250 Msps/phase=25/phase_raw_gained_analyzed/Phase--waveforms--00000.txt',5)
+    t,v,_ = rw('G:/data/watchman/'+datadate+'_watchman_spe/studies/phase/'+samplerate_name+'/phase=25/phase_'+shaping+'/Phase--waveforms--00000.txt',5)
     v = -1*v
     return("Passed")
 
