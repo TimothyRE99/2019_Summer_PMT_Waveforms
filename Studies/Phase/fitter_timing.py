@@ -27,7 +27,7 @@ def fitter_timing(datadate,numhead,samplerate,samplerate_name,shaping):
     t,v,_ = rw('G:/data/watchman/'+datadate+'_watchman_spe/studies/phase/'+samplerate_name+'/phase=25/phase_'+shaping+'/Phase--waveforms--00000.txt',5)
     v = -1*v
     shifts = np.arange(0,80/20000000000,1/20000000000)
-    for i in shifts:
+    for shift in shifts:
         pass
     plt.show()
     return("Passed")
