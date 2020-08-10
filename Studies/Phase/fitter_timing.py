@@ -83,8 +83,7 @@ def fitter_timing(datadate,numhead,samplerate,samplerate_name,shaping):
 
     true_mean = '%5g' % np.mean(difference_list)
     true_std = '%5g' % np.std(difference_list)
-    difference_list = np.concatenate(difference_list,[-1e-9,1e-9])
-    print(difference_list)
+    difference_list = np.append(difference_list,[-1e-9,1e-9])
     histo_data, bins_data = np.histogram(difference_list, bins = 200)
     binwidth = (bins_data[1] - bins_data[0])                    #determining bin width
     #determining bin centers
@@ -93,7 +92,7 @@ def fitter_timing(datadate,numhead,samplerate,samplerate_name,shaping):
     plt.bar(binscenters, histo_data, width=binwidth)        #plotting histogram
     plt.xlabel('True Timing - Recovered Timing')
     plt.ylabel('Count')
-    plt.title('Corrected Timings\nGaussian Values:\nMean = '+true_mean+' seconds\nStandard Deviation ='+true_std+' seconds')
+    plt.title('Corrected Timings\nGaussian Fite Values:\nMean = '+true_mean+' seconds\nStandard Deviation ='+true_std+' seconds')
     plt.get_current_fig_manager().window.showMaximized()
     plt.show()
 
