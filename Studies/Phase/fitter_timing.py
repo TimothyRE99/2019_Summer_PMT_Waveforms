@@ -8,29 +8,9 @@ from readwaveform import read_waveform as rw
 from writewaveform import write_waveform as ww
 import scipy.interpolate as it
 from unispline import unispline as us
-from scipy.optimize import curve_fit as cf
 
-def gauss_histogram(histo):
-    histo = np.sort(histo)
-    #splitting off array into upper and lower halves
-    histo_low = np.array_split(histo,2)[0]
-    histo_high = np.array_split(histo,2)[1]
-    #determining median of each half (aka, 1st and 3rd quartiles)
-    medi_low = np.median(histo_low)
-    medi_high = np.median(histo_high)
-    iqr = (medi_high - medi_low)                    #calculating inter-quartile range
-    #calculating outlier thresholds
-    out_low = (medi_low - 1.5*iqr)
-    out_high = (medi_low + 1.5*iqr)
-    histo_out_remove = histo[np.where((out_low <= histo) & (histo <= out_high))]    #creating new array with outliers removed
-    #determining mean and std guesses for central data
-    histo_mean = np.mean(histo_out_remove)
-    histo_std = np.std(histo_out_remove)
-    return (histo_mean,histo_std)
-
-def fit_function(x,B,mu,sigma):
-    #funcion for a gaussian scaled by factor B
-    return (B * (1/np.sqrt(2 * np.pi * sigma**2)) * np.exp(-1.0 * (x - mu)**2 / (2 * sigma**2)))
+def horiz_align(t,v,t_fitter,v_fitter,i):
+    return(t_fitter - i*1/20000000000)
 
 def scale_determine(t,v,t_fitter,v_fitter,offset):
     v_max = np.amax(v)
@@ -66,10 +46,10 @@ def fitter_timing(datadate,numhead,samplerate,samplerate_name,shaping):
         print(j)
         i = random.randint(0,maxphase - 1)
         t_fitter,v_fitter,_ = rw('G:/data/watchman/'+datadate+'_watchman_spe/d2/d2_average.txt',1)
-        t_fitter = t_fitter - i*1/20000000000
         filename = filedir + '/phase='+str(i)+'/phase_'+shaping+'/Phase--waveforms--%05d.txt' % j
         (t,v,_) = rw(filename,numhead)
         v = -1*v
+        t_fitter = horiz_align(t,v,t_fitter,v_fitter,i)
         scale_1 = scale_determine(t,v,t_fitter,v_fitter,-1)
         scale_2 = scale_determine(t,v,t_fitter,v_fitter,0)
         scale_3 = scale_determine(t,v,t_fitter,v_fitter,1)
@@ -98,6 +78,8 @@ def fitter_timing(datadate,numhead,samplerate,samplerate_name,shaping):
             plt.show()
 
     difference_list = np.asarray(difference_list)
+    median_value = np.median(difference_list)
+    difference_list -= median_value
 
     true_mean = '%5g' % np.mean(difference_list)
     true_std = '%5g' % np.std(difference_list)
