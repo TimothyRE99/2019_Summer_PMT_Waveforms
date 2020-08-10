@@ -33,8 +33,6 @@ def fitter_timing(datadate,numhead,samplerate,samplerate_name,shaping):
     shifts = np.arange(0,80/20000000000,1/20000000000)
     for shift in shifts:
         pass
-    chi2 = chi_squared(np.array([1,2,3]),np.array([2,3,4]))
-    print(chi2)
     return("Passed")
 
 if __name__ == '__main__':
