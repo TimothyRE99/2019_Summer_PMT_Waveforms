@@ -93,6 +93,12 @@ def fitter_timing(datadate,numhead,samplerate,samplerate_name,shaping):
                 x_min = x
         v_fit = x_min*uspl(t_fitter + shift_min)
         t_cross = timing_extraction(t_fitter,v_fit)
+        if (-1*j*phase_time - t_cross) < -1.2e-7:
+            plt.plot(t,v)
+            plt.plot(t_fitter,v_fit)
+            plt.scatter(ET,EV)
+            plt.get_current_fig_manager().window.showMaximized()
+            plt.show()
         difference_list.append(-1*j*phase_time - t_cross)
     difference_list = np.asarray(difference_list)
     ##histo_mean,histo_std = gauss_histogram(difference_list)
