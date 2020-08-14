@@ -30,9 +30,37 @@ def fitter_timing(datadate,numhead,samplerate,samplerate_name,shaping):
     uspl = us(t_fitter,v_fitter)
     t,v,_ = rw('G:/data/watchman/'+datadate+'_watchman_spe/studies/phase/'+samplerate_name+'/phase=25/phase_'+shaping+'/Phase--waveforms--00000.txt',5)
     v = -1*v
+    v_max = np.amax(v)
+    i2 = np.where(v == v_max)[0][0]
+    i1 = i2 - 1
+    i3 = i2 + 1
+    ET = np.array([t[i1],t[i2],t[i3]])
+    EV = np.array([v[i1],v[i2],v[i3]])
+    chi2_min = -1
+    x_min = -1
+    shift_min = -1
     shifts = np.arange(0,80/20000000000,1/20000000000)
     for shift in shifts:
-        pass
+        pre_OV = uspl(ET + shift)
+        pre_OV_square = np.square(pre_OV)
+        pre_bott = np.true_divide(pre_OV_square,EV)
+        top = np.sum(pre_OV)
+        bott = np.sum(pre_bott)
+        x = top/bott
+        OV = x*pre_OV
+        chi2 = chi_squared(OV,EV)
+        if chi2_min < 0:
+            shift_min = shift
+            chi2_min = chi2
+            x_min = x
+        elif chi2 < chi2_min:
+            shift_min = shift
+            chi2_min = chi2
+            x_min = x
+    v_fit = x_min*uspl(t_fitter + shift_min)
+    plt.plot(t,v)
+    plt.plot(t_fitter,v_fit)
+    plt.show()
     return("Passed")
 
 if __name__ == '__main__':
