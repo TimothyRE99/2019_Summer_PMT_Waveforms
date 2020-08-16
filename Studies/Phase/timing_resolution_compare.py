@@ -97,7 +97,7 @@ def phase_hist_gen(samplerate,samplerate_name,shaping,datadate,n_box,n_delay,n_a
     median_array = []
     correction_median_array = []
     for i in range(len(phase_array)):
-        filedir = 'G:/data/watchman/'+str(datadate)+'_watchman_spe/studies/phase/'+samplerate_name+'/averages_splined/phase='+str(phase_array[i])+'/phase_'+shaping+'/'
+        filedir = 'G:/data/watchman/'+str(datadate)+'_watchman_spe/studies/phase/'+samplerate_name+'/phase='+str(phase_array[i])+'/phase_'+shaping+'/'
         Nloops = len(os.listdir(filedir))
         y_j = []
         correction_j = []
@@ -122,7 +122,7 @@ def phase_hist_gen(samplerate,samplerate_name,shaping,datadate,n_box,n_delay,n_a
     for j in range(Nloops):
         print(j)
         i = random.randint(0,maxphase - 1)
-        filedir = 'G:/data/watchman/'+str(datadate)+'_watchman_spe/studies/phase/'+samplerate_name+'/averages_splined/phase='+str(i)+'/phase_'+shaping+'/'
+        filedir = 'G:/data/watchman/'+str(datadate)+'_watchman_spe/studies/phase/'+samplerate_name+'/phase='+str(i)+'/phase_'+shaping+'/'
         filename = filedir + 'Phase--waveforms--%05d.txt' % j
         (t,v,_) = rw(filename,numhead)
         t_avg,v_avg = boxcar_wf(t,v,n_box)
@@ -188,7 +188,7 @@ if __name__ == '__main__':
     import argparse
     parser = argparse.ArgumentParser(prog="timing_resolution_compare",description="Generates 1D Histograms of timing resolution with random sampled phase.")
     parser.add_argument('--datadate',type = str,help = 'date when data was gathered, YYYYMMDD', default = '20190724')
-    parser.add_argument('--numhead',type=int,help='number of lines to ignore for header',default = 1)
+    parser.add_argument('--numhead',type=int,help='number of lines to ignore for header',default = 5)
     args = parser.parse_args()
 
     phase_hist_gen(250000000,'250 Msps','raw_gained_analyzed',args.datadate,2,1,2,args.numhead)
