@@ -43,7 +43,7 @@ def timing_extraction(t_fitter,v_fitter):
     return(t_cross)
 
 def chi_squared(observed,expected):
-    chi2 = np.sum(np.true_divide(np.square(observed - expected),expected))
+    chi2 = np.sum(np.true_divide(np.square(observed - expected),expected+10))
     return(chi2)
 
 def fitter_timing(datadate,numhead,samplerate,samplerate_name,shaping):
@@ -77,8 +77,6 @@ def fitter_timing(datadate,numhead,samplerate,samplerate_name,shaping):
             i2 = np.where(v == v_max)[0][0]
             i1 = i2 - 1
             i3 = i2 + 1
-            if v[i1] <= 0:
-                i1 = i2 + 2
             ET = np.array([t[i1],t[i2],t[i3]])
             EV = np.array([v[i1],v[i2],v[i3]])
             chi2_min = -1
@@ -87,10 +85,8 @@ def fitter_timing(datadate,numhead,samplerate,samplerate_name,shaping):
             shifts = np.arange(0,80/20000000000,1/20000000000)
             for shift in shifts:
                 pre_OV = uspl(ET + shift)
-                pre_OV_square = np.square(pre_OV)
-                pre_bott = np.true_divide(pre_OV_square,EV)
-                top = np.sum(pre_OV)
-                bott = np.sum(pre_bott)
+                top = np.sum(np.true_divide(np.multiply(pre_OV,EV),EV+10))
+                bott = np.sum(np.true_divide(np.square(pre_OV),EV+10))
                 x = top/bott
                 OV = x*pre_OV
                 chi2 = chi_squared(OV,EV)
@@ -189,22 +185,14 @@ def fitter_timing(datadate,numhead,samplerate,samplerate_name,shaping):
             i3 = i2 + 1
             ET = np.array([t[i1],t[i2],t[i3]])
             EV = np.array([v[i1],v[i2],v[i3]])
-            if v[i1] <= 0:
-                ET = np.delete(ET,0)
-                EV = np.delete(EV,0)
-            if v[i3] <= 0:
-                ET = np.delete(ET,2)
-                EV = np.delete(EV,2)
             chi2_min = -1
             x_min = -1
             shift_min = -1
             shifts = np.arange(0,80/20000000000,1/20000000000)
             for shift in shifts:
                 pre_OV = uspl(ET + shift)
-                pre_OV_square = np.square(pre_OV)
-                pre_bott = np.true_divide(pre_OV_square,EV)
-                top = np.sum(pre_OV)
-                bott = np.sum(pre_bott)
+                top = np.sum(np.true_divide(np.multiply(pre_OV,EV),EV+10))
+                bott = np.sum(np.true_divide(np.square(pre_OV),EV+10))
                 x = top/bott
                 OV = x*pre_OV
                 chi2 = chi_squared(OV,EV)
