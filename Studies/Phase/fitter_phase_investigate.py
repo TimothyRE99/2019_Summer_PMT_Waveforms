@@ -1,6 +1,5 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from matplotlib.colors import LogNorm
 import os
 import random
 import math
@@ -131,7 +130,7 @@ def fitter_timing(datadate,numhead,samplerate,samplerate_name,shaping):
     x_bins = np.flip(x_bins)
 
     fig,ax = plt.subplots()
-    h = ax.hist2d(x,y,bins = [x_bins,y_bins],norm = LogNorm())
+    h = ax.hist2d(x,y,bins = [x_bins,y_bins])
     plt.colorbar(h[3],ax = ax)
     ax.plot(np.flip(x_bins)-0.5*phase_time,median_array,c = 'Green')
     ax.plot(np.flip(x_bins)-0.5*phase_time,np.flip(x_bins)-0.5*phase_time,c = 'Green',ls = '--')
@@ -149,7 +148,7 @@ def fitter_timing(datadate,numhead,samplerate,samplerate_name,shaping):
     plt.close()
 
     fig,ax = plt.subplots()
-    h = ax.hist2d(x,correction,bins = [x_bins,y_bins_corrections],norm = LogNorm())
+    h = ax.hist2d(x,correction,bins = [x_bins,y_bins_corrections])
     plt.colorbar(h[3],ax = ax)
     ax.plot(np.flip(x_bins)-0.5*phase_time,correction_median_array,c = 'Green')
     ax.set_title('Timing Corrections vs. True Timing')
@@ -219,7 +218,7 @@ def fitter_timing(datadate,numhead,samplerate,samplerate_name,shaping):
     corrected_corrections = np.asarray(corrected_corrections)
 
     fig,ax = plt.subplots()
-    h = ax.hist2d(x,y_corrected,bins = [x_bins,y_bins],norm = LogNorm())
+    h = ax.hist2d(x,y_corrected,bins = [x_bins,y_bins])
     plt.colorbar(h[3],ax = ax)
     ax.plot(np.flip(x_bins)-0.5*phase_time,corrected_median_array,c = 'Green')
     ax.plot(np.flip(x_bins)-0.5*phase_time,np.flip(x_bins)-0.5*phase_time,c = 'Green',ls = '--')
@@ -237,7 +236,7 @@ def fitter_timing(datadate,numhead,samplerate,samplerate_name,shaping):
     plt.close()
 
     fig,ax = plt.subplots()
-    h = ax.hist2d(x,corrected_corrections,bins = [x_bins,y_bins_corrections],norm = LogNorm())
+    h = ax.hist2d(x,corrected_corrections,bins = [x_bins,y_bins_corrections])
     plt.colorbar(h[3],ax = ax)
     ax.plot(np.flip(x_bins)-0.5*phase_time,corrected_correction_median_array,c = 'Green')
     ax.set_title('Timing Corrections vs. True Timing')
