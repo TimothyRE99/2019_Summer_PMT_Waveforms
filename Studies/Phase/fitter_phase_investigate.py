@@ -147,7 +147,7 @@ def fitter_timing(datadate,numhead,samplerate,samplerate_name,shaping):
     savedir = 'G:/data/watchman/'+str(datadate)+'_watchman_spe/studies/phase/Histograms/' + samplerate_name + '/'
     if not os.path.exists(savedir):
         os.makedirs(savedir)
-    filename = 'fitter_differences_uncorrected.png'
+    filename = 'fitter_recovered_uncorrected.png'
     savename = savedir + filename
     fig.savefig(savename,dpi = 500)
     plt.close()
@@ -247,7 +247,7 @@ def fitter_timing(datadate,numhead,samplerate,samplerate_name,shaping):
     savedir = 'G:/data/watchman/'+str(datadate)+'_watchman_spe/studies/phase/Histograms/' + samplerate_name + '/'
     if not os.path.exists(savedir):
         os.makedirs(savedir)
-    filename = 'fitter_differences_corrected.png'
+    filename = 'fitter_recovered_corrected.png'
     savename = savedir + filename
     fig.savefig(savename,dpi = 500)
     plt.close()
