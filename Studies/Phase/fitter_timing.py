@@ -43,7 +43,7 @@ def timing_extraction(t_fitter,v_fitter):
     return(t_cross)
 
 def chi_squared(observed,expected):
-    chi2 = np.sum(np.true_divide(np.square(observed - expected),expected+10))
+    chi2 = np.sum(np.true_divide(np.square(observed - expected),expected+100))
     return(chi2)
 
 def fitter_timing(datadate,numhead,samplerate,samplerate_name,shaping):
@@ -74,8 +74,8 @@ def fitter_timing(datadate,numhead,samplerate,samplerate_name,shaping):
         shifts = np.arange(0,80/20000000000,1/20000000000)
         for shift in shifts:
             pre_OV = uspl(ET + shift)
-            top = np.sum(np.true_divide(np.multiply(pre_OV,EV),EV+10))
-            bott = np.sum(np.true_divide(np.square(pre_OV),EV+10))
+            top = np.sum(np.true_divide(np.multiply(pre_OV,EV),EV+100))
+            bott = np.sum(np.true_divide(np.square(pre_OV),EV+100))
             x = top/bott
             OV = x*pre_OV
             chi2 = chi_squared(OV,EV)
