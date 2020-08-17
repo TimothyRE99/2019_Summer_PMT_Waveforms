@@ -66,10 +66,14 @@ def fitter_timing(datadate,numhead,samplerate,samplerate_name,shaping):
         i2 = np.where(v == v_max)[0][0]
         i1 = i2 - 1
         i3 = i2 + 1
-        if v[i1] <= 0:
-            i1 = i2 + 2
         ET = np.array([t[i1],t[i2],t[i3]])
         EV = np.array([v[i1],v[i2],v[i3]])
+        if v[i1] <= 0:
+            ET = np.delete(ET,0)
+            EV = np.delete(EV,0)
+        if v[i3] <= 0:
+            ET = np.delete(ET,2)
+            EV = np.delete(EV,2)
         chi2_min = -1
         x_min = -1
         shift_min = -1

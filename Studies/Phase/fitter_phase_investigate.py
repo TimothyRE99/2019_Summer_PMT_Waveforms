@@ -187,10 +187,14 @@ def fitter_timing(datadate,numhead,samplerate,samplerate_name,shaping):
             i2 = np.where(v == v_max)[0][0]
             i1 = i2 - 1
             i3 = i2 + 1
-            if v[i1] <= 0:
-                i1 = i2 + 2
             ET = np.array([t[i1],t[i2],t[i3]])
             EV = np.array([v[i1],v[i2],v[i3]])
+            if v[i1] <= 0:
+                ET = np.delete(ET,0)
+                EV = np.delete(EV,0)
+            if v[i3] <= 0:
+                ET = np.delete(ET,2)
+                EV = np.delete(EV,2)
             chi2_min = -1
             x_min = -1
             shift_min = -1
@@ -214,14 +218,6 @@ def fitter_timing(datadate,numhead,samplerate,samplerate_name,shaping):
                     x_min = x
             v_fit = x_min*uspl(t_fitter + shift_min)
             t_cross = timing_extraction(t_fitter,v_fit)
-            if (-1*i*phase_time - t_cross) < -1.e-7:
-                plt.plot(t,v)
-                plt.plot(t_fitter,v_fit)
-                plt.scatter(ET,EV)
-                plt.axvline(-1*i*phase_time,color = 'Black')
-                plt.axvline(t_cross,color = 'Red')
-                plt.get_current_fig_manager().window.showMaximized()
-                plt.show()
             t_corrected = t_cross - median_value + correction_median_array[i]
             y_corrected_j.append(t_corrected)
             corrected_correction = -1*i*phase_time - t_corrected
