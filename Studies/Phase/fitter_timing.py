@@ -56,6 +56,7 @@ def fitter_timing(datadate,numhead,samplerate,samplerate_name,shaping):
     filedir = 'G:/data/watchman/'+str(datadate)+'_watchman_spe/studies/phase/'+samplerate_name+'/'
     Nloops = len(os.listdir(filedir + 'phase=0/phase_'+shaping))
     difference_list = []
+    chi_list = []
     for i in range(Nloops):
         print(i)
         j = random.randint(0,maxphase - 1)
@@ -99,15 +100,20 @@ def fitter_timing(datadate,numhead,samplerate,samplerate_name,shaping):
                 y_min = y
         v_fit = x_min*uspl(t_fitter + shift_min) + y_min
         t_cross = timing_extraction(t_fitter,v_fit)
-        ##if abs(-1*j*phase_time - t_cross) > 1e-9:
+        ##if abs(-1*j*phase_time - t_cross) >= 1e-9 and chi2_min <= 2:
         ##    plt.plot(t,v)
         ##    plt.plot(t_fitter,v_fit)
         ##    plt.plot(t_exact,v_exact)
         ##    plt.scatter(ET,EV)
+        ##    plt.axvline(-1*j*phase_time)
+        ##    plt.axvline(t_cross)
+        ##    plt.title(str(-1*j*phase_time - t_cross) + ', ' + str(chi2_min) + ', ' + str(i) + ', ' + str(j))
         ##    plt.get_current_fig_manager().window.showMaximized()
         ##    plt.show()
-        difference_list.append(-1*j*phase_time - t_cross)
+        difference_list.append((-1*j*phase_time - t_cross)[0])
+        chi_list.append(chi2_min)
     difference_list = np.asarray(difference_list)
+    chi_list = np.asarray(chi_list)
     true_mean = '%5g' % np.mean(difference_list)
     true_std = '%5g' % np.std(difference_list)
     histo_data, bins_data = np.histogram(difference_list, bins = 100)
@@ -122,6 +128,29 @@ def fitter_timing(datadate,numhead,samplerate,samplerate_name,shaping):
     plt.title('Corrected Timings\nGaussian Fit Values:\nMean = '+true_mean+' seconds\nStandard Deviation = '+true_std+' seconds')
     plt.get_current_fig_manager().window.showMaximized()
     plt.show()
+    plt.close()
+    histo_data, bins_data = np.histogram(chi_list, bins = 100)
+    binwidth = (bins_data[1] - bins_data[0])                    #determining bin width
+    #determining bin centers
+    binscenters = np.array([0.5 * (bins_data[i] + bins_data[i+1]) for i in range(len(bins_data)-1)])
+    #establishing 5 significant figure versions of the mean and std from curve fit
+    plt.rcParams.update({'font.size': 14})
+    plt.bar(binscenters, histo_data, width=binwidth)        #plotting histogram
+    plt.xlabel('Chi Squared')
+    plt.ylabel('Count')
+    plt.title('Chi Squared Counts')
+    plt.get_current_fig_manager().window.showMaximized()
+    plt.show()
+    plt.close()
+    _,ax = plt.subplots()
+    h = ax.hist2d(difference_list,chi_list,bins=100,norm = LogNorm())
+    plt.colorbar(h[3],ax = ax)
+    ax.set_title('Chi Squared vs. Timing Corrections')
+    ax.set_xlabel('Timing Corrections')
+    ax.set_ylabel('Chi Squared')
+    plt.get_current_fig_manager().window.showMaximized()
+    plt.show()
+    plt.close()
     return("Passed")
 
 if __name__ == '__main__':
