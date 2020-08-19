@@ -43,7 +43,7 @@ def timing_extraction(t_fitter,v_fitter):
     return(t_cross)
 
 def chi_squared(observed,expected):
-    chi2 = np.sum(np.true_divide(np.square(observed - expected),expected+100))
+    chi2 = np.sum(np.square(observed - expected))
     return(chi2)
 
 def fitter_timing(datadate,numhead,samplerate,samplerate_name,shaping):
