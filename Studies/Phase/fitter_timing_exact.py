@@ -90,15 +90,6 @@ def fitter_timing(datadate,numhead,samplerate,samplerate_name,shaping):
                 y_min = y
         v_fit = x_min*uspl(t_fitter + shift_min) + y_min
         t_cross = timing_extraction(t_fitter,v_fit)
-        ##_,ax = plt.subplots()
-        ##ax.plot(t,v)
-        ##ax.plot(t_fitter,v_fit)
-        ##ax.scatter(ET,EV)
-        ##ax.axvline(t_cross)
-        ##ax.axvline(0)
-        ##ax.set_title(str(t_cross) + ', ' + str(chi2_min) + ', ' + str(i))
-        ##plt.get_current_fig_manager().window.showMaximized()
-        ##plt.show()
         difference_list.append((t_cross)[0])
         chi_list.append(chi2_min)
     difference_list = np.asarray(difference_list)
