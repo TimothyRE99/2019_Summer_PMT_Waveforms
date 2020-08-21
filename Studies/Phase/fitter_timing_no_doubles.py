@@ -63,6 +63,7 @@ def fitter_timing(datadate,numhead,samplerate,samplerate_name,shaping):
     for i in range(Nloops):
         print(i)
         if '%05d.png' % i in doubles_array:
+            print('Skipped!')
             pass
         else:
             j = random.randint(0,maxphase - 1)
