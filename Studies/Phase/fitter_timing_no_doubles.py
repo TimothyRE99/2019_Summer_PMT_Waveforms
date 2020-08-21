@@ -54,71 +54,53 @@ def fitter_timing(datadate,numhead,samplerate,samplerate_name,shaping):
     t_fitter,v_fitter,_ = rw('G:/data/watchman/'+datadate+'_watchman_spe/d2/d2_average.txt',1)
     uspl = us(t_fitter,v_fitter)
     filedir = 'G:/data/watchman/'+str(datadate)+'_watchman_spe/studies/phase/'+samplerate_name+'/'
+    doubles_dir = 'G:/data/watchman/20190724_watchman_spe/studies/phase/Histograms/250 Msps/Doubles/'
+    doubles_array = os.listdir(doubles_dir)
+    print(doubles_array)
     Nloops = len(os.listdir(filedir + 'phase=0/phase_'+shaping))
     difference_list = []
     chi_list = []
     for i in range(Nloops):
         print(i)
-        j = random.randint(0,maxphase - 1)
-        filename = filedir + 'phase='+str(j)+'/phase_'+shaping+'/Phase--waveforms--%05d.txt' % i
-        ##filename_exact = 'G:/data/watchman/'+str(datadate)+'_watchman_spe/d3/d3_raw_gained/D3--waveforms--%05d.txt' % i
-        t,v,_ = rw(filename,5)
-        v = -1*v
-        ##t_exact,v_exact,_ = rw(filename_exact,5)
-        ##t_exact -= 1*j*phase_time
-        ##time_locator = t[4]
-        ##t_min_array = abs(t_exact - time_locator)
-        ##time_index = np.where(t_min_array == np.amin(t_min_array))[0][0]
-        ##v_exact = v_exact * v[4]/v_exact[time_index]
-        ET = t[0:10]
-        EV = v[0:10]
-        chi2_min = -1
-        x_min = -1
-        y_min = -1
-        shift_min = -1
-        shifts = np.arange(0,80/20000000000,1e-11)
-        for shift in shifts:
-            pre_OV = uspl(ET + shift)
-            A = np.array([[np.sum(np.square(pre_OV)),np.sum(pre_OV),np.sum(np.multiply(pre_OV,EV))],[np.sum(pre_OV),len(EV),np.sum(EV)]])
-            A[0] = A[0]/A[0][0]
-            A[1] = np.subtract(A[1],A[1][0]*A[0])
-            A[1] = A[1]/A[1][1]
-            A[0] = np.subtract(A[0],A[0][1]*A[1])
-            x = A[0][2]
-            y = A[1][2]
-            OV = x*pre_OV + y
-            chi2 = chi_squared(OV,EV)
-            if chi2_min < 0:
-                shift_min = shift
-                chi2_min = chi2
-                x_min = x
-                y_min = y
-            elif chi2 < chi2_min:
-                shift_min = shift
-                chi2_min = chi2
-                x_min = x
-                y_min = y
-        v_fit = x_min*uspl(t_fitter + shift_min) + y_min
-        t_cross = timing_extraction(t_fitter,v_fit)
-        ##if abs(-1*j*phase_time - t_cross) >= 1e-9 or chi2_min >= 5000:
-        ##    fig,ax = plt.subplots()
-        ##    ax.plot(t,v)
-        ##    ax.plot(t_fitter,v_fit)
-        ##    ax.plot(t_exact,v_exact)
-        ##    ax.scatter(ET,EV)
-        ##    ax.axvline(-1*j*phase_time)
-        ##    ax.axvline(t_cross)
-        ##    ax.set_title(str(-1*j*phase_time - t_cross) + ', ' + str(chi2_min) + ', ' + str(i) + ', ' + str(j))
-        ##    plt.get_current_fig_manager().window.showMaximized()
-        ##    plt.show(block = False)
-        ##    plt.pause(0.1)
-        ##    fig.savefig('G:/data/watchman/20190724_watchman_spe/studies/phase/Histograms/250 Msps/Doubles/%05d.png' % i,dpi = 500)
-        ##    print("Was double!")
-        ##    plt.close()
-        ##else:
-        ##   difference_list.append((-1*j*phase_time - t_cross)[0])
-        difference_list.append((-1*j*phase_time - t_cross)[0])
-        chi_list.append(chi2_min)
+        if '%05d.png' % i in doubles_array:
+            pass
+        else:
+            j = random.randint(0,maxphase - 1)
+            filename = filedir + 'phase='+str(j)+'/phase_'+shaping+'/Phase--waveforms--%05d.txt' % i
+            t,v,_ = rw(filename,5)
+            v = -1*v
+            ET = t[0:10]
+            EV = v[0:10]
+            chi2_min = -1
+            x_min = -1
+            y_min = -1
+            shift_min = -1
+            shifts = np.arange(0,80/20000000000,1e-11)
+            for shift in shifts:
+                pre_OV = uspl(ET + shift)
+                A = np.array([[np.sum(np.square(pre_OV)),np.sum(pre_OV),np.sum(np.multiply(pre_OV,EV))],[np.sum(pre_OV),len(EV),np.sum(EV)]])
+                A[0] = A[0]/A[0][0]
+                A[1] = np.subtract(A[1],A[1][0]*A[0])
+                A[1] = A[1]/A[1][1]
+                A[0] = np.subtract(A[0],A[0][1]*A[1])
+                x = A[0][2]
+                y = A[1][2]
+                OV = x*pre_OV + y
+                chi2 = chi_squared(OV,EV)
+                if chi2_min < 0:
+                    shift_min = shift
+                    chi2_min = chi2
+                    x_min = x
+                    y_min = y
+                elif chi2 < chi2_min:
+                    shift_min = shift
+                    chi2_min = chi2
+                    x_min = x
+                    y_min = y
+            v_fit = x_min*uspl(t_fitter + shift_min) + y_min
+            t_cross = timing_extraction(t_fitter,v_fit)
+            difference_list.append((-1*j*phase_time - t_cross)[0])
+            chi_list.append(chi2_min)
     difference_list = np.asarray(difference_list)
     chi_list = np.asarray(chi_list)
     true_mean = '%5g' % np.mean(difference_list)
