@@ -107,7 +107,7 @@ def fitter_timing(datadate,numhead,samplerate,samplerate_name,shaping):
         ##    ax.plot(t_exact,v_exact)
         ##    ax.scatter(ET,EV)
         ##    ax.axvline(-1*j*phase_time,color = 'Black')
-        ##    ax.axvline(t_cross,color = 'Red)
+        ##    ax.axvline(t_cross,color = 'Red')
         ##    ax.set_title(str(-1*j*phase_time - t_cross) + ', ' + str(chi2_min) + ', ' + str(i) + ', ' + str(j))
         ##    plt.get_current_fig_manager().window.showMaximized()
         ##    plt.show(block = False)

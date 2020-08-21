@@ -97,10 +97,10 @@ def fitter_timing(datadate,numhead,samplerate,samplerate_name,shaping):
                     chi2_min = chi2
                     x_min = x
                     y_min = y
-                v_fit = x_min*uspl(t_fitter + shift_min) + y_min
-                t_cross = timing_extraction(t_fitter,v_fit)
-                difference_list.append((-1*j*phase_time - t_cross)[0])
-                chi_list.append(chi2_min)
+            v_fit = x_min*uspl(t_fitter + shift_min) + y_min
+            t_cross = timing_extraction(t_fitter,v_fit)
+            difference_list.append((-1*j*phase_time - t_cross)[0])
+            chi_list.append(chi2_min)
     difference_list = np.asarray(difference_list)
     chi_list = np.asarray(chi_list)
     true_mean = '%5g' % np.mean(difference_list)
