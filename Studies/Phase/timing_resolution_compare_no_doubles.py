@@ -100,26 +100,23 @@ def phase_hist_gen(samplerate,samplerate_name,shaping,datadate,n_box,n_delay,n_a
     median_array = []
     correction_median_array = []
     for i in range(len(phase_array)):
-        if '%05d.png' % i in doubles_array:
-            print('Skipped!')
-        else:
-            filedir = 'G:/data/watchman/'+str(datadate)+'_watchman_spe/studies/phase/'+samplerate_name+'/phase='+str(phase_array[i])+'/phase_'+shaping+'/'
-            Nloops = len(os.listdir(filedir))
-            y_j = []
-            correction_j = []
-            for j in range(Nloops):
-                print(samplerate_name+';'+str(n_box)+','+str(n_delay)+','+str(n_att)+';'+str(i)+','+str(j))
-                filename = filedir + 'Phase--waveforms--%05d.txt' % j
-                (t,v,_) = rw(filename,numhead)
-                t_avg,v_avg = boxcar_wf(t,v,n_box)
-                v_delay = delay_wf(v_avg,n_delay)
-                v_att = attenuate_wf(v_avg,n_att)
-                v_sum = sum_wf(v_att,v_delay)
-                t_cross,_,_ = zc_locator(t_avg,v_sum)
-                y_j.append(t_cross)
-                correction_j.append(-1*i*phase_time - t_cross)
-            median_array.append(np.median(np.asarray(y_j)))
-            correction_median_array.append(np.median(np.asarray(correction_j)))
+        filedir = 'G:/data/watchman/'+str(datadate)+'_watchman_spe/studies/phase/'+samplerate_name+'/phase='+str(phase_array[i])+'/phase_'+shaping+'/'
+        Nloops = len(os.listdir(filedir))
+        y_j = []
+        correction_j = []
+        for j in range(Nloops):
+            print(samplerate_name+';'+str(n_box)+','+str(n_delay)+','+str(n_att)+';'+str(i)+','+str(j))
+            filename = filedir + 'Phase--waveforms--%05d.txt' % j
+            (t,v,_) = rw(filename,numhead)
+            t_avg,v_avg = boxcar_wf(t,v,n_box)
+            v_delay = delay_wf(v_avg,n_delay)
+            v_att = attenuate_wf(v_avg,n_att)
+            v_sum = sum_wf(v_att,v_delay)
+            t_cross,_,_ = zc_locator(t_avg,v_sum)
+            y_j.append(t_cross)
+            correction_j.append(-1*i*phase_time - t_cross)
+        median_array.append(np.median(np.asarray(y_j)))
+        correction_median_array.append(np.median(np.asarray(correction_j)))
     correction_median_array = np.asarray(correction_median_array)
     correction_median_array = correction_median_array + median_array[0]
 
