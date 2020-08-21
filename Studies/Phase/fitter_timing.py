@@ -117,6 +117,7 @@ def fitter_timing(datadate,numhead,samplerate,samplerate_name,shaping):
         ##    plt.close()
         ##else:
         ##   difference_list.append((-1*j*phase_time - t_cross)[0])
+        ##   chi_list.append(chi2_min)
         difference_list.append((-1*j*phase_time - t_cross)[0])
         chi_list.append(chi2_min)
     difference_list = np.asarray(difference_list)
