@@ -64,7 +64,6 @@ def fitter_timing(datadate,numhead,samplerate,samplerate_name,shaping):
         print(i)
         if '%05d.png' % i in doubles_array:
             print('Skipped!')
-            pass
         else:
             j = random.randint(0,maxphase - 1)
             filename = filedir + 'phase='+str(j)+'/phase_'+shaping+'/Phase--waveforms--%05d.txt' % i

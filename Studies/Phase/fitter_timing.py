@@ -100,14 +100,14 @@ def fitter_timing(datadate,numhead,samplerate,samplerate_name,shaping):
                 y_min = y
         v_fit = x_min*uspl(t_fitter + shift_min) + y_min
         t_cross = timing_extraction(t_fitter,v_fit)
-        ##if abs(-1*j*phase_time - t_cross) >= 1e-9 or chi2_min >= 5000:
+        ##if -1*j*phase_time - t_cross <= -1e-9 or chi2_min >= 5000 or -1*j*phase_time - t_cross >= 1e-9:
         ##    fig,ax = plt.subplots()
         ##    ax.plot(t,v)
         ##    ax.plot(t_fitter,v_fit)
         ##    ax.plot(t_exact,v_exact)
         ##    ax.scatter(ET,EV)
-        ##    ax.axvline(-1*j*phase_time)
-        ##    ax.axvline(t_cross)
+        ##    ax.axvline(-1*j*phase_time,color = 'Black')
+        ##    ax.axvline(t_cross,color = 'Red)
         ##    ax.set_title(str(-1*j*phase_time - t_cross) + ', ' + str(chi2_min) + ', ' + str(i) + ', ' + str(j))
         ##    plt.get_current_fig_manager().window.showMaximized()
         ##    plt.show(block = False)
