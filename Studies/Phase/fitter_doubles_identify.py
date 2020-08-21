@@ -58,8 +58,8 @@ def fitter_timing(datadate,numhead,samplerate,samplerate_name,shaping):
         filename_exact = 'G:/data/watchman/'+str(datadate)+'_watchman_spe/d3/d3_raw_gained/D3--waveforms--%05d.txt' % i
         t,v,_ = rw(filename_exact,5)
         v = -1*v
-        ET = t[0:800]
-        EV = v[0:800]
+        ET = t[0:400]
+        EV = v[0:400]
         chi2_min = -1
         x_min = -1
         y_min = -1
@@ -88,7 +88,7 @@ def fitter_timing(datadate,numhead,samplerate,samplerate_name,shaping):
                 y_min = y
         v_fit = x_min*uspl(t_fitter + shift_min) + y_min
         t_cross = timing_extraction(t_fitter,v_fit)
-        if t_cross <= () or chi2_min >= () or t_cross >= ():
+        if t_cross <= -1.8e-10 or chi2_min >= 7.95e-5 or t_cross >= 0.5e-10:
             fig,ax = plt.subplots()
             ax.plot(t,v)
             ax.plot(t_fitter,v_fit)
