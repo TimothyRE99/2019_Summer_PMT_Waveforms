@@ -67,15 +67,15 @@ def fitter_timing(datadate,numhead,samplerate,samplerate_name,shaping):
         else:
             j = random.randint(0,maxphase - 1)
             filename = filedir + 'phase='+str(j)+'/phase_'+shaping+'/Phase--waveforms--%05d.txt' % i
-            filename_exact = 'G:/data/watchman/'+str(datadate)+'_watchman_spe/d3/d3_raw_gained/D3--waveforms--%05d.txt' % i
+            ##filename_exact = 'G:/data/watchman/'+str(datadate)+'_watchman_spe/d3/d3_raw_gained/D3--waveforms--%05d.txt' % i
             t,v,_ = rw(filename,5)
             v = -1*v
-            t_exact,v_exact,_ = rw(filename_exact,5)
-            t_exact -= 1*j*phase_time
-            time_locator = t[4]
-            t_min_array = abs(t_exact - time_locator)
-            time_index = np.where(t_min_array == np.amin(t_min_array))[0][0]
-            v_exact = v_exact * v[4]/v_exact[time_index]
+            ##t_exact,v_exact,_ = rw(filename_exact,5)
+            ##t_exact -= 1*j*phase_time
+            ##time_locator = t[4]
+            ##t_min_array = abs(t_exact - time_locator)
+            ##time_index = np.where(t_min_array == np.amin(t_min_array))[0][0]
+            ##v_exact = v_exact * v[4]/v_exact[time_index]
             ET = t[0:10]
             EV = v[0:10]
             chi2_min = -1
@@ -106,31 +106,31 @@ def fitter_timing(datadate,numhead,samplerate,samplerate_name,shaping):
                     y_min = y
             v_fit = x_min*uspl(t_fitter + shift_min) + y_min
             t_cross = timing_extraction(t_fitter,v_fit)
-            if -1*j*phase_time - t_cross <= -1e-9 or chi2_min >= 2750 or -1*j*phase_time - t_cross >= 1e-9:
-                fig,ax = plt.subplots()
-                ax.plot(t,v)
-                ax.plot(t_fitter,v_fit)
-                ax.plot(t_exact,v_exact)
-                ax.scatter(ET,EV)
-                ax.axvline(-1*j*phase_time,color = 'Black')
-                ax.axvline(t_cross,color = 'Red')
-                ax.set_title(str(-1*j*phase_time - t_cross) + ', ' + str(chi2_min) + ', ' + str(i) + ', ' + str(j))
-                plt.get_current_fig_manager().window.showMaximized()
-                plt.show(block = False)
-                plt.pause(0.1)
-                fig.savefig('G:/data/watchman/20190724_watchman_spe/studies/phase/Histograms/250 Msps/Doubles/%05d.png' % i,dpi = 500)
-                print("Was double!")
-                plt.close()
-            else:
-                difference_list.append((-1*j*phase_time - t_cross)[0])
-                chi_list.append(chi2_min)
-            ##difference_list.append((-1*j*phase_time - t_cross)[0])
-            ##chi_list.append(chi2_min)
+            ##if -1*j*phase_time - t_cross <= -1e-9 or chi2_min >= 2750 or -1*j*phase_time - t_cross >= 1e-9:
+            ##    fig,ax = plt.subplots()
+            ##    ax.plot(t,v)
+            ##    ax.plot(t_fitter,v_fit)
+            ##    ax.plot(t_exact,v_exact)
+            ##    ax.scatter(ET,EV)
+            ##    ax.axvline(-1*j*phase_time,color = 'Black')
+            ##    ax.axvline(t_cross,color = 'Red')
+            ##    ax.set_title(str(-1*j*phase_time - t_cross) + ', ' + str(chi2_min) + ', ' + str(i) + ', ' + str(j))
+            ##    plt.get_current_fig_manager().window.showMaximized()
+            ##    plt.show(block = False)
+            ##    plt.pause(0.1)
+            ##    fig.savefig('G:/data/watchman/20190724_watchman_spe/studies/phase/Histograms/250 Msps/Doubles/%05d.png' % i,dpi = 500)
+            ##    print("Was double!")
+            ##    plt.close()
+            ##else:
+            ##    difference_list.append((-1*j*phase_time - t_cross)[0])
+            ##    chi_list.append(chi2_min)
+            difference_list.append((-1*j*phase_time - t_cross)[0])
+            chi_list.append(chi2_min)
     difference_list = np.asarray(difference_list)
     chi_list = np.asarray(chi_list)
     true_mean = '%5g' % np.mean(difference_list)
     true_std = '%5g' % np.std(difference_list)
-    histo_data, bins_data = np.histogram(difference_list, bins = 50)
+    histo_data, bins_data = np.histogram(difference_list, bins = 25)
     binwidth = (bins_data[1] - bins_data[0])                    #determining bin width
     #determining bin centers
     binscenters = np.array([0.5 * (bins_data[i] + bins_data[i+1]) for i in range(len(bins_data)-1)])
@@ -143,7 +143,7 @@ def fitter_timing(datadate,numhead,samplerate,samplerate_name,shaping):
     plt.get_current_fig_manager().window.showMaximized()
     plt.show()
     plt.close()
-    histo_data, bins_data = np.histogram(chi_list, bins = 50)
+    histo_data, bins_data = np.histogram(chi_list, bins = 25)
     binwidth = (bins_data[1] - bins_data[0])                    #determining bin width
     #determining bin centers
     binscenters = np.array([0.5 * (bins_data[i] + bins_data[i+1]) for i in range(len(bins_data)-1)])
@@ -157,7 +157,7 @@ def fitter_timing(datadate,numhead,samplerate,samplerate_name,shaping):
     plt.show()
     plt.close()
     _,ax = plt.subplots()
-    h = ax.hist2d(difference_list,chi_list,bins=50,norm = LogNorm())
+    h = ax.hist2d(difference_list,chi_list,bins=25,norm = LogNorm())
     plt.colorbar(h[3],ax = ax)
     ax.set_title('Chi Squared vs. Timing Corrections')
     ax.set_xlabel('Timing Corrections')
