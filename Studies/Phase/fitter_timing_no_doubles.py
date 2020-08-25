@@ -55,7 +55,10 @@ def fitter_timing(datadate,numhead,samplerate,samplerate_name,shaping):
     uspl = us(t_fitter,v_fitter)
     filedir = 'G:/data/watchman/'+str(datadate)+'_watchman_spe/studies/phase/'+samplerate_name+'/'
     doubles_dir = 'G:/data/watchman/20190724_watchman_spe/studies/phase/Histograms/250 Msps/Doubles/'
+    doubles_removed_dir = 'G:/data/watchman/20190724_watchman_spe/studies/phase/Histograms/250 Msps/Doubles Wrong/'
     doubles_array = os.listdir(doubles_dir)
+    doubles_wrong_array = os.listdir(doubles_removed_dir)
+    doubles_array = doubles_array + doubles_wrong_array
     print(doubles_array)
     Nloops = len(os.listdir(filedir + 'phase=0/phase_'+shaping))
     difference_list = []
