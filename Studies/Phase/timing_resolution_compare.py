@@ -170,16 +170,14 @@ def phase_hist_gen(samplerate,samplerate_name,shaping,datadate,n_box,n_delay,n_a
     binscenters = np.array([0.5 * (bins_data[i] + bins_data[i+1]) for i in range(len(bins_data)-1)])
     b_guess = (len(corrected_difference_list) * binwidth)   #using area approximation to guess at B value
     popt, _ = cf(fit_function,xdata = binscenters,ydata = histo_data, p0 = [b_guess,histo_mean,histo_std], maxfev = 10000)
-    gauss_mean = '%s' % float('%.5g' % popt[1])
-    gauss_std = '%s' % float('%.5g' % popt[2])
     #establishing 5 significant figure versions of the mean and std from curve fit
     x_values = np.linspace(popt[1] - 1.5*popt[2], popt[1] + 1.5*popt[2], 100000)    #creating 100,000 x values to map curvefit gaussian to
-    plt.rcParams.update({'font.size': 14})
+    plt.rcParams.update({'font.size': 18})
     plt.bar(binscenters, histo_data, width=binwidth)        #plotting histogram
     plt.plot(x_values, fit_function(x_values, *popt), color='darkorange')   #plotting curve fit
     plt.xlabel('True Timing - Recovered Timing')
     plt.ylabel('Count')
-    plt.title('Corrected Timings'+'\nGaussian Fit Values:\nMean = '+gauss_mean+' seconds, '+true_mean+' seconds\nStandard Deviation = '+gauss_std+' seconds, '+true_std+' seconds')
+    plt.title('Corrected Timings'+'\nGaussian Fit Values:\nMean = '+true_mean+' seconds\nStandard Deviation = '+true_std+' seconds')
     plt.get_current_fig_manager().window.showMaximized()
     plt.show()
 
