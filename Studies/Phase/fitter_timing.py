@@ -109,6 +109,7 @@ def fitter_timing(datadate,numhead,samplerate,samplerate_name,shaping):
     plt.xlabel('True Timing - Recovered Timing')
     plt.ylabel('Count')
     plt.title('Corrected Timings\nGaussian Fit Values:\nMean = '+true_mean+' seconds\nStandard Deviation = '+true_std+' seconds')
+    plt.xlim(-2.1e-9,2.1e-9)
     plt.get_current_fig_manager().window.showMaximized()
     plt.show()
     plt.close()
@@ -141,7 +142,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(prog="fitter timing",description="Uses average waveform to fit for timing")
     parser.add_argument('--datadate',type = str,help = 'date when data was gathered, YYYYMMDD', default = '20190724')
     parser.add_argument('--numhead',type=int,help='number of lines to ignore for header',default = 5)
-    parser.add_argument('--samplerate',type=int,help='samples per second',default = 500000000)
+    parser.add_argument('--samplerate',type=int,help='samples per second',default = 250000000)
     parser.add_argument('--shaping',type=str,help='name of shaping',default = 'raw_gained_analyzed')
     args = parser.parse_args()
 

@@ -178,6 +178,7 @@ def phase_hist_gen(samplerate,samplerate_name,shaping,datadate,n_box,n_delay,n_a
     plt.xlabel('True Timing - Recovered Timing')
     plt.ylabel('Count')
     plt.title('Corrected Timings'+'\nGaussian Fit Values:\nMean = '+true_mean+' seconds\nStandard Deviation = '+true_std+' seconds')
+    plt.xlim(-2.1e-9,2.1e-9)
     plt.get_current_fig_manager().window.showMaximized()
     plt.show()
 
