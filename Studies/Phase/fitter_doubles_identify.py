@@ -98,7 +98,7 @@ def fitter_timing(datadate,numhead,samplerate,samplerate_name,shaping):
             plt.get_current_fig_manager().window.showMaximized()
             plt.show(block = False)
             plt.pause(0.1)
-            fig.savefig('G:/data/watchman/20190724_watchman_spe/studies/phase/Histograms/250 Msps/Doubles_Exact/%05d.png' % i,dpi = 500)
+            fig.savefig('G:/data/watchman/20190724_watchman_spe/studies/phase/Histograms/250 Msps/Doubles/%05d.png' % i,dpi = 500)
             print("Was double!")
             plt.close()
     return("Passed")
