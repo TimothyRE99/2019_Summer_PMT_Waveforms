@@ -88,7 +88,7 @@ def fitter_timing(datadate,numhead,samplerate,samplerate_name,shaping):
                 y_min = y
         v_fit = x_min*uspl(t_fitter + shift_min) + y_min
         t_cross = timing_extraction(t_fitter,v_fit)
-        if t_cross <= -1.8e-10 or chi2_min >= 7.95e-5 or t_cross >= 0.5e-10:
+        if t_cross <= -0.5e-10 or chi2_min >= 7.95e-5 or t_cross >= 0.5e-10:
             fig,ax = plt.subplots()
             ax.plot(t,v)
             ax.plot(t_fitter,v_fit)
@@ -108,7 +108,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(prog="fitter timing",description="Uses average waveform to fit for timing")
     parser.add_argument('--datadate',type = str,help = 'date when data was gathered, YYYYMMDD', default = '20190724')
     parser.add_argument('--numhead',type=int,help='number of lines to ignore for header',default = 5)
-    parser.add_argument('--samplerate',type=int,help='samples per second',default = 500000000)
+    parser.add_argument('--samplerate',type=int,help='samples per second',default = 250000000)
     parser.add_argument('--shaping',type=str,help='name of shaping',default = 'raw_gained_analyzed')
     args = parser.parse_args()
 
