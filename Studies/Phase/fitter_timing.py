@@ -99,12 +99,12 @@ def fitter_timing(datadate,numhead,samplerate,samplerate_name,shaping):
     chi_list = np.asarray(chi_list)
     true_mean = '%5g' % np.mean(difference_list)
     true_std = '%5g' % np.std(difference_list)
-    histo_data, bins_data = np.histogram(difference_list, bins = 100)
+    histo_data, bins_data = np.histogram(difference_list, bins = 65)
     binwidth = (bins_data[1] - bins_data[0])                    #determining bin width
     #determining bin centers
     binscenters = np.array([0.5 * (bins_data[i] + bins_data[i+1]) for i in range(len(bins_data)-1)])
     #establishing 5 significant figure versions of the mean and std from curve fit
-    plt.rcParams.update({'font.size': 14})
+    plt.rcParams.update({'font.size': 18})
     plt.bar(binscenters, histo_data, width=binwidth)        #plotting histogram
     plt.xlabel('True Timing - Recovered Timing')
     plt.ylabel('Count')
@@ -112,12 +112,12 @@ def fitter_timing(datadate,numhead,samplerate,samplerate_name,shaping):
     plt.get_current_fig_manager().window.showMaximized()
     plt.show()
     plt.close()
-    histo_data, bins_data = np.histogram(chi_list, bins = 100)
+    histo_data, bins_data = np.histogram(chi_list, bins = 65)
     binwidth = (bins_data[1] - bins_data[0])                    #determining bin width
     #determining bin centers
     binscenters = np.array([0.5 * (bins_data[i] + bins_data[i+1]) for i in range(len(bins_data)-1)])
     #establishing 5 significant figure versions of the mean and std from curve fit
-    plt.rcParams.update({'font.size': 14})
+    plt.rcParams.update({'font.size': 18})
     plt.bar(binscenters, histo_data, width=binwidth)        #plotting histogram
     plt.xlabel('Chi Squared')
     plt.ylabel('Count')
@@ -126,7 +126,7 @@ def fitter_timing(datadate,numhead,samplerate,samplerate_name,shaping):
     plt.show()
     plt.close()
     _,ax = plt.subplots()
-    h = ax.hist2d(difference_list,chi_list,bins=100,norm = LogNorm())
+    h = ax.hist2d(difference_list,chi_list,bins=65,norm = LogNorm())
     plt.colorbar(h[3],ax = ax)
     ax.set_title('Chi Squared vs. Timing Corrections')
     ax.set_xlabel('Timing Corrections')
