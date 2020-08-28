@@ -109,11 +109,11 @@ def fitter_timing(datadate,numhead,samplerate,samplerate_name,shaping):
     plt.xlabel('True Timing - Recovered Timing')
     plt.ylabel('Count')
     plt.title('Corrected Timings\nGaussian Fit Values:\nMean = '+true_mean+' seconds\nStandard Deviation = '+true_std+' seconds')
-    plt.xlim(-2.1e-9,2.1e-9)
+    plt.xlim(-2.2e-9,2.2e-9)
     plt.get_current_fig_manager().window.showMaximized()
     plt.show()
     plt.close()
-    histo_data, bins_data = np.histogram(chi_list, bins = 65)
+    histo_data, bins_data = np.histogram(chi_list, bins = 100)
     binwidth = (bins_data[1] - bins_data[0])                    #determining bin width
     #determining bin centers
     binscenters = np.array([0.5 * (bins_data[i] + bins_data[i+1]) for i in range(len(bins_data)-1)])
