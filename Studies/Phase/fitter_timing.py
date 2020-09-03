@@ -100,7 +100,7 @@ def fitter_timing(datadate,numhead,samplerate,samplerate_name,shaping):
     true_mean = '%5g' % np.mean(difference_list)
     true_std = '%5g' % np.std(difference_list)
     bins_data = np.linspace(-2.2e-9,2.2e-9,num = 100)
-    histo_data, _ = np.histogram(difference_list, bins = 100)
+    histo_data, _ = np.histogram(difference_list, bins = bins_data)
     binwidth = (bins_data[1] - bins_data[0])                    #determining bin width
     #determining bin centers
     binscenters = np.array([0.5 * (bins_data[i] + bins_data[i+1]) for i in range(len(bins_data)-1)])
