@@ -94,7 +94,7 @@ def phase_hist_gen(samplerate,samplerate_name,shaping,datadate,n_box,n_delay,n_a
     phase_time = 1/20000000000
     maxphase = int(20000000000/samplerate + 0.5)
     phase_array = np.arange(0,maxphase)
-    doubles_dir = 'G:/data/watchman/20190724_watchman_spe/studies/phase/Histograms/250 Msps/Doubles/'
+    doubles_dir = 'G:/data/watchman/20190724_watchman_spe/studies/phase/Histograms/250 Msps/Doubles Combined/'
     doubles_array = os.listdir(doubles_dir)
     median_array = []
     correction_median_array = []

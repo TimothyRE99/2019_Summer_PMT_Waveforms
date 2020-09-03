@@ -54,7 +54,7 @@ def fitter_timing(datadate,numhead,samplerate,samplerate_name,shaping):
     t_fitter,v_fitter,_ = rw('G:/data/watchman/'+datadate+'_watchman_spe/d2/d2_average.txt',1)
     uspl = us(t_fitter,v_fitter)
     filedir = 'G:/data/watchman/'+str(datadate)+'_watchman_spe/studies/phase/'+samplerate_name+'/'
-    doubles_dir = 'G:/data/watchman/20190724_watchman_spe/studies/phase/Histograms/250 Msps/Doubles/'
+    doubles_dir = 'G:/data/watchman/20190724_watchman_spe/studies/phase/Histograms/250 Msps/Doubles Combined/'
     doubles_array = os.listdir(doubles_dir)
     print(doubles_array)
     Nloops = len(os.listdir(filedir + 'phase=0/phase_'+shaping))
