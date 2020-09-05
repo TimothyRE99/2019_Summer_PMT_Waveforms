@@ -110,14 +110,14 @@ def fitter_timing(datadate,numhead,samplerate,samplerate_name,shaping):
     plt.get_current_fig_manager().window.showMaximized()
     plt.show()
     plt.close()
-    bins = np.linspace(-2.2e-9,2.2e-9,num = 100)
+    bins = np.linspace(0,0.001,num = 100)
     histo_data, bins_data = np.histogram(chi_list, bins = bins)
     binwidth = (bins_data[1] - bins_data[0])                    #determining bin width
     #determining bin centers
     binscenters = np.array([0.5 * (bins_data[i] + bins_data[i+1]) for i in range(len(bins_data)-1)])
     #establishing 5 significant figure versions of the mean and std from curve fit
     plt.rcParams.update({'font.size': 14})
-    plt.bar(binscenters, histo_data, width=binwidth)        #plotting histogram
+    plt.bar(binscenters, histo_data, width=binwidth,log=True)        #plotting histogram
     plt.xlabel('Chi Squared')
     plt.ylabel('Count')
     plt.title('Chi Squared Counts')
