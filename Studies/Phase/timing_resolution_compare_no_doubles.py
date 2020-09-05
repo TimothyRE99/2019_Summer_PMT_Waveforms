@@ -144,23 +144,24 @@ def phase_hist_gen(samplerate,samplerate_name,shaping,datadate,n_box,n_delay,n_a
 
     histo_mean,histo_std = gauss_histogram(corrected_difference_list)
     corrected_difference_list = corrected_difference_list[(corrected_difference_list >= histo_mean - 10*histo_std) & (corrected_difference_list <= histo_mean + 10*histo_std)]
-    true_mean = '%5g' % np.mean(corrected_difference_list)
-    true_std = '%5g' % np.std(corrected_difference_list)
+    true_mean = '%5g' % (np.mean(corrected_difference_list)*1e12)
+    true_std = '%5g' % (np.std(corrected_difference_list)*1e12)
     bins = np.linspace(-2.2e-9,2.2e-9,num = 100)
     histo_data, bins_data = np.histogram(corrected_difference_list, bins = bins)
-    binwidth = (bins_data[1] - bins_data[0])                    #determining bin width
-    #determining bin centers
+    binwidth = (bins_data[1] - bins_data[0])
     binscenters = np.array([0.5 * (bins_data[i] + bins_data[i+1]) for i in range(len(bins_data)-1)])
-    b_guess = (len(corrected_difference_list) * binwidth)   #using area approximation to guess at B value
+    b_guess = (len(corrected_difference_list) * binwidth)
     popt, _ = cf(fit_function,xdata = binscenters,ydata = histo_data, p0 = [b_guess,histo_mean,histo_std], maxfev = 10000)
-    #establishing 5 significant figure versions of the mean and std from curve fit
-    x_values = np.linspace(popt[1] - 1.5*popt[2], popt[1] + 1.5*popt[2], 100000)    #creating 100,000 x values to map curvefit gaussian to
-    plt.rcParams.update({'font.size': 18})
-    plt.bar(binscenters, histo_data, width=binwidth)        #plotting histogram
-    plt.plot(x_values, fit_function(x_values, *popt), color='darkorange')   #plotting curve fit
-    plt.xlabel('True Timing - Recovered Timing')
-    plt.ylabel('Count')
-    plt.title('Corrected Timings'+'\nGaussian Fit Values:\nMean = '+true_mean+' seconds\nStandard Deviation = '+true_std+' seconds')
+    x_values = np.linspace(popt[1] - 1.5*popt[2], popt[1] + 1.5*popt[2], 100000)
+    FontSize = 20
+    plt.rcParams.update({'font.size': FontSize})
+    _,ax = plt.subplots()
+    ax.bar(binscenters, histo_data, width=binwidth)
+    ax.plot(x_values, fit_function(x_values, *popt), color='darkorange')
+    ax.set_xlabel('True Timing - Recovered Timing')
+    ax.set_ylabel('Count')
+    ax.set_title('CFD Timings, Doubles Removed')
+    ax.text(0.025, 0.95, 'Distribution Parameters:\nMean: '+true_mean+' ps\nStandard Deviation: '+true_std+' ps', transform=ax.transAxes, fontsize=FontSize, verticalalignment='top', bbox=dict(boxstyle='round', facecolor='White', alpha=0.5))
     plt.get_current_fig_manager().window.showMaximized()
     plt.show()
 
