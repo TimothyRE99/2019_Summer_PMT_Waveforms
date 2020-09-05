@@ -160,7 +160,7 @@ def phase_hist_gen(samplerate,samplerate_name,shaping,datadate,n_box,n_delay,n_a
     ax.plot(x_values, fit_function(x_values, *popt), color='darkorange')
     ax.set_xlabel('True Timing - Recovered Timing')
     ax.set_ylabel('Count')
-    ax.set_title('CFD Timings, Doubles Removed')
+    ax.set_title(samplerate_name+' - CFD Timings, Doubles Removed')
     ax.text(0.025, 0.95, 'Distribution Parameters:\nMean: '+true_mean+' ps\nStandard Deviation: '+true_std+' ps', transform=ax.transAxes, fontsize=FontSize, verticalalignment='top', bbox=dict(boxstyle='round', facecolor='White', alpha=0.5))
     plt.get_current_fig_manager().window.showMaximized()
     plt.show()
