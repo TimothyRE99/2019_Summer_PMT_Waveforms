@@ -110,7 +110,7 @@ def fitter_timing(datadate,numhead,samplerate,samplerate_name,shaping):
     ax.set_xlabel('True Timing - Recovered Timing')
     ax.set_ylabel('Count')
     ax.set_title(samplerate_name+' - Fitter Timings')
-    ax.text(0.025, 0.95, 'Distribution Parameters:\nMean: '+true_mean+' ps\nStandard Deviation: '+true_std+' ps', transform=ax.transAxes, fontsize=FontSize, verticalalignment='top', bbox=dict(boxstyle='round', facecolor='White', alpha=0.5))
+    ax.text(0.05, 0.95, 'Distribution Parameters:\nMean: '+true_mean+' ps\nStandard Deviation: '+true_std+' ps', transform=ax.transAxes, fontsize=FontSize, verticalalignment='top', bbox=dict(boxstyle='round', facecolor='White', alpha=0.5))
     plt.get_current_fig_manager().window.showMaximized()
     plt.show()
     plt.close()
