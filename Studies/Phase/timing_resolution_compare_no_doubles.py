@@ -142,22 +142,22 @@ def phase_hist_gen(samplerate,samplerate_name,shaping,datadate,n_box,n_delay,n_a
     difference_list = np.asarray(difference_list)
     corrected_difference_list = np.asarray(corrected_difference_list)
 
-    histo_mean,histo_std = gauss_histogram(corrected_difference_list)
-    corrected_difference_list = corrected_difference_list[(corrected_difference_list >= histo_mean - 10*histo_std) & (corrected_difference_list <= histo_mean + 10*histo_std)]
+    #histo_mean,histo_std = gauss_histogram(corrected_difference_list)
+    #corrected_difference_list = corrected_difference_list[(corrected_difference_list >= histo_mean - 10*histo_std) & (corrected_difference_list <= histo_mean + 10*histo_std)]
     true_mean = '%5g' % (np.mean(corrected_difference_list)*1e12)
     true_std = '%5g' % (np.std(corrected_difference_list)*1e12)
     bins = np.linspace(-2.2e-9,2.2e-9,num = 100)
     histo_data, bins_data = np.histogram(corrected_difference_list, bins = bins)
     binwidth = (bins_data[1] - bins_data[0])
     binscenters = np.array([0.5 * (bins_data[i] + bins_data[i+1]) for i in range(len(bins_data)-1)])
-    b_guess = (len(corrected_difference_list) * binwidth)
-    popt, _ = cf(fit_function,xdata = binscenters,ydata = histo_data, p0 = [b_guess,histo_mean,histo_std], maxfev = 10000)
-    x_values = np.linspace(popt[1] - 1.5*popt[2], popt[1] + 1.5*popt[2], 100000)
-    FontSize = 20
+    #b_guess = (len(corrected_difference_list) * binwidth)
+    #popt, _ = cf(fit_function,xdata = binscenters,ydata = histo_data, p0 = [b_guess,histo_mean,histo_std], maxfev = 10000)
+    #x_values = np.linspace(popt[1] - 1.5*popt[2], popt[1] + 1.5*popt[2], 100000)
+    FontSize = 32
     plt.rcParams.update({'font.size': FontSize})
     _,ax = plt.subplots()
     ax.bar(binscenters, histo_data, width=binwidth)
-    ax.plot(x_values, fit_function(x_values, *popt), color='darkorange')
+    #ax.plot(x_values, fit_function(x_values, *popt), color='darkorange')
     ax.set_xlabel('True Timing - Recovered Timing')
     ax.set_ylabel('Count')
     ax.set_title(samplerate_name+' - CFD Timings, Doubles Removed')

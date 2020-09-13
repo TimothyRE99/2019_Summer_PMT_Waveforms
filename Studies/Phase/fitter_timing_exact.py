@@ -100,7 +100,7 @@ def fitter_timing(datadate,numhead,samplerate,samplerate_name,shaping):
     histo_data, bins_data = np.histogram(difference_list, bins = bins)
     binwidth = (bins_data[1] - bins_data[0])
     binscenters = np.array([0.5 * (bins_data[i] + bins_data[i+1]) for i in range(len(bins_data)-1)])
-    FontSize = 20
+    FontSize = 32
     plt.rcParams.update({'font.size': FontSize})
     _,ax = plt.subplots()
     ax.bar(binscenters, histo_data, width=binwidth)
