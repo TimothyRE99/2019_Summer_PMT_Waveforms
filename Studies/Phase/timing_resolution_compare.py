@@ -160,8 +160,8 @@ def phase_hist_gen(samplerate,samplerate_name,shaping,datadate,n_box,n_delay,n_a
     #plt.get_current_fig_manager().window.showMaximized()
     #plt.show()
 
-    #histo_mean,histo_std = gauss_histogram(corrected_difference_list)
-    #corrected_difference_list = corrected_difference_list[(corrected_difference_list >= histo_mean - 10*histo_std) & (corrected_difference_list <= histo_mean + 10*histo_std)]
+    histo_mean,histo_std = gauss_histogram(corrected_difference_list)
+    corrected_difference_list = corrected_difference_list[(corrected_difference_list >= histo_mean - 10*histo_std) & (corrected_difference_list <= histo_mean + 10*histo_std)]
     true_mean = '%5g' % (np.mean(corrected_difference_list)*1e12)
     true_std = '%5g' % (np.std(corrected_difference_list)*1e12)
     bins = np.linspace(-2.2e-9,2.2e-9,num = 100)
