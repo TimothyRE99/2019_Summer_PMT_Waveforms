@@ -1,3 +1,6 @@
+#Establishes files for investigation of using Template Waveform with different variations
+
+#Import necessary
 import numpy as np
 import os
 import random
@@ -17,8 +20,8 @@ def digitize(v,noise):
     v_final = v_final.astype(int)           #converting values to ints
     return(v_final)
 
-#reading and writing waveforms and calling other functions
-def p3(new_fsps,datadate,numhead,scale_array,phase_array,noise,fsps,steps):
+#Function that calls most other functions, runs small calculations
+def establish_templates(new_fsps,datadate,numhead,scale_array,phase_array,noise,fsps,steps,scale_mean):
     #establishing directory names
     if new_fsps == 1000000000:
         sample_rate = '1 Gsps'
@@ -33,38 +36,49 @@ def p3(new_fsps,datadate,numhead,scale_array,phase_array,noise,fsps,steps):
     uspl = us(t,v)
     for i in range(len(phase_array)):
         print(i)
-        writedir = 'G:/data/watchman/'+datadate+'_watchman_spe/studies/phase/' + sample_rate + '/averages_splined/phase=' + str(i) + '/phase_raw_gained_analyzed_unnoised/'
+        writedir_noise = 'G:/data/watchman/'+datadate+'_watchman_spe/studies/phase/' + sample_rate + '/template/phase=' + str(i) + '/phase_raw_gained_analyzed_noised/'
+        writedir_peaked = 'G:/data/watchman/'+datadate+'_watchman_spe/studies/phase/' + sample_rate + '/template/phase=' + str(i) + '/phase_raw_gained_analyzed_peaked/'
         #creating directories if they don't exist
-        if not os.path.exists(writedir):
-            os.makedirs(writedir)
+        if not os.path.exists(writedir_noise):
+            os.makedirs(writedir_noise)
+        if not os.path.exists(writedir_peaked):
+            os.makedirs(writedir_peaked)
         start_value = t[i]
         end_value = t[-1]
         t_array = np.arange(start_value,end_value,1/new_fsps)
         v_array = uspl(t_array)
         Nloops = len(scale_array)      #establishing how many files to cycle through
         for j in range(Nloops):
-            scale_height = scale_array[j]/np.max(v_array)
-            v_scaled = v_array*scale_height
+            scale_height_noise = scale_mean/np.max(v_array)
+            scale_height_peaked = scale_array[j]/np.max(v_array)
+            v_scaled_noise = v_array*scale_height_noise
+            v_scaled_peaked = v_array*scale_height_peaked
             print('%s/%s, File: %05d' % (i + 1,steps,j))             #printing number of file currently being processed
             #establishing read and write names
-            writename = writedir + 'Phase--waveforms--%05d.txt' % j
+            writename_noise = writedir_noise + 'Phase--waveforms--%05d.txt' % j
+            writename_peaked = writedir_peaked + 'Phase--waveforms--%05d.txt' % j
             #digitizing waveform values
-            v_digit = digitize(v_scaled,noise)
+            v_digit_noise = digitize(v_scaled_noise,noise)
+            v_digit_peaked = digitize(v_scaled_peaked,noise)
             #saving downsampled and digitized waveforms
-            ww(t_array-i/fsps,v_digit,writename,header)
+            ww(t_array-i/fsps,v_digit_noise,writename_noise,header)
+            ww(t_array-i/fsps,v_digit_peaked,writename_peaked,header)
+    return()
 
-#main function
+#Main function
 if __name__ == '__main__':
     import argparse
-    parser = argparse.ArgumentParser(prog="spline_discrete_copy",description="Runs Downsampling and Digitizing based on discrete phases for splined waveform.")
-    parser.add_argument("--noise",type=float,help='bits of noise from digitizer',default=0)
+    parser = argparse.ArgumentParser(prog="",description="")
     parser.add_argument('--datadate',type = str,help = 'date when data was gathered, YYYYMMDD', default = '20190724')
+    parser.add_argument("--noise",type=float,help='bits of noise from digitizer',default=3.3)
     parser.add_argument('--numhead',type=int,help='number of lines to ignore for header',default = 1)
     parser.add_argument("--fsps",type=float,help="hz, samples/s",default=20000000000.0)
+    parser.add_argument('--new_fsps',type=int,help='samples per second',default = 250000000)
     args = parser.parse_args()
 
-    new_fsps = 250000000
-    scale_array = np.random.normal(-0.0065313,0.0018414,10000)
-    phase_array = np.arange(0,1/new_fsps,1/args.fsps)
-    steps = int(args.fsps/new_fsps + 0.5)
-    p3(new_fsps,args.datadate,args.numhead,scale_array,phase_array,args.noise,args.fsps,steps)
+    scale_mean = 0.0018414
+    scale_std = -0.0065313
+    scale_array = np.random.normal(scale_std,scale_mean,10000)
+    phase_array = np.arange(0,1/args.new_fsps,1/args.fsps)
+    steps = int(args.fsps/args.new_fsps + 0.5)
+    establish_templates(args.new_fsps,args.datadate,args.numhead,scale_array,phase_array,args.noise,args.fsps,steps,scale_mean)
