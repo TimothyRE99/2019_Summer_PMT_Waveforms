@@ -36,8 +36,8 @@ def establish_templates(new_fsps,datadate,numhead,scale_array,phase_array,noise,
     uspl = us(t,v)
     for i in range(len(phase_array)):
         print(i)
-        writedir_noise = 'G:/data/watchman/'+datadate+'_watchman_spe/studies/phase/' + sample_rate + '/template/phase=' + str(i) + '/phase_raw_gained_analyzed_noised/'
-        writedir_peaked = 'G:/data/watchman/'+datadate+'_watchman_spe/studies/phase/' + sample_rate + '/template/phase=' + str(i) + '/phase_raw_gained_analyzed_peaked/'
+        writedir_noise = 'G:/data/watchman/'+datadate+'_watchman_spe/studies/phase/' + sample_rate + '/file_template/phase=' + str(i) + '/phase_raw_gained_analyzed_noised/'
+        writedir_peaked = 'G:/data/watchman/'+datadate+'_watchman_spe/studies/phase/' + sample_rate + '/file_template/phase=' + str(i) + '/phase_raw_gained_analyzed_peaked/'
         #creating directories if they don't exist
         if not os.path.exists(writedir_noise):
             os.makedirs(writedir_noise)
