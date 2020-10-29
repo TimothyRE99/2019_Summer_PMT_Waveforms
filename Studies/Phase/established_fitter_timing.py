@@ -94,6 +94,16 @@ def fitter_timing(datadate,numhead,samplerate,samplerate_name,shaping):
                 y_min = y
         v_fit = x_min*uspl(t_fitter + shift_min) + y_min
         t_cross = timing_extraction(t_fitter,v_fit)
+        #if (-1*j*phase_time - t_cross) < -1e-7:
+        #    _,ax = plt.subplots()
+        #    ax.plot(t,v)
+        #    ax.plot(t_fitter,v_fit)
+        #    ax.scatter(ET,EV)
+        #    ax.axvline(-1*j*phase_time,color = 'Black')
+        #    ax.axvline(t_cross,color = 'Red')
+        #    ax.set_title(str(-1*j*phase_time - t_cross) + ', ' + str(chi2_min) + ', ' + str(i) + ', ' + str(j))
+        #    plt.get_current_fig_manager().window.showMaximized()
+        #    plt.show()
         difference_list.append((-1*j*phase_time - t_cross)[0])
         chi_list.append(chi2_min)
     difference_list = np.asarray(difference_list)
@@ -146,7 +156,7 @@ if __name__ == '__main__':
     parser.add_argument('--datadate',type = str,help = 'date when data was gathered, YYYYMMDD', default = '20190724')
     parser.add_argument('--numhead',type=int,help='number of lines to ignore for header',default = 5)
     parser.add_argument('--samplerate',type=int,help='samples per second',default = 250000000)
-    parser.add_argument('--shaping',type=str,help='name of shaping',default = 'raw_gained_analyzed_noised')
+    parser.add_argument('--shaping',type=str,help='name of shaping',default = 'raw_gained_analyzed_peaked')
     args = parser.parse_args()
 
     if args.samplerate == 250000000:
