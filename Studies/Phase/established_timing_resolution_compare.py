@@ -125,8 +125,6 @@ def phase_hist_gen(samplerate,samplerate_name,shaping,datadate,n_box,n_delay,n_a
         filedir = 'G:/data/watchman/'+str(datadate)+'_watchman_spe/studies/phase/'+samplerate_name+'/file_template/phase='+str(i)+'/phase_'+shaping+'/'
         filename = filedir + 'Phase--waveforms--%05d.txt' % j
         (t,v,_) = rw(filename,numhead)
-        if shaping == 'raw_gained_analyzed_noised':
-            v = v*-1
         t_avg,v_avg = boxcar_wf(t,v,n_box)
         v_delay = delay_wf(v_avg,n_delay)
         v_att = attenuate_wf(v_avg,n_att)
