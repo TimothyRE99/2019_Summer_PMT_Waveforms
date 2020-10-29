@@ -49,8 +49,8 @@ def establish_templates(new_fsps,datadate,numhead,scale_array,phase_array,noise,
         v_array = uspl(t_array)
         Nloops = len(scale_array)      #establishing how many files to cycle through
         for j in range(Nloops):
-            scale_height_noise = scale_mean/np.max(v_array)
-            scale_height_peaked = scale_array[j]/np.max(v_array)
+            scale_height_noise = -1*scale_mean/np.max(v_array)
+            scale_height_peaked = -1*scale_array[j]/np.max(v_array)
             v_scaled_noise = v_array*scale_height_noise
             v_scaled_peaked = v_array*scale_height_peaked
             print('%s/%s, File: %05d' % (i + 1,steps,j))             #printing number of file currently being processed
@@ -76,9 +76,14 @@ if __name__ == '__main__':
     parser.add_argument('--new_fsps',type=int,help='samples per second',default = 250000000)
     args = parser.parse_args()
 
-    scale_mean = 0.0018414
-    scale_std = -0.0065313
-    scale_array = np.random.normal(scale_std,scale_mean,10000)
+    scale_mean = -0.0065414
+    scale_std = 0.0018414
+    scale_array = np.random.normal(scale_mean,scale_std,10000)
+    j = 0
+    while np.amin(scale_array) > 0:
+        print(str(j) + ', ' + str(np.amin(scale_array)))
+        scale_array = np.random.normal(scale_mean,scale_std,10000)
+        j += 1
     phase_array = np.arange(0,1/args.new_fsps,1/args.fsps)
     steps = int(args.fsps/args.new_fsps + 0.5)
     establish_templates(args.new_fsps,args.datadate,args.numhead,scale_array,phase_array,args.noise,args.fsps,steps,scale_mean)
