@@ -62,8 +62,7 @@ def fitter_timing(datadate,numhead,samplerate,samplerate_name,shaping):
         j = random.randint(0,maxphase - 1)
         filename = filedir + 'phase='+str(j)+'/phase_'+shaping+'/Phase--waveforms--%05d.txt' % i
         t,v,_ = rw(filename,5)
-        if shaping == 'raw_gained_analyzed_peaked':
-            v = -1*v
+        v = -1*v
         ET = t[0:10]
         EV = v[0:10]
         chi2_min = -1

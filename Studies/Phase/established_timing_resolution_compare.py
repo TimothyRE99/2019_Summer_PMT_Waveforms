@@ -105,8 +105,6 @@ def phase_hist_gen(samplerate,samplerate_name,shaping,datadate,n_box,n_delay,n_a
             print(samplerate_name+';'+str(n_box)+','+str(n_delay)+','+str(n_att)+';'+str(i)+','+str(j))
             filename = filedir + 'Phase--waveforms--%05d.txt' % j
             (t,v,_) = rw(filename,numhead)
-            if shaping == 'raw_gained_analyzed_noised':
-                v = v*-1
             t_avg,v_avg = boxcar_wf(t,v,n_box)
             v_delay = delay_wf(v_avg,n_delay)
             v_att = attenuate_wf(v_avg,n_att)

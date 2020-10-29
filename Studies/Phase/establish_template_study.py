@@ -49,8 +49,8 @@ def establish_templates(new_fsps,datadate,numhead,scale_array,phase_array,noise,
         v_array = uspl(t_array)
         Nloops = len(scale_array)      #establishing how many files to cycle through
         for j in range(Nloops):
-            scale_height_noise = -1*scale_mean/np.max(v_array)
-            scale_height_peaked = -1*scale_array[j]/np.max(v_array)
+            scale_height_noise = scale_mean/np.max(v_array)
+            scale_height_peaked = scale_array[j]/np.max(v_array)
             v_scaled_noise = v_array*scale_height_noise
             v_scaled_peaked = v_array*scale_height_peaked
             print('%s/%s, File: %05d' % (i + 1,steps,j))             #printing number of file currently being processed
