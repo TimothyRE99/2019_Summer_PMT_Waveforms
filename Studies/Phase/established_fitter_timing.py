@@ -109,7 +109,7 @@ def fitter_timing(datadate,numhead,samplerate,samplerate_name,shaping):
     chi_list = np.asarray(chi_list)
     true_mean = '%5g' % (np.mean(difference_list)*1e12)
     true_std = '%5g' % (np.std(difference_list)*1e12)
-    bins = 100#np.linspace(-2.2e-9,2.2e-9,num = 100)
+    bins = 45#np.linspace(-2.2e-9,2.2e-9,num = 100)
     histo_data, bins_data = np.histogram(difference_list, bins = bins)
     binwidth = (bins_data[1] - bins_data[0])
     binscenters = np.array([0.5 * (bins_data[i] + bins_data[i+1]) for i in range(len(bins_data)-1)])
@@ -125,7 +125,7 @@ def fitter_timing(datadate,numhead,samplerate,samplerate_name,shaping):
     plt.show()
     plt.close()
 
-    bins = 100#np.linspace(0,30200,num = 100)
+    bins = 45#np.linspace(0,30200,num = 100)
     histo_data, bins_data = np.histogram(chi_list, bins = bins)
     binwidth = (bins_data[1] - bins_data[0])
     binscenters = np.array([0.5 * (bins_data[i] + bins_data[i+1]) for i in range(len(bins_data)-1)])
@@ -155,7 +155,7 @@ if __name__ == '__main__':
     parser.add_argument('--datadate',type = str,help = 'date when data was gathered, YYYYMMDD', default = '20190724')
     parser.add_argument('--numhead',type=int,help='number of lines to ignore for header',default = 5)
     parser.add_argument('--samplerate',type=int,help='samples per second',default = 250000000)
-    parser.add_argument('--shaping',type=str,help='name of shaping',default = 'raw_gained_analyzed_peaked')
+    parser.add_argument('--shaping',type=str,help='name of shaping',default = 'raw_gained_analyzed_noised')
     args = parser.parse_args()
 
     if args.samplerate == 250000000:
