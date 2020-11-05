@@ -153,7 +153,7 @@ if __name__ == '__main__':
     import argparse
     parser = argparse.ArgumentParser(prog="fitter timing",description="Uses average waveform to fit for timing")
     parser.add_argument('--datadate',type = str,help = 'date when data was gathered, YYYYMMDD', default = '20190724')
-    parser.add_argument('--numhead',type=int,help='number of lines to ignore for header',default = 5)
+    parser.add_argument('--numhead',type=int,help='number of lines to ignore for header',default = 1)
     parser.add_argument('--samplerate',type=int,help='samples per second',default = 250000000)
     parser.add_argument('--shaping',type=str,help='name of shaping',default = 'raw_gained_analyzed_noised')
     args = parser.parse_args()

@@ -178,7 +178,7 @@ if __name__ == '__main__':
     import argparse
     parser = argparse.ArgumentParser(prog="timing_resolution_compare",description="Generates 1D Histograms of timing resolution with random sampled phase.")
     parser.add_argument('--datadate',type = str,help = 'date when data was gathered, YYYYMMDD', default = '20190724')
-    parser.add_argument('--numhead',type=int,help='number of lines to ignore for header',default = 5)
+    parser.add_argument('--numhead',type=int,help='number of lines to ignore for header',default = 1)
     args = parser.parse_args()
 
     phase_hist_gen(250000000,'250 Msps','raw_gained_analyzed_peaked',args.datadate,2,1,2,args.numhead)
