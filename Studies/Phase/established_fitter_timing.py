@@ -109,7 +109,7 @@ def fitter_timing(datadate,numhead,samplerate,samplerate_name,shaping):
     chi_list = np.asarray(chi_list)
     true_mean = '%5g' % (np.mean(difference_list)*1e12)
     true_std = '%5g' % (np.std(difference_list)*1e12)
-    bins = 45#np.linspace(-2.2e-9,2.2e-9,num = 100)
+    bins = 25#np.linspace(-2.2e-9,2.2e-9,num = 100)
     histo_data, bins_data = np.histogram(difference_list, bins = bins)
     binwidth = (bins_data[1] - bins_data[0])
     binscenters = np.array([0.5 * (bins_data[i] + bins_data[i+1]) for i in range(len(bins_data)-1)])
@@ -125,7 +125,7 @@ def fitter_timing(datadate,numhead,samplerate,samplerate_name,shaping):
     plt.show()
     plt.close()
 
-    bins = 45#np.linspace(0,30200,num = 100)
+    bins = 25#np.linspace(0,30200,num = 100)
     histo_data, bins_data = np.histogram(chi_list, bins = bins)
     binwidth = (bins_data[1] - bins_data[0])
     binscenters = np.array([0.5 * (bins_data[i] + bins_data[i+1]) for i in range(len(bins_data)-1)])
@@ -139,7 +139,7 @@ def fitter_timing(datadate,numhead,samplerate,samplerate_name,shaping):
     plt.close()
 
     _,ax = plt.subplots()
-    h = ax.hist2d(difference_list,chi_list,bins=65,norm = LogNorm())
+    h = ax.hist2d(difference_list,chi_list,bins=25,norm = LogNorm())
     plt.colorbar(h[3],ax = ax)
     ax.set_title(samplerate_name+' - Chi Squared vs. Timing Corrections - Fitter Timings')
     ax.set_xlabel('Timing Corrections')
