@@ -181,4 +181,4 @@ if __name__ == '__main__':
     parser.add_argument('--numhead',type=int,help='number of lines to ignore for header',default = 1)
     args = parser.parse_args()
 
-    phase_hist_gen(250000000,'250 Msps','raw_gained_analyzed_peaked',args.datadate,2,1,2,args.numhead)
+    phase_hist_gen(250000000,'250 Msps','raw_gained_analyzed_noised',args.datadate,2,1,2,args.numhead)
