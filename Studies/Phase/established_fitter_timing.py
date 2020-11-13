@@ -61,7 +61,7 @@ def fitter_timing(datadate,numhead,samplerate,samplerate_name,shaping):
         print(i)
         j = random.randint(0,maxphase - 1)
         filename = filedir + 'phase='+str(j)+'/phase_'+shaping+'/Phase--waveforms--%05d.txt' % i
-        t,v,_ = rw(filename,5)
+        t,v,_ = rw(filename,numhead)
         v = -1*v
         ET = t[0:10]
         EV = v[0:10]
@@ -103,8 +103,8 @@ def fitter_timing(datadate,numhead,samplerate,samplerate_name,shaping):
         #    ax.set_title(str(-1*j*phase_time - t_cross) + ', ' + str(chi2_min) + ', ' + str(i) + ', ' + str(j))
         #    plt.get_current_fig_manager().window.showMaximized()
         #    plt.show()
-        difference_list.append((-1*j*phase_time - t_cross)[0])
-        chi_list.append(chi2_min)
+        #    difference_list.append((-1*j*phase_time - t_cross)[0])
+        #    chi_list.append(chi2_min)
     difference_list = np.asarray(difference_list)
     chi_list = np.asarray(chi_list)
     true_mean = '%5g' % (np.mean(difference_list)*1e12)
