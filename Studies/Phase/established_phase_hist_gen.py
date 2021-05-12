@@ -68,52 +68,20 @@ def zc_locator(t,v):
 
 def phase_hist_gen(samplerate,samplerate_name,shaping,datadate,n_box,n_delay,n_att,numhead):
     phase_time = 1/20000000000
-    maxphase = int(20000000000/samplerate + 0.5)
-    phase_array = np.arange(0,maxphase)
-    x = []
-    y = []
-    x_bins = []
-    median_array = []
-    correction = []
-    correction_median_array = []
-    for i in range(len(phase_array)):
-        filedir = 'G:/data/watchman/'+str(datadate)+'_watchman_spe/studies/phase/'+samplerate_name+'/file_template/phase='+str(phase_array[i])+'/phase_'+shaping+'/'
-        Nloops = len(os.listdir(filedir))
-        y_j = []
-        x_j = []
-        correction_j = []
-        for j in range(Nloops):
-            print('Uncorrected Files '+samplerate_name+';'+str(n_box)+','+str(n_delay)+','+str(n_att)+';'+str(i)+','+str(j))
-            filename = filedir + 'Phase--waveforms--%05d.txt' % j
-            (t,v,_) = rw(filename,numhead)
-            t_avg,v_avg = boxcar_wf(t,v,n_box)
-            v_delay = delay_wf(v_avg,n_delay)
-            v_att = attenuate_wf(v_avg,n_att)
-            v_sum = sum_wf(v_att,v_delay)
-            t_cross,_,_ = zc_locator(t_avg,v_sum)
-            y_j.append(t_cross)
-            x_j.append(-1*i*phase_time)
-            correction_j.append(-1*i*phase_time - t_cross)
-        median_array.append(np.median(np.asarray(y_j)))
-        correction_median_array.append(np.median(np.asarray(correction_j)))
-        y = y + y_j
-        x = x + x_j
-        correction = correction + correction_j
-        x_bins.append(-1*(i-0.5)*phase_time)
-    y = np.asarray(y)
-    y = y - median_array[0]
-    correction = np.asarray(correction)
-    correction = correction + median_array[0]
-    correction_median_array = np.asarray(correction_median_array)
-    correction_median_array = correction_median_array + median_array[0]
-    median_value = median_array[0]
-    median_array = np.asarray(median_array)
-    median_array = median_array - median_array[0]
-    ybin = 1/(2*samplerate)
-    y_bins = np.linspace(-2*ybin,0,num=maxphase,endpoint = True)
-    y_bins_corrections = np.linspace(-ybin,ybin,num=maxphase,endpoint = True)
-    x_bins = np.asarray(x_bins)
-    x_bins = np.flip(x_bins)
+
+    filedir = 'G:/data/watchman/'+str(datadate)+'_watchman_spe/studies/phase/' + samplerate_name + '/array_data/'
+    x = np.loadtxt(filedir+'established_x.csv', delimiter=',')
+    y = np.loadtxt(filedir+'established_y.csv', delimiter=',')
+    x_bins = np.loadtxt(filedir+'established_x_bins.csv', delimiter=',')
+    y_bins = np.loadtxt(filedir+'established_y_bins.csv', delimiter=',')
+    median_array = np.loadtxt(filedir+'established_median_array.csv', delimiter=',')
+    correction = np.loadtxt(filedir+'established_correction.csv', delimiter=',')
+    y_bins_corrections = np.loadtxt(filedir+'established_y_bins_corrections.csv', delimiter=',')
+    correction_median_array = np.loadtxt(filedir+'established_correction_median_array.csv', delimiter=',')
+    y_corrected = np.loadtxt(filedir+'established_y_corrected.csv', delimiter=',')
+    corrected_median_array = np.loadtxt(filedir+'established_corrected_median_array.csv', delimiter=',')
+    corrected_corrections = np.loadtxt(filedir+'established_corrected_corrections.csv', delimiter=',')
+    corrected_correction_median_array = np.loadtxt(filedir+'corrected_correction_median_array.csv', delimiter=',')
 
     _,ax = plt.subplots()
     h = ax.hist2d(x,y,bins = [x_bins,y_bins],norm = LogNorm())
@@ -149,36 +117,6 @@ def phase_hist_gen(samplerate,samplerate_name,shaping,datadate,n_box,n_delay,n_a
     #savename = savedir + filename
     #fig.savefig(savename,dpi = 500)
     #plt.close()
-
-    y_corrected = []
-    corrected_median_array = []
-    corrected_corrections = []
-    corrected_correction_median_array = []
-    for i in range(len(phase_array)):
-        filedir = 'G:/data/watchman/'+str(datadate)+'_watchman_spe/studies/phase/'+samplerate_name+'/file_template/phase='+str(phase_array[i])+'/phase_'+shaping+'/'
-        Nloops = len(os.listdir(filedir))
-        corrected_corrections_j = []
-        y_corrected_j = []
-        for j in range(Nloops):
-            print('Corrected Files '+samplerate_name+';'+str(n_box)+','+str(n_delay)+','+str(n_att)+';'+str(i)+','+str(j))
-            filename = filedir + 'Phase--waveforms--%05d.txt' % j
-            (t,v,_) = rw(filename,numhead)
-            t_avg,v_avg = boxcar_wf(t,v,n_box)
-            v_delay = delay_wf(v_avg,n_delay)
-            v_att = attenuate_wf(v_avg,n_att)
-            v_sum = sum_wf(v_att,v_delay)
-            t_cross,_,_ = zc_locator(t_avg,v_sum)
-            t_corrected = t_cross - median_value + correction_median_array[i]
-            y_corrected_j.append(t_corrected)
-            corrected_correction = -1*i*phase_time - t_corrected
-            corrected_corrections_j.append(corrected_correction)
-        corrected_median_array.append(np.median(np.asarray(y_corrected_j)))
-        corrected_correction_median_array.append(np.median(np.asarray(corrected_corrections_j)))
-        y_corrected = y_corrected + y_corrected_j
-        corrected_corrections = corrected_corrections + corrected_corrections_j
-    y_corrected = np.asarray(y_corrected)
-    corrected_correction_median_array = np.asarray(corrected_correction_median_array)
-    corrected_corrections = np.asarray(corrected_corrections)
 
     _,ax = plt.subplots()
     h = ax.hist2d(x,y_corrected,bins = [x_bins,y_bins],norm = LogNorm())
