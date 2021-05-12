@@ -5,7 +5,7 @@ import shutil
 import os
 
 #moves files
-def d1rename(datadate,numhead):
+def d1rename(datadate):
     files = sorted(os.listdir('G:/data/watchman/'+datadate+'_watchman_spe/d1/d1_raw'))          #creating list of files in d1_raw directory
     if not os.path.exists('G:/data/watchman/'+datadate+'_watchman_spe/d1/d1_renamed/'): #creating directory for writing to if nonexistant
         os.makedirs('G:/data/watchman/'+datadate+'_watchman_spe/d1/d1_renamed/')
@@ -18,7 +18,6 @@ if __name__ == '__main__':
     import argparse
     parser = argparse.ArgumentParser(prog='d1rename', description='Rename the data and move to new location')
     parser.add_argument('--datadate',type = str,help = 'date when data was gathered, YYYYMMDD', default = '20190724')
-    parser.add_argument('--numhead',type=int,help='number of lines to ignore for header',default = 5)
     args = parser.parse_args()
 
-    d1rename(args.datadate,args.numhead)
+    d1rename(args.datadate)

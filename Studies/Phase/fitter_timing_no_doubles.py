@@ -46,7 +46,7 @@ def chi_squared(observed,expected):
     chi2 = np.sum(np.square(observed - expected))
     return(chi2)
 
-def fitter_timing(datadate,numhead,samplerate,samplerate_name,shaping):
+def fitter_timing(datadate,samplerate,samplerate_name,shaping):
     if samplerate_name == 'INVALID':
         return("Failed")
     phase_time = 1/20000000000
@@ -174,7 +174,6 @@ if __name__ == '__main__':
     import argparse
     parser = argparse.ArgumentParser(prog="fitter timing",description="Uses average waveform to fit for timing")
     parser.add_argument('--datadate',type = str,help = 'date when data was gathered, YYYYMMDD', default = '20190724')
-    parser.add_argument('--numhead',type=int,help='number of lines to ignore for header',default = 5)
     parser.add_argument('--samplerate',type=int,help='samples per second',default = 250000000)
     parser.add_argument('--shaping',type=str,help='name of shaping',default = 'raw_gained_analyzed')
     args = parser.parse_args()
@@ -188,5 +187,5 @@ if __name__ == '__main__':
     else:
         samplerate_name = 'INVALID'
     
-    status = fitter_timing(args.datadate,args.numhead,args.samplerate,samplerate_name,args.shaping)
+    status = fitter_timing(args.datadate,args.samplerate,samplerate_name,args.shaping)
     print(status)

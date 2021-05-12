@@ -33,7 +33,7 @@ def downsampling(t,v,fsps,new_fsps,start_index):
     return t_new,v_new
 
 #reading and writing waveforms and calling other functions
-def p3(noise_filter,noise,datadate,numhead,fsps,new_fsps,gain_noise,gain_factor_2,gain_factor_4,gain_factor_8,start_index,steps,scale_array):
+def p3(noise,datadate,numhead,fsps,new_fsps,gain_noise,gain_factor_2,gain_factor_4,gain_factor_8,start_index,steps,scale_array):
     #establishing directory names
     if new_fsps == 1000000000:
         sample_rate = '1 Gsps'
@@ -67,7 +67,6 @@ def p3(noise_filter,noise,datadate,numhead,fsps,new_fsps,gain_noise,gain_factor_
 if __name__ == '__main__':
     import argparse
     parser = argparse.ArgumentParser(prog="phase_discrete_copy_average",description="Runs Downsampling and Digitizing based on discrete phases for average waveform.")
-    parser.add_argument("--noise_filter",type=float,help='bits of noise from filter',default=0)
     parser.add_argument("--noise",type=float,help='bits of noise from digitizer',default=3.3)
     parser.add_argument('--datadate',type = str,help = 'date when data was gathered, YYYYMMDD', default = '20190724')
     parser.add_argument('--numhead',type=int,help='number of lines to ignore for header',default = 1)
@@ -84,4 +83,4 @@ if __name__ == '__main__':
         steps = int(args.fsps/new_fsps[i] + 0.5)
         for j in range(steps):
             start_index = j
-            p3(args.noise_filter,args.noise,args.datadate,args.numhead,args.fsps,new_fsps[i],args.gain_noise,args.gain_factor_2,args.gain_factor_4,args.gain_factor_8,start_index,steps,scale_array)
+            p3(args.noise,args.datadate,args.numhead,args.fsps,new_fsps[i],args.gain_noise,args.gain_factor_2,args.gain_factor_4,args.gain_factor_8,start_index,steps,scale_array)

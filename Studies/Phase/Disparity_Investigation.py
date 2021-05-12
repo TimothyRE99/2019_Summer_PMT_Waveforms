@@ -92,7 +92,7 @@ def zc_locator(t,v):
     t_cross = t_bef + t_pass
     return (t_cross,index_Cross,index_Peak)
 
-def disparity_investigation(samplerate,samplerate_name,shaping,datadate,n_box,n_delay,n_att,numhead):
+def disparity_investigation(samplerate_name,shaping,datadate,n_box,n_delay,n_att,numhead):
     phase_time = 1/20000000000  #sets timing between phases (initial sample rate of oscilloscope)
     
     filedir = 'G:/data/watchman/'+str(datadate)+'_watchman_spe/studies/phase/'+samplerate_name+'/phase=0/phase_'+shaping+'/'
@@ -161,4 +161,4 @@ if __name__ == '__main__':
     parser.add_argument('--numhead',type=int,help='number of lines to ignore for header',default = 5)
     args = parser.parse_args()
 
-    disparity_investigation(250000000,'250 Msps','raw_gained_analyzed',args.datadate,2,1,2,args.numhead)
+    disparity_investigation('250 Msps','raw_gained_analyzed',args.datadate,2,1,2,args.numhead)
