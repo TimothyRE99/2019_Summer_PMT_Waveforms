@@ -1,6 +1,7 @@
 # 2019_Summer_PMT_Waveforms
 ## Overview
 * I ran all files using Anaconda. I imagine you can individually import the necessary libraries, but using Anaconda is faster
+* When running 250 MSPS use a 2,1,2 formulation for the n_### values, and use 2,2,2 for 500 MSPS. These values are for raw_gained_analyzed shaping. For increased shaping, multiply the middle value by the degree of shaping (doubled=x2, quadrupled=x4, octupled=x8)
 
 ## p1
 ### Preliminary Steps
