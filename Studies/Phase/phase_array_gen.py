@@ -146,7 +146,7 @@ def phase_array_gen(samplerate,samplerate_name,shaping,datadate,n_box,n_delay,n_
     corrected_correction_median_array = np.asarray(corrected_correction_median_array)
     corrected_corrections = np.asarray(corrected_corrections)
 
-    if samplerate_name == '250 Msps':
+    if samplerate_name == '250 Msps' and shaping == 'raw_gained_analyzed':
         established_x_noised = []
         established_y_noised = []
         established_x_bins_noised = []
