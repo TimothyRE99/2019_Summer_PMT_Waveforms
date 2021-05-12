@@ -1,3 +1,5 @@
+#generates proper arrays
+
 #import necessary
 import os
 import numpy as np

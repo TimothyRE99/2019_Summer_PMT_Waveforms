@@ -1,3 +1,5 @@
+#generates 2D histogram of timing resolution vs phase
+
 #import necessary
 import os
 import numpy as np

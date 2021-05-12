@@ -1,3 +1,6 @@
+#copying and downsampling/digitizing from p2 with discrete phases and splining them
+
+#import necessary
 import numpy as np
 import os
 import random

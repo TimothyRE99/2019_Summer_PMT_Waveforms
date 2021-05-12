@@ -1,6 +1,5 @@
 #copying and downsampling/digitizing waveforms from p2 with discrete phases
 
-
 #import necessary
 import numpy as np
 import os

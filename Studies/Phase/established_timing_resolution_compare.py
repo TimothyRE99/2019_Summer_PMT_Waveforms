@@ -1,3 +1,5 @@
+#template study version of timing_resolution_compare
+
 #import necessary
 import os
 import numpy as np

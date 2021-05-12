@@ -1,3 +1,5 @@
+#Generates 1D Histograms of timing resolution with random sampled phase.
+
 #import necessary
 import os
 import numpy as np

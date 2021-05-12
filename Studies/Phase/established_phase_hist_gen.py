@@ -1,3 +1,5 @@
+#Template study version of phase_hist_gen
+
 #import necessary
 import os
 import numpy as np

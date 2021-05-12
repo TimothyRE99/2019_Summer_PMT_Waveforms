@@ -1,3 +1,6 @@
+#Plots comparison of recovered vs true timing for splined waveforms
+
+#import necessary
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.colors import LogNorm
