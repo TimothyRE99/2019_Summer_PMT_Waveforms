@@ -146,155 +146,156 @@ def phase_array_gen(samplerate,samplerate_name,shaping,datadate,n_box,n_delay,n_
     corrected_correction_median_array = np.asarray(corrected_correction_median_array)
     corrected_corrections = np.asarray(corrected_corrections)
 
-    established_x = []
-    established_y = []
-    established_x_bins = []
-    established_median_array = []
-    established_correction = []
-    established_correction_median_array = []
-    for i in range(len(phase_array)):
-        filedir = 'G:/data/watchman/'+str(datadate)+'_watchman_spe/studies/phase/'+samplerate_name+'/file_template/phase='+str(phase_array[i])+'/phase_'+shaping+'_noised/'
-        Nloops = len(os.listdir(filedir))
-        established_y_j = []
-        established_x_j = []
-        established_correction_j = []
-        for j in range(Nloops):
-            print('Established Noised Uncorrected Files '+samplerate_name+';'+str(n_box)+','+str(n_delay)+','+str(n_att)+';'+str(i)+','+str(j))
-            filename = filedir + 'Phase--waveforms--%05d.txt' % j
-            (t,v,_) = rw(filename,numhead)
-            t_avg,v_avg = boxcar_wf(t,v,n_box)
-            v_delay = delay_wf(v_avg,n_delay)
-            v_att = attenuate_wf(v_avg,n_att)
-            v_sum = sum_wf(v_att,v_delay)
-            t_cross,_,_ = zc_locator(t_avg,v_sum)
-            established_y_j.append(t_cross)
-            established_x_j.append(-1*i*phase_time)
-            established_correction_j.append(-1*i*phase_time - t_cross)
-        established_median_array.append(np.median(np.asarray(established_y_j)))
-        established_correction_median_array.append(np.median(np.asarray(established_correction_j)))
-        established_y = established_y + established_y_j
-        established_x = established_x + established_x_j
-        established_correction = established_correction + established_correction_j
-        established_x_bins.append(-1*(i-0.5)*phase_time)
-    established_y = np.asarray(established_y)
-    established_y = established_y - established_median_array[0]
-    established_correction = np.asarray(established_correction)
-    established_correction = established_correction + established_median_array[0]
-    established_correction_median_array = np.asarray(established_correction_median_array)
-    established_correction_median_array = established_correction_median_array + established_median_array[0]
-    established_median_value = established_median_array[0]
-    established_median_array = np.asarray(established_median_array)
-    established_median_array = established_median_array - established_median_array[0]
-    established_ybin = 1/(2*samplerate)
-    established_y_bins = np.linspace(-2*established_ybin,0,num=maxphase,endpoint = True)
-    established_y_bins_corrections = np.linspace(-established_ybin,established_ybin,num=maxphase,endpoint = True)
-    established_x_bins = np.asarray(established_x_bins)
-    established_x_bins = np.flip(established_x_bins)
+    if samplerate_name == '250 Msps':
+        established_x_noised = []
+        established_y_noised = []
+        established_x_bins_noised = []
+        established_median_array_noised = []
+        established_correction_noised = []
+        established_correction_median_array_noised = []
+        for i in range(len(phase_array)):
+            filedir = 'G:/data/watchman/'+str(datadate)+'_watchman_spe/studies/phase/'+samplerate_name+'/file_template/phase='+str(phase_array[i])+'/phase_'+shaping+'_noised/'
+            Nloops = len(os.listdir(filedir))
+            established_y_j_noised = []
+            established_x_j_noised = []
+            established_correction_j_noised = []
+            for j in range(Nloops):
+                print('Established Noised Uncorrected Files '+samplerate_name+';'+str(n_box)+','+str(n_delay)+','+str(n_att)+';'+str(i)+','+str(j))
+                filename = filedir + 'Phase--waveforms--%05d.txt' % j
+                (t,v,_) = rw(filename,numhead)
+                t_avg,v_avg = boxcar_wf(t,v,n_box)
+                v_delay = delay_wf(v_avg,n_delay)
+                v_att = attenuate_wf(v_avg,n_att)
+                v_sum = sum_wf(v_att,v_delay)
+                t_cross,_,_ = zc_locator(t_avg,v_sum)
+                established_y_j_noised.append(t_cross)
+                established_x_j_noised.append(-1*i*phase_time)
+                established_correction_j_noised.append(-1*i*phase_time - t_cross)
+            established_median_array_noised.append(np.median(np.asarray(established_y_j_noised)))
+            established_correction_median_array_noised.append(np.median(np.asarray(established_correction_j_noised)))
+            established_y_noised = established_y_noised + established_y_j_noised
+            established_x_noised = established_x_noised + established_x_j_noised
+            established_correction_noised = established_correction_noised + established_correction_j_noised
+            established_x_bins_noised.append(-1*(i-0.5)*phase_time)
+        established_y_noised = np.asarray(established_y_noised)
+        established_y_noised = established_y_noised - established_median_array_noised[0]
+        established_correction_noised = np.asarray(established_correction_noised)
+        established_correction_noised = established_correction_noised + established_median_array_noised[0]
+        established_correction_median_array_noised = np.asarray(established_correction_median_array_noised)
+        established_correction_median_array_noised = established_correction_median_array_noised + established_median_array_noised[0]
+        established_median_value_noised = established_median_array_noised[0]
+        established_median_array_noised = np.asarray(established_median_array_noised)
+        established_median_array_noised = established_median_array_noised - established_median_array_noised[0]
+        established_ybin_noised = 1/(2*samplerate)
+        established_y_bins_noised = np.linspace(-2*established_ybin_noised,0,num=maxphase,endpoint = True)
+        established_y_bins_corrections_noised = np.linspace(-established_ybin_noised,established_ybin_noised,num=maxphase,endpoint = True)
+        established_x_bins_noised = np.asarray(established_x_bins_noised)
+        established_x_bins_noised = np.flip(established_x_bins_noised)
 
-    established_y_corrected = []
-    established_corrected_median_array = []
-    established_corrected_corrections = []
-    established_corrected_correction_median_array = []
-    for i in range(len(phase_array)):
-        filedir = 'G:/data/watchman/'+str(datadate)+'_watchman_spe/studies/phase/'+samplerate_name+'/file_template/phase='+str(phase_array[i])+'/phase_'+shaping+'_noised/'
-        Nloops = len(os.listdir(filedir))
-        established_corrected_corrections_j = []
-        established_y_corrected_j = []
-        for j in range(Nloops):
-            print('Established Noised Corrected Files '+samplerate_name+';'+str(n_box)+','+str(n_delay)+','+str(n_att)+';'+str(i)+','+str(j))
-            filename = filedir + 'Phase--waveforms--%05d.txt' % j
-            (t,v,_) = rw(filename,numhead)
-            t_avg,v_avg = boxcar_wf(t,v,n_box)
-            v_delay = delay_wf(v_avg,n_delay)
-            v_att = attenuate_wf(v_avg,n_att)
-            v_sum = sum_wf(v_att,v_delay)
-            t_cross,_,_ = zc_locator(t_avg,v_sum)
-            established_t_corrected = t_cross - established_median_value + established_correction_median_array[i]
-            established_y_corrected_j.append(established_t_corrected)
-            established_corrected_correction = -1*i*phase_time - established_t_corrected
-            established_corrected_corrections_j.append(established_corrected_correction)
-        established_corrected_median_array.append(np.median(np.asarray(established_y_corrected_j)))
-        established_corrected_correction_median_array.append(np.median(np.asarray(established_corrected_corrections_j)))
-        established_y_corrected = established_y_corrected + established_y_corrected_j
-        established_corrected_corrections = established_corrected_corrections + established_corrected_corrections_j
-    established_y_corrected = np.asarray(established_y_corrected)
-    established_corrected_correction_median_array = np.asarray(established_corrected_correction_median_array)
-    established_corrected_corrections = np.asarray(established_corrected_corrections)
+        established_y_corrected_noised = []
+        established_corrected_median_array_noised = []
+        established_corrected_corrections_noised = []
+        established_corrected_correction_median_array_noised = []
+        for i in range(len(phase_array)):
+            filedir = 'G:/data/watchman/'+str(datadate)+'_watchman_spe/studies/phase/'+samplerate_name+'/file_template/phase='+str(phase_array[i])+'/phase_'+shaping+'_noised/'
+            Nloops = len(os.listdir(filedir))
+            established_corrected_corrections_j_noised = []
+            established_y_corrected_j_noised = []
+            for j in range(Nloops):
+                print('Established Noised Corrected Files '+samplerate_name+';'+str(n_box)+','+str(n_delay)+','+str(n_att)+';'+str(i)+','+str(j))
+                filename = filedir + 'Phase--waveforms--%05d.txt' % j
+                (t,v,_) = rw(filename,numhead)
+                t_avg,v_avg = boxcar_wf(t,v,n_box)
+                v_delay = delay_wf(v_avg,n_delay)
+                v_att = attenuate_wf(v_avg,n_att)
+                v_sum = sum_wf(v_att,v_delay)
+                t_cross,_,_ = zc_locator(t_avg,v_sum)
+                established_t_corrected_noised = t_cross - established_median_value_noised + established_correction_median_array_noised[i]
+                established_y_corrected_j_noised.append(established_t_corrected_noised)
+                established_corrected_correction_noised = -1*i*phase_time - established_t_corrected_noised
+                established_corrected_corrections_j_noised.append(established_corrected_correction_noised)
+            established_corrected_median_array_noised.append(np.median(np.asarray(established_y_corrected_j_noised)))
+            established_corrected_correction_median_array_noised.append(np.median(np.asarray(established_corrected_corrections_j_noised)))
+            established_y_corrected_noised = established_y_corrected_noised + established_y_corrected_j_noised
+            established_corrected_corrections_noised = established_corrected_corrections_noised + established_corrected_corrections_j_noised
+        established_y_corrected_noised = np.asarray(established_y_corrected_noised)
+        established_corrected_correction_median_array_noised = np.asarray(established_corrected_correction_median_array_noised)
+        established_corrected_corrections_noised = np.asarray(established_corrected_corrections_noised)
 
-    established_x = []
-    established_y = []
-    established_x_bins = []
-    established_median_array = []
-    established_correction = []
-    established_correction_median_array = []
-    for i in range(len(phase_array)):
-        filedir = 'G:/data/watchman/'+str(datadate)+'_watchman_spe/studies/phase/'+samplerate_name+'/file_template/phase='+str(phase_array[i])+'/phase_'+shaping+'_peaked/'
-        Nloops = len(os.listdir(filedir))
-        established_y_j = []
-        established_x_j = []
-        established_correction_j = []
-        for j in range(Nloops):
-            print('Established Peaked Uncorrected Files '+samplerate_name+';'+str(n_box)+','+str(n_delay)+','+str(n_att)+';'+str(i)+','+str(j))
-            filename = filedir + 'Phase--waveforms--%05d.txt' % j
-            (t,v,_) = rw(filename,numhead)
-            t_avg,v_avg = boxcar_wf(t,v,n_box)
-            v_delay = delay_wf(v_avg,n_delay)
-            v_att = attenuate_wf(v_avg,n_att)
-            v_sum = sum_wf(v_att,v_delay)
-            t_cross,_,_ = zc_locator(t_avg,v_sum)
-            established_y_j.append(t_cross)
-            established_x_j.append(-1*i*phase_time)
-            established_correction_j.append(-1*i*phase_time - t_cross)
-        established_median_array.append(np.median(np.asarray(established_y_j)))
-        established_correction_median_array.append(np.median(np.asarray(established_correction_j)))
-        established_y = established_y + established_y_j
-        established_x = established_x + established_x_j
-        established_correction = established_correction + established_correction_j
-        established_x_bins.append(-1*(i-0.5)*phase_time)
-    established_y = np.asarray(established_y)
-    established_y = established_y - established_median_array[0]
-    established_correction = np.asarray(established_correction)
-    established_correction = established_correction + established_median_array[0]
-    established_correction_median_array = np.asarray(established_correction_median_array)
-    established_correction_median_array = established_correction_median_array + established_median_array[0]
-    established_median_value = established_median_array[0]
-    established_median_array = np.asarray(established_median_array)
-    established_median_array = established_median_array - established_median_array[0]
-    established_ybin = 1/(2*samplerate)
-    established_y_bins = np.linspace(-2*established_ybin,0,num=maxphase,endpoint = True)
-    established_y_bins_corrections = np.linspace(-established_ybin,established_ybin,num=maxphase,endpoint = True)
-    established_x_bins = np.asarray(established_x_bins)
-    established_x_bins = np.flip(established_x_bins)
+        established_x_peaked = []
+        established_y_peaked = []
+        established_x_bins_peaked = []
+        established_median_array_peaked = []
+        established_correction_peaked = []
+        established_correction_median_array_peaked = []
+        for i in range(len(phase_array)):
+            filedir = 'G:/data/watchman/'+str(datadate)+'_watchman_spe/studies/phase/'+samplerate_name+'/file_template/phase='+str(phase_array[i])+'/phase_'+shaping+'_peaked/'
+            Nloops = len(os.listdir(filedir))
+            established_y_j_peaked = []
+            established_x_j_peaked = []
+            established_correction_j_peaked = []
+            for j in range(Nloops):
+                print('Established Peaked Uncorrected Files '+samplerate_name+';'+str(n_box)+','+str(n_delay)+','+str(n_att)+';'+str(i)+','+str(j))
+                filename = filedir + 'Phase--waveforms--%05d.txt' % j
+                (t,v,_) = rw(filename,numhead)
+                t_avg,v_avg = boxcar_wf(t,v,n_box)
+                v_delay = delay_wf(v_avg,n_delay)
+                v_att = attenuate_wf(v_avg,n_att)
+                v_sum = sum_wf(v_att,v_delay)
+                t_cross,_,_ = zc_locator(t_avg,v_sum)
+                established_y_j_peaked.append(t_cross)
+                established_x_j_peaked.append(-1*i*phase_time)
+                established_correction_j_peaked.append(-1*i*phase_time - t_cross)
+            established_median_array_peaked.append(np.median(np.asarray(established_y_j_peaked)))
+            established_correction_median_array_peaked.append(np.median(np.asarray(established_correction_j_peaked)))
+            established_y_peaked = established_y_peaked + established_y_j_peaked
+            established_x_peaked = established_x_peaked + established_x_j_peaked
+            established_correction_peaked = established_correction_peaked + established_correction_j_peaked
+            established_x_bins_peaked.append(-1*(i-0.5)*phase_time)
+        established_y_peaked = np.asarray(established_y_peaked)
+        established_y_peaked = established_y_peaked - established_median_array_peaked[0]
+        established_correction_peaked = np.asarray(established_correction_peaked)
+        established_correction_peaked = established_correction_peaked + established_median_array_peaked[0]
+        established_correction_median_array_peaked = np.asarray(established_correction_median_array_peaked)
+        established_correction_median_array_peaked = established_correction_median_array_peaked + established_median_array_peaked[0]
+        established_median_value_peaked = established_median_array_peaked[0]
+        established_median_array_peaked = np.asarray(established_median_array_peaked)
+        established_median_array_peaked = established_median_array_peaked - established_median_array_peaked[0]
+        established_ybin_peaked = 1/(2*samplerate)
+        established_y_bins_peaked = np.linspace(-2*established_ybin_peaked,0,num=maxphase,endpoint = True)
+        established_y_bins_corrections_peaked = np.linspace(-established_ybin_peaked,established_ybin_peaked,num=maxphase,endpoint = True)
+        established_x_bins_peaked = np.asarray(established_x_bins_peaked)
+        established_x_bins_peaked = np.flip(established_x_bins_peaked)
 
-    established_y_corrected = []
-    established_corrected_median_array = []
-    established_corrected_corrections = []
-    established_corrected_correction_median_array = []
-    for i in range(len(phase_array)):
-        filedir = 'G:/data/watchman/'+str(datadate)+'_watchman_spe/studies/phase/'+samplerate_name+'/file_template/phase='+str(phase_array[i])+'/phase_'+shaping+'_peaked/'
-        Nloops = len(os.listdir(filedir))
-        established_corrected_corrections_j = []
-        established_y_corrected_j = []
-        for j in range(Nloops):
-            print('Established Peaked Corrected Files '+samplerate_name+';'+str(n_box)+','+str(n_delay)+','+str(n_att)+';'+str(i)+','+str(j))
-            filename = filedir + 'Phase--waveforms--%05d.txt' % j
-            (t,v,_) = rw(filename,numhead)
-            t_avg,v_avg = boxcar_wf(t,v,n_box)
-            v_delay = delay_wf(v_avg,n_delay)
-            v_att = attenuate_wf(v_avg,n_att)
-            v_sum = sum_wf(v_att,v_delay)
-            t_cross,_,_ = zc_locator(t_avg,v_sum)
-            established_t_corrected = t_cross - established_median_value + established_correction_median_array[i]
-            established_y_corrected_j.append(established_t_corrected)
-            established_corrected_correction = -1*i*phase_time - established_t_corrected
-            established_corrected_corrections_j.append(established_corrected_correction)
-        established_corrected_median_array.append(np.median(np.asarray(established_y_corrected_j)))
-        established_corrected_correction_median_array.append(np.median(np.asarray(established_corrected_corrections_j)))
-        established_y_corrected = established_y_corrected + established_y_corrected_j
-        established_corrected_corrections = established_corrected_corrections + established_corrected_corrections_j
-    established_y_corrected = np.asarray(established_y_corrected)
-    established_corrected_correction_median_array = np.asarray(established_corrected_correction_median_array)
-    established_corrected_corrections = np.asarray(established_corrected_corrections)
+        established_y_corrected_peaked = []
+        established_corrected_median_array_peaked = []
+        established_corrected_corrections_peaked = []
+        established_corrected_correction_median_array_peaked = []
+        for i in range(len(phase_array)):
+            filedir = 'G:/data/watchman/'+str(datadate)+'_watchman_spe/studies/phase/'+samplerate_name+'/file_template/phase='+str(phase_array[i])+'/phase_'+shaping+'_peaked/'
+            Nloops = len(os.listdir(filedir))
+            established_corrected_corrections_j_peaked = []
+            established_y_corrected_j_peaked = []
+            for j in range(Nloops):
+                print('Established Peaked Corrected Files '+samplerate_name+';'+str(n_box)+','+str(n_delay)+','+str(n_att)+';'+str(i)+','+str(j))
+                filename = filedir + 'Phase--waveforms--%05d.txt' % j
+                (t,v,_) = rw(filename,numhead)
+                t_avg,v_avg = boxcar_wf(t,v,n_box)
+                v_delay = delay_wf(v_avg,n_delay)
+                v_att = attenuate_wf(v_avg,n_att)
+                v_sum = sum_wf(v_att,v_delay)
+                t_cross,_,_ = zc_locator(t_avg,v_sum)
+                established_t_corrected_peaked = t_cross - established_median_value_peaked + established_correction_median_array_peaked[i]
+                established_y_corrected_j_peaked.append(established_t_corrected_peaked)
+                established_corrected_correction_peaked = -1*i*phase_time - established_t_corrected_peaked
+                established_corrected_corrections_j_peaked.append(established_corrected_correction_peaked)
+            established_corrected_median_array_peaked.append(np.median(np.asarray(established_y_corrected_j_peaked)))
+            established_corrected_correction_median_array_peaked.append(np.median(np.asarray(established_corrected_corrections_j_peaked)))
+            established_y_corrected_peaked = established_y_corrected_peaked + established_y_corrected_j_peaked
+            established_corrected_corrections_peaked = established_corrected_corrections_peaked + established_corrected_corrections_j_peaked
+        established_y_corrected_peaked = np.asarray(established_y_corrected_peaked)
+        established_corrected_correction_median_array_peaked = np.asarray(established_corrected_correction_median_array_peaked)
+        established_corrected_corrections_peaked = np.asarray(established_corrected_corrections_peaked)
 
     savedir = 'G:/data/watchman/'+str(datadate)+'_watchman_spe/studies/phase/' + samplerate_name + '/array_data/'
     if not os.path.exists(savedir):
@@ -312,31 +313,31 @@ def phase_array_gen(samplerate,samplerate_name,shaping,datadate,n_box,n_delay,n_
     np.savetxt(savedir+'corrected_corrections.csv', corrected_corrections, delimiter=',')
     np.savetxt(savedir+'corrected_correction_median_array.csv', corrected_correction_median_array, delimiter=',')
 
-    np.savetxt(savedir+'established_x_noised.csv', established_x, delimiter=',')
-    np.savetxt(savedir+'established_y_noised.csv', established_y, delimiter=',')
-    np.savetxt(savedir+'established_x_bins_noised.csv', established_x_bins, delimiter=',')
-    np.savetxt(savedir+'established_y_bins_noised.csv', established_y_bins, delimiter=',')
-    np.savetxt(savedir+'established_median_array_noised.csv', established_median_array, delimiter=',')
-    np.savetxt(savedir+'established_correction_noised.csv', established_correction, delimiter=',')
-    np.savetxt(savedir+'established_y_bins_corrections_noised.csv', established_y_bins_corrections, delimiter=',')
-    np.savetxt(savedir+'established_correction_median_array_noised.csv', established_correction_median_array, delimiter=',')
-    np.savetxt(savedir+'established_y_corrected_noised.csv', established_y_corrected, delimiter=',')
-    np.savetxt(savedir+'established_corrected_median_array_noised.csv', established_corrected_median_array, delimiter=',')
-    np.savetxt(savedir+'established_corrected_corrections_noised.csv', established_corrected_corrections, delimiter=',')
-    np.savetxt(savedir+'established_corrected_correction_median_array_noised.csv', established_corrected_correction_median_array, delimiter=',')
+    np.savetxt(savedir+'established_x_noised.csv', established_x_noised, delimiter=',')
+    np.savetxt(savedir+'established_y_noised.csv', established_y_noised, delimiter=',')
+    np.savetxt(savedir+'established_x_bins_noised.csv', established_x_bins_noised, delimiter=',')
+    np.savetxt(savedir+'established_y_bins_noised.csv', established_y_bins_noised, delimiter=',')
+    np.savetxt(savedir+'established_median_array_noised.csv', established_median_array_noised, delimiter=',')
+    np.savetxt(savedir+'established_correction_noised.csv', established_correction_noised, delimiter=',')
+    np.savetxt(savedir+'established_y_bins_corrections_noised.csv', established_y_bins_corrections_noised, delimiter=',')
+    np.savetxt(savedir+'established_correction_median_array_noised.csv', established_correction_median_array_noised, delimiter=',')
+    np.savetxt(savedir+'established_y_corrected_noised.csv', established_y_corrected_noised, delimiter=',')
+    np.savetxt(savedir+'established_corrected_median_array_noised.csv', established_corrected_median_array_noised, delimiter=',')
+    np.savetxt(savedir+'established_corrected_corrections_noised.csv', established_corrected_corrections_noised, delimiter=',')
+    np.savetxt(savedir+'established_corrected_correction_median_array_noised.csv', established_corrected_correction_median_array_noised, delimiter=',')
 
-    np.savetxt(savedir+'established_x_peaked.csv', established_x, delimiter=',')
-    np.savetxt(savedir+'established_y_peaked.csv', established_y, delimiter=',')
-    np.savetxt(savedir+'established_x_bins_peaked.csv', established_x_bins, delimiter=',')
-    np.savetxt(savedir+'established_y_bins_peaked.csv', established_y_bins, delimiter=',')
-    np.savetxt(savedir+'established_median_array_peaked.csv', established_median_array, delimiter=',')
-    np.savetxt(savedir+'established_correction_peaked.csv', established_correction, delimiter=',')
-    np.savetxt(savedir+'established_y_bins_corrections_peaked.csv', established_y_bins_corrections, delimiter=',')
-    np.savetxt(savedir+'established_correction_median_array_peaked.csv', established_correction_median_array, delimiter=',')
-    np.savetxt(savedir+'established_y_corrected_peaked.csv', established_y_corrected, delimiter=',')
-    np.savetxt(savedir+'established_corrected_median_array_peaked.csv', established_corrected_median_array, delimiter=',')
-    np.savetxt(savedir+'established_corrected_corrections_peaked.csv', established_corrected_corrections, delimiter=',')
-    np.savetxt(savedir+'established_corrected_correction_median_array_peaked.csv', established_corrected_correction_median_array, delimiter=',')
+    np.savetxt(savedir+'established_x_peaked.csv', established_x_peaked, delimiter=',')
+    np.savetxt(savedir+'established_y_peaked.csv', established_y_peaked, delimiter=',')
+    np.savetxt(savedir+'established_x_bins_peaked.csv', established_x_bins_peaked, delimiter=',')
+    np.savetxt(savedir+'established_y_bins_peaked.csv', established_y_bins_peaked, delimiter=',')
+    np.savetxt(savedir+'established_median_array_peaked.csv', established_median_array_peaked, delimiter=',')
+    np.savetxt(savedir+'established_correction_peaked.csv', established_correction_peaked, delimiter=',')
+    np.savetxt(savedir+'established_y_bins_corrections_peaked.csv', established_y_bins_corrections_peaked, delimiter=',')
+    np.savetxt(savedir+'established_correction_median_array_peaked.csv', established_correction_median_array_peaked, delimiter=',')
+    np.savetxt(savedir+'established_y_corrected_peaked.csv', established_y_corrected_peaked, delimiter=',')
+    np.savetxt(savedir+'established_corrected_median_array_peaked.csv', established_corrected_median_array_peaked, delimiter=',')
+    np.savetxt(savedir+'established_corrected_corrections_peaked.csv', established_corrected_corrections_peaked, delimiter=',')
+    np.savetxt(savedir+'established_corrected_correction_median_array_peaked.csv', established_corrected_correction_median_array_peaked, delimiter=',')
 
     return()
 
