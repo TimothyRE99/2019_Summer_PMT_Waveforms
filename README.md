@@ -1,5 +1,6 @@
 # 2019_Summer_PMT_Waveforms
 ## Overview
+* I ran all files using Anaconda. I imagine you can individually import the necessary libraries, but using Anaconda is faster
 
 ## p1
 ### Preliminary Steps
@@ -86,3 +87,19 @@
 * readhistogram: same as p1, ported over to allow use by trigger files
 * writehistogram: same as p1, ported over to allow use by trigger files
 * gausshistogram: same as p1, ported over to allow use by trigger files
+
+## Phase Study
+### Preliminary Steps
+* No preliminary steps for P3. All functions create their own directories as needed
+
+### Processing Steps
+1. phase_discrete_copy.py/phase_discrete_copy_average/spline_discrete_copy.py (Moves files from d3 to phase study folder and renames appropriately)
+    * These can be done in any order
+1. phase_array_gen.py (Generates array files necessary for the rest of the programs, run this for both 250 and 500 MSPS for all shapings)
+1. fitter_doubles_identify.py/fitter_doubles_identify copy.py (Use these to identify any missed double waveforms)
+1. establish_template_study.py (Must be done before all "established_###.py" programs)
+
+### Additional Programs
+* readwaveform: same as p1, ported over to allow use by trigger files
+* writewaveform: same as p1, ported over to allow use by trigger files
+* unispline: function for generating spline of averaged waveform
