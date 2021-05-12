@@ -159,7 +159,7 @@ def phase_array_gen(samplerate,samplerate_name,shaping,datadate,n_box,n_delay,n_
         established_x_j = []
         established_correction_j = []
         for j in range(Nloops):
-            print('Established Uncorrected Files '+samplerate_name+';'+str(n_box)+','+str(n_delay)+','+str(n_att)+';'+str(i)+','+str(j))
+            print('Established Noised Uncorrected Files '+samplerate_name+';'+str(n_box)+','+str(n_delay)+','+str(n_att)+';'+str(i)+','+str(j))
             filename = filedir + 'Phase--waveforms--%05d.txt' % j
             (t,v,_) = rw(filename,numhead)
             t_avg,v_avg = boxcar_wf(t,v,n_box)
@@ -201,7 +201,7 @@ def phase_array_gen(samplerate,samplerate_name,shaping,datadate,n_box,n_delay,n_
         established_corrected_corrections_j = []
         established_y_corrected_j = []
         for j in range(Nloops):
-            print('Established Corrected Files '+samplerate_name+';'+str(n_box)+','+str(n_delay)+','+str(n_att)+';'+str(i)+','+str(j))
+            print('Established Noised Corrected Files '+samplerate_name+';'+str(n_box)+','+str(n_delay)+','+str(n_att)+';'+str(i)+','+str(j))
             filename = filedir + 'Phase--waveforms--%05d.txt' % j
             (t,v,_) = rw(filename,numhead)
             t_avg,v_avg = boxcar_wf(t,v,n_box)
@@ -234,7 +234,7 @@ def phase_array_gen(samplerate,samplerate_name,shaping,datadate,n_box,n_delay,n_
         established_x_j = []
         established_correction_j = []
         for j in range(Nloops):
-            print('Established Uncorrected Files '+samplerate_name+';'+str(n_box)+','+str(n_delay)+','+str(n_att)+';'+str(i)+','+str(j))
+            print('Established Peaked Uncorrected Files '+samplerate_name+';'+str(n_box)+','+str(n_delay)+','+str(n_att)+';'+str(i)+','+str(j))
             filename = filedir + 'Phase--waveforms--%05d.txt' % j
             (t,v,_) = rw(filename,numhead)
             t_avg,v_avg = boxcar_wf(t,v,n_box)
@@ -276,7 +276,7 @@ def phase_array_gen(samplerate,samplerate_name,shaping,datadate,n_box,n_delay,n_
         established_corrected_corrections_j = []
         established_y_corrected_j = []
         for j in range(Nloops):
-            print('Established Corrected Files '+samplerate_name+';'+str(n_box)+','+str(n_delay)+','+str(n_att)+';'+str(i)+','+str(j))
+            print('Established Peaked Corrected Files '+samplerate_name+';'+str(n_box)+','+str(n_delay)+','+str(n_att)+';'+str(i)+','+str(j))
             filename = filedir + 'Phase--waveforms--%05d.txt' % j
             (t,v,_) = rw(filename,numhead)
             t_avg,v_avg = boxcar_wf(t,v,n_box)
