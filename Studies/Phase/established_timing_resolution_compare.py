@@ -98,8 +98,12 @@ def phase_hist_gen(samplerate,samplerate_name,shaping,datadate,n_box,n_delay,n_a
     Nloops = len(os.listdir(filedir))
 
     filedir = 'G:/data/watchman/'+str(datadate)+'_watchman_spe/studies/phase/' + samplerate_name + '/array_data/'
-    median_array = np.loadtxt(filedir+'established_median_array.csv', delimiter=',')
-    correction_median_array = np.loadtxt(filedir+'established_correction_median_array.csv', delimiter=',')
+    if shaping == 'raw_gained_analyzed_noised':
+        shape_name = '_noised'
+    elif shaping == 'raw_gained_analyzed_peaked':    
+        shape_name = '_peaked'
+    median_array = np.loadtxt(filedir+'established_median_array'+shape_name+'.csv', delimiter=',')
+    correction_median_array = np.loadtxt(filedir+'established_correction_median_array'+shape_name+'.csv', delimiter=',')
 
     difference_list = []
     corrected_difference_list = []
