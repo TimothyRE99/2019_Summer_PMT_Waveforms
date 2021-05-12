@@ -94,7 +94,6 @@ def zc_locator(t,v):
 
 def disparity_investigation(samplerate,samplerate_name,shaping,datadate,n_box,n_delay,n_att,numhead):
     phase_time = 1/20000000000  #sets timing between phases (initial sample rate of oscilloscope)
-    maxphase = int(20000000000/samplerate + 0.5)    #determines final phase as an integer
     
     filedir = 'G:/data/watchman/'+str(datadate)+'_watchman_spe/studies/phase/'+samplerate_name+'/phase=0/phase_'+shaping+'/'
     Nloops = len(os.listdir(filedir))

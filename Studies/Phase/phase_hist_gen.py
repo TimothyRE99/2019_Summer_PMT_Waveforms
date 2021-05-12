@@ -7,7 +7,6 @@ from readwaveform import read_waveform as rw
 
 def phase_hist_gen(samplerate,samplerate_name,shaping,datadate,n_box,n_delay,n_att,numhead):
     phase_time = 1/20000000000
-    maxphase = int(20000000000/samplerate + 0.5)
 
     filedir = 'G:/data/watchman/'+str(datadate)+'_watchman_spe/studies/phase/' + samplerate_name + '/array_data/'
     x = np.loadtxt(filedir+'x.csv', delimiter=',')
