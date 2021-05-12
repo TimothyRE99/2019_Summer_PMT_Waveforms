@@ -95,31 +95,13 @@ def zc_locator(t,v):
 def disparity_investigation(samplerate,samplerate_name,shaping,datadate,n_box,n_delay,n_att,numhead):
     phase_time = 1/20000000000  #sets timing between phases (initial sample rate of oscilloscope)
     maxphase = int(20000000000/samplerate + 0.5)    #determines final phase as an integer
-    phase_array = np.arange(0,maxphase)     #creates array containing all phases from 0 to maxphase
-    #initializing lists (use python lists rather than np arrays when appending, faster)
-    median_array = []
-    correction_median_array = []
-    for i in range(len(phase_array)):
-        filedir = 'G:/data/watchman/'+str(datadate)+'_watchman_spe/studies/phase/'+samplerate_name+'/phase='+str(phase_array[i])+'/phase_'+shaping+'/'  #sets name for file directory
-        Nloops = len(os.listdir(filedir))   #determines length of file directory
-        #initializing lists (use python lists rather than np arrays when appending, faster)
-        y_j = []
-        correction_j = []
-        for j in range(Nloops):
-            print(samplerate_name+';'+str(n_box)+','+str(n_delay)+','+str(n_att)+';'+str(i)+','+str(j)) #printing values to monitor progress
-            filename = filedir + 'Phase--waveforms--%05d.txt' % j   #setting file name to open
-            (t,v,_) = rw(filename,numhead)  #reading in waveform values
-            t_avg,v_avg = boxcar_wf(t,v,n_box)  #running boxcar average calculation for CFD
-            v_delay = delay_wf(v_avg,n_delay)   #running delay calculation for CFD
-            v_att = attenuate_wf(v_avg,n_att)   #running attentuation calculation for CFD
-            v_sum = sum_wf(v_att,v_delay)       #summing two waveforms to make CFD waveform
-            t_cross,_,_ = zc_locator(t_avg,v_sum)   #calculating crossing time from CFD
-            y_j.append(t_cross)                     #appending crosssing time from CFD to list of crossing times
-            correction_j.append(-1*i*phase_time - t_cross)      #appending timing corrections to list of timing corrections
-        median_array.append(np.median(np.asarray(y_j)))         #appending median value from each phase to median list
-        correction_median_array.append(np.median(np.asarray(correction_j))) #combining individual correction lists to total correction list
-    correction_median_array = np.asarray(correction_median_array)       #turning into numpy array to allow easier calculation
-    correction_median_array = correction_median_array + median_array[0] #correcting correction array based on initial median value
+    
+    filedir = 'G:/data/watchman/'+str(datadate)+'_watchman_spe/studies/phase/'+samplerate_name+'/phase=0/phase_'+shaping+'/'
+    Nloops = len(os.listdir(filedir))
+
+    filedir = 'G:/data/watchman/'+str(datadate)+'_watchman_spe/studies/phase/' + samplerate_name + '/array_data/'
+    median_array = np.loadtxt(filedir+'median_array.csv', delimiter=',')
+    correction_median_array = np.loadtxt(filedir+'correction_median_array.csv', delimiter=',')
 
     for i in range(29,40):
         corrected_difference_list = []      #initializing lists (use python lists rather than np arrays when appending, faster)
